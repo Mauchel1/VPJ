@@ -1,0 +1,74 @@
+
+\documentclass[12pt,  % 12 Punkt Schrift
+  a4paper,            % DIN A4
+  oneside,            % einseitiger Druck
+  BCOR=5mm,           % Bindungskorrektur
+  parskip=half,       % Halber Abstand zwischen Absätzen
+]{scrreprt}
+\usepackage{./style/thesisstyle}
+\usepackage{enumitem}           % customizations for enumerations
+\usepackage{listings}   				% für Codeschnipsel in lstlisting{}
+
+\begin{document}
+\input{configuration/configuration}    % load all settings
+\newcommand{\inlinetodo}[1]{\todo[inline,linecolor=blue,backgroundcolor=blue!25,bordercolor=blue,size=\normalsize]{#1}}
+
+\hyphenation{Ba-che-lor-the-sis Mas-ter-the-sis}
+
+% Cover page here, no page number
+\input{./style/coverpage}
+
+% Titlepage is page one even if the number is not shown.
+\pagenumbering{roman}
+% Title page here
+\input{./style/titlepage}
+
+% Abstract page here
+\input{./style/abstractpage}
+
+% Table of contents here
+\tableofcontents
+
+% path to the chapters folder is set to find the images used there
+\graphicspath{ {./chapters/} }
+
+\setcitestyle{square}
+
+% Chapters
+\clearpage
+\pagenumbering{arabic}
+\input{chapters/Einleitung}
+%\input{chapters/Vorhandenes_System}
+%\input{chapters/PixyCam}
+%\input{chapters/Marktrecherche}
+%%\input{chapters/Anforderungen}
+%\input{chapters/Umsetzung}
+%\input{chapters/Halterung}
+%\input{chapters/Abgeleitete_Anforderungen}
+%\input{chapters/Implementierung}
+%%\input{chapters/Test}
+%\input{chapters/Auswertung}
+%\input{chapters/Fazit}
+
+\listoffigures
+%\listoftables
+
+
+\begin{flushleft}           % kein Blocksatz, sondern Linksbündig
+\bibliographystyle{alpha}
+%\bibliographystyle{natdin}
+%\bibliographystyle{dinat}
+
+\bibliography{literature}
+\end{flushleft}
+
+\appendix
+\input{chapters/Anhang}
+
+\newpage
+\clearpage
+\thispagestyle{empty}
+%\Istatement
+
+% appendix
+\end{document}

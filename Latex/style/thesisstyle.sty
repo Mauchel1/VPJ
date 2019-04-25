@@ -1,0 +1,44 @@
+%
+% Style File for thesises in the computer science deparment
+% at UAS Hamburg
+% Maintainer:
+% Thomas Lehmann <t.l@haw-hamburg.de>
+%
+\ProvidesPackage{./style/thesisstyle}
+
+\RequirePackage[utf8]{inputenc}         % Universal encoding
+%\RequirePackage[ansinew]{inputenc}      % Windows encoding
+%\RequirePackage[applemac]{inputenc}     % Mac encoding
+%\RequirePackage[latin1]{inputenc}       % Linux encoding
+
+\RequirePackage[ngerman]{babel}     % New german spell checking
+\RequirePackage[T1]{fontenc}        % Font
+\RequirePackage{url}                % Line break support in URL
+\RequirePackage{siunitx}            % SI-Unit support
+\RequirePackage{courier}            % Courier as \ttdefault
+
+\RequirePackage[automark]{scrlayer-scrpage}
+\clearscrheadfoot
+\ihead{\headmark}
+\ofoot[\pagemark]{\pagemark}
+\pagestyle{scrheadings}
+
+%\RequirePackage{listing}            % Computer listings
+%\RequirePackage{xcolor}             % Colored text
+
+\RequirePackage{amsmath}            % Math
+\RequirePackage{amsfonts}
+\RequirePackage{amssymb}
+
+\RequirePackage{graphicx}           % Include graphics to document
+\RequirePackage{subcaption}         % Multiple Pictures next to each other
+\RequirePackage[round]{natbib}      % More citation styles
+\parindent0pt                       % First line starts imediately
+\RequirePackage{todonotes}          % Adds notes on marginpar (can lead to warnings!)
+
+\RequirePackage[top=2.5cm, right=2.5cm, bottom=2.5cm, left=4cm]{geometry}
+
+\RequirePackage[absolute]{textpos}  % place at absolute coordinates on title page
+
+\RequirePackage{./style/configurationcommands}
+\RequirePackage{./style/convenience}

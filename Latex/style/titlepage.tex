@@ -1,0 +1,52 @@
+% !TEX root = ../VPJ.tex
+%
+% title page
+% @author Thomas Lehmann
+% Hints for titel page and page numbering: https://en.wikipedia.org/wiki/Title_page
+%
+\newpage
+\thispagestyle{empty}
+{\fontfamily{phv}\selectfont
+
+  % Author of thesis
+  % TODO: Select correct font
+  \vspace*{1cm}
+  \begin{minipage}[b]{\textwidth}
+    \fontsize{14pt}{20pt}
+    \selectfont
+    \begin{center}
+      \IthesisAuthor
+    \end{center}
+  \end{minipage}
+
+  % Title of thesis
+  % TODO: Select correct font  
+  \vspace{1.5cm}
+  \begin{minipage}[b][0cm][b]{\textwidth}
+    \fontsize{18pt}{20pt}
+    \selectfont
+    \begin{center}
+      \IthesisTitle  	  
+  	\end{center}
+  \end{minipage}
+
+  % Important information
+  % TODO: Select correct font  
+  \begin{textblock*}{\textwidth}(40mm,210mm)
+    \begin{minipage}[b]{\textwidth}
+      \fontfamily{ptm}\selectfont
+      \fontsize{12pt}{14pt}
+      \selectfont
+      \IthesisKindDE ~eingereicht im Rahmen der \IthesisExaminationDE \\
+
+      im Studiengang \IstudyCourseName \\
+      am \IthesisDepartmentFull \\
+      der Fakultät Technik und Informatik\\
+      der Hochschule für Angewandte Wissenschaften Hamburg\\
+
+      Betreuender Prüfer: \IfirstSv \\
+
+      Eingereicht am: \ISubDate \\
+    \end{minipage}
+  \end{textblock*}
+}
