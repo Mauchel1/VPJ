@@ -1,3 +1,8 @@
-\begin{thebibliography}{}
+\begin{thebibliography}{Sch09}
+
+\bibitem[Sch09]{festo_dok}
+Schober.
+\newblock {\em Festo Dokumentation Handbuch MPS Transfersystem}.
+\newblock Festo Didactic, 2009.
 
 \end{thebibliography}

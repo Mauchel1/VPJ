@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6500 64-bit) (preloaded format=pdflatex 2017.12.4)  25 APR 2019 16:57
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6500 64-bit) (preloaded format=pdflatex 2017.12.4)  30 APR 2019 11:15
 entering extended mode
 **./VPJ.tex
 (VPJ.tex
@@ -1291,7 +1291,24 @@ File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
 File: listings.cfg 2015/06/04 1.6 listings configuration
 ))
 Package: listings 2015/06/04 1.6 (Carsten Heinz)
- (VPJ.aux)
+ (VPJ.aux
+
+LaTeX Warning: Label `fig:Pixy_Fehler' multiply defined.
+
+
+! Package natbib Error: Bibliography not compatible with author-year citations.
+(natbib)                Press <return> to continue in numerical citation style.
+
+See the natbib package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.112 ...and\NAT@force@numbers{}\NAT@force@numbers
+                                                  
+Check the bibliography entries for non-compliant syntax,
+or select author-year BibTeX style, e.g. plainnat
+
+)
 \openout1 = `VPJ.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 12.
@@ -1308,8 +1325,7 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 12.
 LaTeX Font Info:    ... okay on input line 12.
 Now handling font encoding TS1 ...
 ... processing UTF-8 mapping file for font encoding TS1
-
-("C:\Program Files\MiKTeX 2.9\tex\latex\base\ts1enc.dfu"
+ ("C:\Program Files\MiKTeX 2.9\tex\latex\base\ts1enc.dfu"
 File: ts1enc.dfu 2017/01/28 v1.1t UTF-8 support for inputenc
    defining Unicode char U+00A2 (decimal 162)
    defining Unicode char U+00A3 (decimal 163)
@@ -1559,17 +1575,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 42--46
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 47--48
+Underfull \hbox (badness 10000) in paragraph at lines 47--49
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 49--50
+Underfull \hbox (badness 10000) in paragraph at lines 50--51
 
  []
 
 
-Overfull \hbox (11.74713pt too wide) in paragraph at lines 36--51
+Overfull \hbox (11.74713pt too wide) in paragraph at lines 36--52
 [][] 
  []
 
@@ -1639,17 +1655,172 @@ File: Abbildungen/Platzhalter.jpg Graphic file (type jpg)
 <use Abbildungen/Platzhalter.jpg>
 Package pdftex.def Info: Abbildungen/Platzhalter.jpg  used on input line 26. on input line 26.
 Package pdftex.def Info: Requested size: 165.02347pt x 133.72594pt on input line 26.
-) [2] (VPJ.lof)
+) (chapters/Aufgabenstellung.tex [2]
+chapter 2.
+) (chapters/Implementierung.tex [3
+
+]
+chapter 3.
+<Abbildungen/Klassendiagramm.PNG, id=37, 943.27406pt x 487.8225pt>
+File: Abbildungen/Klassendiagramm.PNG Graphic file (type png)
+<use Abbildungen/Klassendiagramm.PNG>
+Package pdftex.def Info: Abbildungen/Klassendiagramm.PNG  used on input line 12. on input line 12.
+Package pdftex.def Info: Requested size: 371.30595pt x 192.02158pt on input line 12.
+<Abbildungen/Auftragsplanung.PNG, id=38, 914.66719pt x 466.74374pt>
+File: Abbildungen/Auftragsplanung.PNG Graphic file (type png)
+<use Abbildungen/Auftragsplanung.PNG>
+Package pdftex.def Info: Abbildungen/Auftragsplanung.PNG  used on input line 25. on input line 25.
+Package pdftex.def Info: Requested size: 371.30595pt x 189.47174pt on input line 25.
+) (chapters/Visualisierung.tex [4
+
+ <./Abbildungen/Klassendiagramm.PNG>] [5 <./Abbildungen/Auftragsplanung.PNG>]
+chapter 4.
+<Abbildungen/Gesamtprogramm.png, id=47, 823.57687pt x 569.87906pt>
+File: Abbildungen/Gesamtprogramm.png Graphic file (type png)
+<use Abbildungen/Gesamtprogramm.png>
+Package pdftex.def Info: Abbildungen/Gesamtprogramm.png  used on input line 10. on input line 10.
+Package pdftex.def Info: Requested size: 412.56497pt x 285.47795pt on input line 10.
+<Abbildungen/GesamtprogrammROT.png, id=48, 813.0375pt x 544.28343pt>
+File: Abbildungen/GesamtprogrammROT.png Graphic file (type png)
+<use Abbildungen/GesamtprogrammROT.png>
+Package pdftex.def Info: Abbildungen/GesamtprogrammROT.png  used on input line 17. on input line 17.
+Package pdftex.def Info: Requested size: 412.56497pt x 276.18562pt on input line 17.
+<Abbildungen/LiveView.png, id=49, 1333.98375pt x 671.50874pt>
+File: Abbildungen/LiveView.png Graphic file (type png)
+<use Abbildungen/LiveView.png>
+Package pdftex.def Info: Abbildungen/LiveView.png  used on input line 26. on input line 26.
+Package pdftex.def Info: Requested size: 371.30595pt x 186.90431pt on input line 26.
+<Abbildungen/Parkplatz.png, id=50, 130.23656pt x 48.93282pt>
+File: Abbildungen/Parkplatz.png Graphic file (type png)
+<use Abbildungen/Parkplatz.png>
+Package pdftex.def Info: Abbildungen/Parkplatz.png  used on input line 33. on input line 33.
+Package pdftex.def Info: Requested size: 165.02347pt x 62.00359pt on input line 33.
+<Abbildungen/Laden.png, id=51, 78.2925pt x 89.58469pt>
+File: Abbildungen/Laden.png Graphic file (type png)
+<use Abbildungen/Laden.png>
+Package pdftex.def Info: Abbildungen/Laden.png  used on input line 40. on input line 40.
+Package pdftex.def Info: Requested size: 103.14124pt x 118.02112pt on input line 40.
+<Abbildungen/Station.png, id=52, 34.62938pt x 38.39343pt>
+File: Abbildungen/Station.png Graphic file (type png)
+<use Abbildungen/Station.png>
+Package pdftex.def Info: Abbildungen/Station.png  used on input line 47. on input line 47.
+Package pdftex.def Info: Requested size: 82.51173pt x 91.49112pt on input line 47.
+<Abbildungen/RobotinoGoffen.png, id=53, 39.89906pt x 39.89906pt>
+File: Abbildungen/RobotinoGoffen.png Graphic file (type png)
+<use Abbildungen/RobotinoGoffen.png>
+Package pdftex.def Info: Abbildungen/RobotinoGoffen.png  used on input line 54. on input line 54.
+Package pdftex.def Info: Requested size: 41.259pt x 41.25902pt on input line 54.
+<Abbildungen/RobotinoGZu.png, id=54, 39.89906pt x 39.89906pt>
+File: Abbildungen/RobotinoGZu.png Graphic file (type png)
+<use Abbildungen/RobotinoGZu.png>
+Package pdftex.def Info: Abbildungen/RobotinoGZu.png  used on input line 55. on input line 55.
+Package pdftex.def Info: Requested size: 41.259pt x 41.25902pt on input line 55.
+<Abbildungen/RobotinoDefect.png, id=55, 40.65187pt x 41.4047pt>
+File: Abbildungen/RobotinoDefect.png Graphic file (type png)
+<use Abbildungen/RobotinoDefect.png>
+Package pdftex.def Info: Abbildungen/RobotinoDefect.png  used on input line 56. on input line 56.
+Package pdftex.def Info: Requested size: 41.259pt x 42.02625pt on input line 56.
+<Abbildungen/Auftragsfortschritt.png, id=56, 182.18062pt x 308.65312pt>
+File: Abbildungen/Auftragsfortschritt.png Graphic file (type png)
+<use Abbildungen/Auftragsfortschritt.png>
+Package pdftex.def Info: Abbildungen/Auftragsfortschritt.png  used on input line 65. on input line 65.
+Package pdftex.def Info: Requested size: 165.02347pt x 279.59373pt on input line 65.
+<Abbildungen/Pause.png, id=57, 169.38281pt x 25.59563pt>
+File: Abbildungen/Pause.png Graphic file (type png)
+<use Abbildungen/Pause.png>
+Package pdftex.def Info: Abbildungen/Pause.png  used on input line 72. on input line 72.
+Package pdftex.def Info: Requested size: 165.02347pt x 24.93785pt on input line 72.
+<Abbildungen/Log.png, id=58, 255.20343pt x 195.73125pt>
+File: Abbildungen/Log.png Graphic file (type png)
+<use Abbildungen/Log.png>
+Package pdftex.def Info: Abbildungen/Log.png  used on input line 81. on input line 81.
+Package pdftex.def Info: Requested size: 247.54149pt x 189.86504pt on input line 81.
+<Abbildungen/ManualControl.png, id=59, 255.20343pt x 195.73125pt>
+File: Abbildungen/ManualControl.png Graphic file (type png)
+<use Abbildungen/ManualControl.png>
+Package pdftex.def Info: Abbildungen/ManualControl.png  used on input line 88. on input line 88.
+Package pdftex.def Info: Requested size: 247.54149pt x 189.86504pt on input line 88.
+<Abbildungen/TimestampsWerkstueck.png, id=60, 255.20343pt x 194.97844pt>
+File: Abbildungen/TimestampsWerkstueck.png Graphic file (type png)
+<use Abbildungen/TimestampsWerkstueck.png>
+Package pdftex.def Info: Abbildungen/TimestampsWerkstueck.png  used on input line 95. on input line 95.
+Package pdftex.def Info: Requested size: 165.02347pt x 126.08589pt on input line 95.
+<Abbildungen/TimestampsStation.png, id=61, 255.20343pt x 193.47281pt>
+File: Abbildungen/TimestampsStation.png Graphic file (type png)
+<use Abbildungen/TimestampsStation.png>
+Package pdftex.def Info: Abbildungen/TimestampsStation.png  used on input line 96. on input line 96.
+Package pdftex.def Info: Requested size: 165.02347pt x 125.11226pt on input line 96.
+<Abbildungen/HardCode.png, id=62, 254.45062pt x 194.97844pt>
+File: Abbildungen/HardCode.png Graphic file (type png)
+<use Abbildungen/HardCode.png>
+Package pdftex.def Info: Abbildungen/HardCode.png  used on input line 103. on input line 103.
+Package pdftex.def Info: Requested size: 247.54149pt x 189.69115pt on input line 103.
+<Abbildungen/Batterie.png, id=63, 194.97844pt x 196.48407pt>
+File: Abbildungen/Batterie.png Graphic file (type png)
+<use Abbildungen/Batterie.png>
+Package pdftex.def Info: Abbildungen/Batterie.png  used on input line 112. on input line 112.
+Package pdftex.def Info: Requested size: 206.28249pt x 207.88235pt on input line 112.
+<Abbildungen/BatterieAlive1.png, id=64, 171.64125pt x 27.10126pt>
+File: Abbildungen/BatterieAlive1.png Graphic file (type png)
+<use Abbildungen/BatterieAlive1.png>
+Package pdftex.def Info: Abbildungen/BatterieAlive1.png  used on input line 119. on input line 119.
+Package pdftex.def Info: Requested size: 165.02347pt x 26.05618pt on input line 119.
+<Abbildungen/BatterieAlive2.png, id=65, 171.64125pt x 28.60687pt>
+File: Abbildungen/BatterieAlive2.png Graphic file (type png)
+<use Abbildungen/BatterieAlive2.png>
+Package pdftex.def Info: Abbildungen/BatterieAlive2.png  used on input line 120. on input line 120.
+Package pdftex.def Info: Requested size: 165.02347pt x 27.50374pt on input line 120.
+<Abbildungen/Prozesseingabe.png, id=66, 231.11343pt x 197.98969pt>
+File: Abbildungen/Prozesseingabe.png Graphic file (type png)
+<use Abbildungen/Prozesseingabe.png>
+Package pdftex.def Info: Abbildungen/Prozesseingabe.png  used on input line 129. on input line 129.
+Package pdftex.def Info: Requested size: 206.28249pt x 176.7178pt on input line 129.
+<Abbildungen/Auftragsvergabe.png, id=67, 112.16907pt x 199.49532pt>
+File: Abbildungen/Auftragsvergabe.png Graphic file (type png)
+<use Abbildungen/Auftragsvergabe.png>
+Package pdftex.def Info: Abbildungen/Auftragsvergabe.png  used on input line 138. on input line 138.
+Package pdftex.def Info: Requested size: 123.77074pt x 220.1365pt on input line 138.
+[6
+
+ <./Abbildungen/Gesamtprogramm.png>]
+Overfull \hbox (11.24713pt too wide) in paragraph at lines 145--145
+[] 
+ []
+
+[7 <./Abbildungen/GesamtprogrammROT.png>]
+File: Abbildungen/Platzhalter.jpg Graphic file (type jpg)
+<use Abbildungen/Platzhalter.jpg>
+Package pdftex.def Info: Abbildungen/Platzhalter.jpg  used on input line 150. on input line 150.
+Package pdftex.def Info: Requested size: 165.02347pt x 133.72594pt on input line 150.
+File: Abbildungen/Platzhalter.jpg Graphic file (type jpg)
+<use Abbildungen/Platzhalter.jpg>
+Package pdftex.def Info: Abbildungen/Platzhalter.jpg  used on input line 151. on input line 151.
+Package pdftex.def Info: Requested size: 165.02347pt x 133.72594pt on input line 151.
+) (chapters/Robotersimulation.tex [8 <./Abbildungen/LiveView.png> <./Abbildungen/Parkplatz.png> <./Abbildungen/Laden.png
+>] [9 <./Abbildungen/Station.png> <./Abbildungen/RobotinoGoffen.png> <./Abbildungen/RobotinoGZu.png> <./Abbildungen/Robo
+tinoDefect.png> <./Abbildungen/Auftragsfortschritt.png> <./Abbildungen/Pause.png>] [10 <./Abbildungen/Log.png> <./Abbild
+ungen/ManualControl.png> <./Abbildungen/TimestampsWerkstueck.png> <./Abbildungen/TimestampsStation.png>] [11 <./Abbildun
+gen/HardCode.png> <./Abbildungen/Batterie.png> <./Abbildungen/BatterieAlive1.png> <./Abbildungen/BatterieAlive2.png>] [1
+2 <./Abbildungen/Prozesseingabe.png> <./Abbildungen/Auftragsvergabe.png>]
+chapter 5.
+<Abbildungen/SimulatedRobot.PNG, id=109, 637.63219pt x 298.11375pt>
+File: Abbildungen/SimulatedRobot.PNG Graphic file (type png)
+<use Abbildungen/SimulatedRobot.PNG>
+Package pdftex.def Info: Abbildungen/SimulatedRobot.PNG  used on input line 9. on input line 9.
+Package pdftex.def Info: Requested size: 371.30595pt x 173.59752pt on input line 9.
+) (chapters/Datenbank.tex [13
+
+ <./Abbildungen/SimulatedRobot.PNG>]
+chapter 6.
+) [14
+
+] (VPJ.lof)
 \tf@lof=\write5
 \openout5 = `VPJ.lof'.
 
- (VPJ.bbl [3
+ (VPJ.bbl [15
 
-]
-
-Package natbib Warning: Empty `thebibliography' environment on input line 3.
-
-) (chapters/Anhang.tex [4
+]) (chapters/Anhang.tex [16
 
 ]
 chapter A.
@@ -1699,32 +1870,33 @@ Underfull \hbox (badness 10000) in paragraph at lines 24--26
 
  []
 
-) [5
+) [17
 
 ] (VPJ.aux)
 
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 31999 strings out of 493312
- 658486 string characters out of 3138893
- 773410 words of memory out of 3000000
- 35055 multiletter control sequences out of 15000+200000
- 561381 words of font info for 66 fonts, out of 3000000 for 9000
+ 32183 strings out of 493312
+ 663523 string characters out of 3138893
+ 777798 words of memory out of 3000000
+ 35197 multiletter control sequences out of 15000+200000
+ 562065 words of font info for 67 fonts, out of 3000000 for 9000
  1143 hyphenation exceptions out of 8191
  82i,19n,80p,10481b,609s stack positions out of 5000i,500n,10000p,200000b,50000s
- <C:\Users\dec4frd\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecsl1200.pk> <C:\Users\dec4frd\AppData\
-Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecsx1728.pk> <C:\Users\dec4frd\AppData\Local\MiKTeX\2.9\fonts\pk\ljf
-our\jknappen\ec\dpi600\ecsx1200.pk> <C:\Users\dec4frd\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecsx24
-88.pk> <C:\Users\dec4frd\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1200.pk> <C:\Users\dec4frd\AppD
-ata\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1200.pk>{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/base/8r
-.enc}<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw
-/helvetic/uhvr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvro8a.pfb><C:/Program Files/MiKTeX 2.9/font
-s/type1/urw/times/utmr8a.pfb>
-Output written on VPJ.pdf (9 pages, 177461 bytes).
+ <C:\Users\dec4frd\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecti1200.pk> <C:\Users\dec4frd\AppData\
+Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecsl1200.pk> <C:\Users\dec4frd\AppData\Local\MiKTeX\2.9\fonts\pk\ljf
+our\jknappen\ec\dpi600\ecsx1728.pk> <C:\Users\dec4frd\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecsx12
+00.pk> <C:\Users\dec4frd\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecsx2488.pk> <C:\Users\dec4frd\AppD
+ata\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1200.pk> <C:\Users\dec4frd\AppData\Local\MiKTeX\2.9\fonts\pk
+\ljfour\jknappen\ec\dpi600\ecbx1200.pk>{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Program Files/MiKTeX
+ 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvr8a.pfb><C:/Prog
+ram Files/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvro8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb>
+
+Output written on VPJ.pdf (21 pages, 558776 bytes).
 PDF statistics:
- 242 PDF objects out of 1000 (max. 8388607)
+ 436 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 18 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 138 words of extra memory for PDF output out of 10000 (max. 10000000)
 

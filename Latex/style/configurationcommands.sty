@@ -41,7 +41,7 @@ Aeronautical Engineering}\newcommand{\Istatement}{\input{./style/statement_fuf}}
   \ifthenelse{\equal{#1}{Master}}{\newcommand{\IthesisKind}{Masterthesis}\newcommand{\IthesisKindDE}{Mastertarbeit}\newcommand{\IthesisExaminationDE}{Masterprüfung}}{}
   \ifthenelse{\equal{#1}{Bachelor}}{\newcommand{\IthesisKind}{Bachelorthesis}\newcommand{\IthesisKindDE}{Bachelorarbeit}\newcommand{\IthesisExaminationDE}{Bachelorprüfung}}{}
   \ifthenelse{\equal{#1}{Studien}}{\newcommand{\IthesisKind}{Studienarbeit}\newcommand{\IthesisKindDE}{Studienarbeit}\newcommand{\IthesisExaminationDE}{Studiumszwischenprüfung}}{}
-  \ifthenelse{\equal{#1}{VPJ}}{\newcommand{\IthesisKind}{Dokumentation}\newcommand{\IthesisKindDE}{Verbundprojekt}\newcommand{\IthesisExaminationDE}{Abschluspräsentation}}{}
+  \ifthenelse{\equal{#1}{VPJ}}{\newcommand{\IthesisKind}{Dokumentation}\newcommand{\IthesisKindDE}{Abschluspräsentation}\newcommand{\IthesisExaminationDE}{Verbundprojektes}}{}
 }
 \newcommand{\studycourse}[1]
 {
@@ -50,7 +50,7 @@ Aeronautical Engineering}\newcommand{\Istatement}{\input{./style/statement_fuf}}
   \ifthenelse{\equal{#1}{WI}}{\thesisKind{Bachelor}\department{I}\newcommand{\IstudyCourseName}{Bachelor of Science Wirtschaftsinformatik}}{}
   \ifthenelse{\equal{#1}{BMT}}{\thesisKind{Bachelor}\department{FF}\newcommand{\IstudyCourseName}{Bachelor of Science Mechatronik}}{}
   \ifthenelse{\equal{#1}{MAI}}{\thesisKind{Master}\department{I}\newcommand{\IstudyCourseName}{Master of Science Informatik}}{}
-  \ifthenelse{\equal{#1}{MAA}}{\thesisKind{VPJ}\department{I}\newcommand{\IstudyCourseName}{Master of Science Automatisietung}}{}
+  \ifthenelse{\equal{#1}{MAA}}{\thesisKind{VPJ}\department{I}\newcommand{\IstudyCourseName}{Master of Science Automatisierung}}{}
 }
 
 \newcommand{\abstractDE}[1]{\newcommand{\IabstractDE}{#1}}
