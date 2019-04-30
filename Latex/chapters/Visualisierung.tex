@@ -1,0 +1,155 @@
+% !TEX root = ../VPJ.tex
+
+\chapter{Visualisierung}
+\label{sec:Visualisierung}
+
+\section{Grundstruktur}
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=1\textwidth]{Abbildungen/Gesamtprogramm.png}
+    \caption{Übersicht Visualisierung}		
+    \label{fig:Gesamtprogramm}
+\end{figure}
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=1\textwidth]{Abbildungen/GesamtprogrammROT.png}
+    \caption{Übersicht Visualisierung im Hard-Code Modus}		
+    \label{fig:GesamtprogrammROT}
+\end{figure}
+
+\section{Live-View}
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Abbildungen/LiveView.png}
+    \caption{Visualisierung Live-View}		
+    \label{fig:LiveView}
+\end{figure}
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.4\textwidth]{Abbildungen/Parkplatz.png}
+    \caption{Visualisierung Parkplatz}		
+    \label{fig:Parkplatz}
+\end{figure}
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.25\textwidth]{Abbildungen/Laden.png}
+    \caption{Visualisierung Ladestation}		
+    \label{fig:Ladestation}
+\end{figure}
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.2\textwidth]{Abbildungen/Station.png}
+    \caption{Station mit verschiedenen Arbeitsplatzstati}		
+    \label{fig:Station}
+\end{figure}
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.1\textwidth]{Abbildungen/RobotinoGoffen.png}
+    \includegraphics[width=0.1\textwidth]{Abbildungen/RobotinoGZu.png}
+    \includegraphics[width=0.1\textwidth]{Abbildungen/RobotinoDefect.png}
+    \caption{Roboter in verschiedenen Stati (vlnr: Greifer offen, Greifer geschlossen, Defect)}		
+    \label{fig:Robotino}
+\end{figure}
+
+\section{Auftragsübersicht}
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.4\textwidth]{Abbildungen/Auftragsfortschritt.png}
+    \caption{Auftragsfortschritt}		
+    \label{fig:Auftragsfortschritt}
+\end{figure}
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.4\textwidth]{Abbildungen/Pause.png}
+    \caption{Pause Button gedrückt}		
+    \label{fig:Pause}
+\end{figure}
+
+\section{Tab-View}
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.6\textwidth]{Abbildungen/Log.png}
+    \caption{Tab: Log View}		
+    \label{fig:Log}
+\end{figure}
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.6\textwidth]{Abbildungen/ManualControl.png}
+    \caption{Tab: Manual Control}		
+    \label{fig:ManualControl}
+\end{figure}
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.4\textwidth]{Abbildungen/TimestampsWerkstueck.png}
+    \includegraphics[width=0.4\textwidth]{Abbildungen/TimestampsStation.png}
+    \caption{Tab: Info Area}		
+    \label{fig:InfoArea}
+\end{figure}
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.6\textwidth]{Abbildungen/HardCode.png}
+    \caption{Tab: Hard-Code}		
+    \label{fig:HardCode}
+\end{figure}
+
+\section{Roboterstatus}
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Abbildungen/Batterie.png}
+    \caption{Batterie und Statusanzeige}		
+    \label{fig:Batterie}
+\end{figure}
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.4\textwidth]{Abbildungen/BatterieAlive1.png}
+    \includegraphics[width=0.4\textwidth]{Abbildungen/BatterieAlive2.png}
+    \caption{Roboterstatus-LED blinkend}		
+    \label{fig:Led}
+\end{figure}
+
+\section{Prozesseingabe}
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Abbildungen/Prozesseingabe.png}
+    \caption{Visualisierung - Prozesseingabe}		
+    \label{fig:Prozesseingabe}
+\end{figure}
+
+\section{Auftragseingabe}
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.25\textwidth]{Abbildungen/Auftragsvergabe.png}
+    \caption{Visualisierung - Auftragsvergabe}		
+    \label{fig:Auftragsvergabe}
+\end{figure}
+
+
+\section{Benutzerinteraktion}
+\inlinetodo {blabla}
+In Kapitel~\ref{sec:Einleitung} Ähnlich einer Smart Kamera, bei der nicht nur das Kamerabild, sondern auch weitere schon verarbeitete Informationen ausgegeben werden sollen, wird ein Prozessor benötigt, welcher in der Lage ist Bildverarbeitung durchzuführen. Es wurde als Möglichkeit für ein Prozessorsystem empfohlen, sich mit dem BeagleBone Black und Raspberry PI auseinanderzusetzen. Mithilfe einer Marktrecherche werden zunächst weitere geeignete Kamerasysteme gesucht und anschließend anhand der Eignung sortiert. Dabei wird auch eine geeignete Schnittstelle zu dem Kamerasystem ausgewählt, mit dem die Bilder und Informationen an den PC gesendet werden. Nachdem die beiden geeignetsten Kamerasysteme gewählt und bestellt sind, werden zugehörige Gehäuse und Befestigungen konstruiert und gefertigt. Nebenbei werden erste einfache Testprogramme geschrieben, um die Funktion von den gewählten Kamerasystemen zu gewährleisten. Der erste Prototyp wird dabei voraussichtlich mit Hilfe rapid-prototyping ein Erzeugnis aus dem 3D-Druck sein, um Kamera an der richtigen Position zu halten. Nachdem das Endprodukt montiert ist, folgt eine Auswertung der Kamerabilder. Folgend folgen optional das Erstellen einer Bibliotheksdatei und eine Automation der Kalibrierung und des Weißabgleichs. Der Zugriff auf die Kamera soll gewährleistet sein. 
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.4\textwidth]{Abbildungen/Platzhalter.jpg}
+    \includegraphics[width=0.4\textwidth]{Abbildungen/Platzhalter.jpg}
+    \caption{PixyCam Gehäusefehler}		
+    \label{fig:Pixy_Fehler}
+\end{figure}
+
