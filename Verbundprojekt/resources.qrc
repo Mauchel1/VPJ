@@ -1,0 +1,30 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Images/Robotino.png</file>
+        <file>Images/gelb.png</file>
+        <file>Images/red.png</file>
+        <file>Images/gray.png</file>
+        <file>Images/green.png</file>
+        <file>Images/RobotinoGzu.png</file>
+        <file>Images/RobotinoGoffen.png</file>
+        <file>Images/StationReserviert.png</file>
+        <file>Images/ParkplatzReserviert.png</file>
+        <file>Images/ParkplatzFrei.png</file>
+        <file>Images/LadestationReserviert.png</file>
+        <file>Images/LadestationFrei.png</file>
+        <file>Images/orange.png</file>
+        <file>Images/RobotinoDefect.png</file>
+        <file>Images/EinHorn.png</file>
+        <file>Images/RobotinoGoffenRandOrange.png</file>
+        <file>Images/RobotinoGoffenRandRot.png</file>
+        <file>Images/RobotinoGzuRandOrange.png</file>
+        <file>Images/RobotinoGzuRandRot.png</file>
+        <file>Images/RobotinoGoffenRandGelb.png</file>
+        <file>Images/RobotinoGzuRandGelb.png</file>
+        <file>Images/RobotinoRandGelb.png</file>
+        <file>Images/RobotinoRandOrange.png</file>
+        <file>Images/RobotinoRandRot.png</file>
+        <file>Images/VPJ.png</file>
+        <file>Images/VPJ.ico</file>
+    </qresource>
+</RCC>
