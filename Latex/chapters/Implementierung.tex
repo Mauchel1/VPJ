@@ -7,9 +7,6 @@ Implementierung
 
 \section{Programmstruktur}
 
-\inlinetodo{Was ist noch in Fertigungsplanung}
-
-
 \begin{figure}[htb]
     \centering
     \includegraphics[width=0.9\textwidth]{Abbildungen/Klassendiagramm.PNG}
@@ -21,7 +18,10 @@ Implementierung
 
 \section{Databasehandler}
 \section{UDP-Handler} 
+\label{sec:UdpHandler}
 \section{Robotino} 
+
+
 
 \section{Auftrag, Prozess, Prozessschritt} 
 \label{sec:AuftragProzessSchritt}
@@ -35,12 +35,61 @@ Implementierung
 
 \section{Fertigungsplanung}
 
-\inlinetodo{Was ist noch in Fertigungsplanung}
-\inlinetodo{Robotgreifer Changed}
-\inlinetodo{RobotStatus Changed}
-\inlinetodo{RobotError}
-\inlinetodo{Auftrag / Prozess hinzufügen (initialisieren)}
-\inlinetodo{HardCode Area}
+Die Klasse Fertigungsplanung enthält alle verfügbaren Roboter, die Datenbankschnittstelle, die abzuarbeitenden Aufträge (vgl. Abschnitt \ref{sec:AuftragProzessSchritt}), die Fertigungsstraße und eine State Machine zur Verteilung von Roboteraufträgen. Außerdem wird auf Events reagiert, die von der Visualisierung oder anderen Quellen kommen. Zu den Events gehören Statusänderungen des Roboters, hinzufügen von Aufträgen oder Prozessen und Funktionen, die über die Hard-Code Area (vgl. Kapitel \ref{sec:HardCode}) angestoßen werden können. 
+In der Fertigungsplanungsklasse werden somit alle Funktionalitäten gebündelt, die nicht direkt mit der Visualisierung zusammenhängen. 
+
+\subsection{Initialisierung}
+
+Um die Fertigungsplanung zu initialisieren wird zunächst in der Funktion InitProzesses() ein Grundzustand hergestellt, in der mindestens 5 Prozesse vorhanden sind. Dazu werden zunächst über einen Datenbankaufruf alle dort verfügbaren Prozesse in eine Liste geschrieben. 
+
+Sollte die Liste weniger als 5 Elemente beinhalten, also in der Datenbank zu Programmstart weniger als 5 Prozesse vorhanden sein, so werden 5 neue zuvor definierte Prozesse angelegt und die Liste so überschrieben. 
+
+Die erzeugten Prozesse werden abschließend in die Datenbank geschrieben. Außerdem erhalten alle Prozesse gemäß ihrer Schritte und Dauer in der Visualisierung einen entsprechenden Tooltip (vgl. Kapitel \ref{sec:tooltips}). 
+
+Die Prozessliste kann über die Funktion AddProzess() dynamisch während das Programm läuft erweitert werden. Dies geschieht bei absenden eines eingestelltes Prozesses in der Visualisierung (\ref{sec:Prozesseingabe}). 
+
+\subsubsection{Aufträge hinzufügen}
+
+Durch Einstellen und Absenden eines Auftrags in der Visualisierung (\ref{sec:Auftragseingabe}) wird die Funktion AddAuftrag() aufgerufen. 
+
+\subsubsection{Standardprozesse}
+\inlinetodo{Standardprozesse AblaufDiagramm erzeugen (wie?)}
+
+
+\subsection{Roboter Statusänderungen}
+
+Wenn eine der in der Fertigungsplanung enthalten Roboterklassen ein Event feuert, welches eine Statusänderung beinhaltet (vgl. Kapitel \ref{sec:UdpHandler}), wird über Funktionen in der Fertigungsplanung auf diese reagiert. So wird der Greifer oder das Statusflag eines Roboters bei einer Änderung aktualisiert. Beim Empfanges eines Errorevents des Roboter wird je nach Errortyp eine Meldung ausgegeben und individuell auf die Robotererror reagiert. 
+
+Weiterhin wird durch Ablauf des Timers eines Arbeitsplatzes dieser in der Fertigungsstraße aktualisiert und auf bereit geschaltet. 
+
+
+\subsubsection{Roboterstatus geändert}
+
+Bei Änderung des Roboterstatus wird die Funktion OnRobotStatusChanged() aufgerufen. Dabei wird zunächst der aufrufende Roboter ausgewählt und zwischengespeichert. Sollte sich der Status des Roboter auf eins geändert haben, also der Roboter auf dem Weg zu etwas ist, so wird unterschieden ob sich der Roboter auf einem Parkplatz oder einem Arbeitsplatz befunden hat.
+
+Von einem Parkplatz (auch Ladestation) kommend wird dieser in der Datenbank und der Visualisierung wieder freigegeben. Wenn der Roboter zuletzt an einer Station war, so wird diese jetzt für andere Roboter freigegeben und der Roboter wird in der Datenbank aus dem Arbeitsplatz gelöscht. 
+
+\subsubsection{Greiferstatus geändert}
+
+Die Prozessaktualisierungen basieren auf der Änderung des Greifers des Roboters. Es wird vorausgesetzt, dass sich der Greifer zu keinem Zeitpunkt willkürlich öffnet oder schließt, sondern nur bei Aufnahme oder Abgabe eines Werkstücks an einer Station. 
+
+Das Schließen des Greifers eines Roboters bedeutet somit immer, dass ein Werkstück aufgenommen wurde. Somit wird in der Datenbank der Arbeitsplatz, an dem sich der Roboter befindet freigegeben und kann für andere Aufträge genutzt werden. Der Arbeitsplatz wird in der Visualisierung und der Datenbank freigegeben. Zuletzt wird der Tooltip des Arbeitsplatzes (vgl. Kapitel \ref{sec:tooltips}) auf einen leeren String gesetzt. 
+
+Beim Öffnen des Greifers wird ein Werkstück in einen Arbeitsplatz einer Station gelegt. Daraufhin wird die Zuordnung des Werkstücks zu dem entsprechenden Roboter gelöscht. Mit der Werkstücks-ID kann nun aus der Auftragsliste der zugehörige Prozess identifiziert werden. Der Timer des so gefundenen Prozesses wird jetzt gestartet, somit läuft die Bearbeitung des Werkstücks an dem Arbeitsplatz. In der Visualisierung und Datenbank wird der Arbeitsplatz von reserviert auf belegt aktualisiert.
+
+Weiterhin wird das Werkstück, dass dem Roboter zu diesem Zeitpunkt zugeordnet ist an der Station an der sich der Roboter zuletzt aufgehalten hat gelöscht und der zugehörige Arbeitsplatz wird freigegeben. 
+
+\subsubsection{Roboter Error geändert}
+
+Bei Auftreten eines Errors im Roboter wird je nach Typ eine Error-Meldung ins Log geschrieben. 
+
+Die Error-Meldungen des Roboters wurden bewusst nicht automatisiert behandelt, da dem Benutzer die Kontrolle über das Gesamtsystem behalten sollte. Somit muss je nach Fehlertyp eine unterschiedlicher Lösungsweg verfolgt werden. 
+
+Die auftretenden Fehler und der Lösungsweg ist in Kapitel \ref{sec:Error} zu finden. 
+
+\subsection{Hard-Code Funktionen}
+
+Die mit der Hard-Code Area erzeugten Befehle aus der Visualisierung (vgl. Kapitel \ref{sec:HardCode}) werden in verschiedenen Funktionen verarbeitet. So wird beispielsweise der Parkplatz oder eine Station in Datenbank und Visualisierung freigegeben, ein Roboter defekt geschaltet oder ein Arbeitsplatz als defekt markiert oder repariert. 
 
 \subsection{Zustandsdiagramm}
 
@@ -127,7 +176,7 @@ Bei dem Zustand SendPositionTask, in dem ein Auftrag aus der Planung an den Robo
 Der Zustand CheckAuftrag enthält die Vergabe der Aufträge an die Roboter. 
 Dazu wird zunächst in der Auftragsliste jeder Auftrag auf unfertige Prozesse untersucht und diese folgend an eine neu erzeugte Prozessliste angehängt (vgl. Abschnitt \ref{sec:AuftragProzessSchritt}). Jeder Prozess der so erzeugten Prozessliste wird anschließend auf die Möglichkeit der Bearbeitung geprüft. Sofern eine der folgenden Prüfungen fehlschlägt wird der nächste Prozess geprüft.
 
-Dazu wird zunächst überprüft ob sich der Prozess schon in Bearbeitung befindet. 
+Dazu wird zunächst überprüft ob die Auftragsplanung pausiert ist oder sich der Prozess schon in Bearbeitung befindet. 
 
 Es wird geprüft ob die Start und Zielstation nicht durch einen Roboter reserviert ist.
 
