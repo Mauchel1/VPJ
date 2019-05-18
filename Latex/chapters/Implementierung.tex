@@ -39,10 +39,11 @@ Die Klasse Fertigungsplanung enthält alle verfügbaren Roboter, die Datenbanksc
 In der Fertigungsplanungsklasse werden somit alle Funktionalitäten gebündelt, die nicht direkt mit der Visualisierung zusammenhängen. 
 
 \subsection{Initialisierung}
+\label{sec:Fertigunginit}
 
 Um die Fertigungsplanung zu initialisieren wird zunächst in der Funktion InitProzesses() ein Grundzustand hergestellt, in der mindestens 5 Prozesse vorhanden sind. Dazu werden zunächst über einen Datenbankaufruf alle dort verfügbaren Prozesse in eine Liste geschrieben. 
 
-Sollte die Liste weniger als 5 Elemente beinhalten, also in der Datenbank zu Programmstart weniger als 5 Prozesse vorhanden sein, so werden 5 neue zuvor definierte Prozesse angelegt und die Liste so überschrieben. 
+Sollte die Liste weniger als 5 Elemente beinhalten, also in der Datenbank zu Programmstart weniger als 5 Prozesse vorhanden sein, so werden 5 neue zuvor definierte Prozesse (Abschnitt \ref{sec:Standardprozesse}) angelegt und die Liste so überschrieben. 
 
 Die erzeugten Prozesse werden abschließend in die Datenbank geschrieben. Außerdem erhalten alle Prozesse gemäß ihrer Schritte und Dauer in der Visualisierung einen entsprechenden Tooltip (vgl. Kapitel \ref{sec:tooltips}). 
 
@@ -50,11 +51,66 @@ Die Prozessliste kann über die Funktion AddProzess() dynamisch während das Pro
 
 \subsubsection{Aufträge hinzufügen}
 
-Durch Einstellen und Absenden eines Auftrags in der Visualisierung (\ref{sec:Auftragseingabe}) wird die Funktion AddAuftrag() aufgerufen. 
+Durch Einstellen und Absenden eines Auftrags in der Visualisierung (\ref{sec:Auftragseingabe}) wird die Funktion AddAuftrag() aufgerufen. In dieser Funktion wird zunächst ein leeres Auftragsobjekt erzeugt und diesem die nächst höhere Auftragsnummer aus der Datenbank zugeordnet.  
+
+Für jeden Prozesseintrag aus der Visualisierung wird nun die angegebene Anzahl des jeweiligen Prozesses eine Prozesskopie erzeugt. Den so kopierten Prozessen werden alle zugehörigen Prozessschritte als Kopie angehängt, um eigenständige Aufträge zu erhalten. Zuletzt werden die Prozesse und Aufträge miteinander verknüpft (siehe Listing \ref{lst:Auftragserzeugung}).
+
+\begin{lstlisting}[frame=single, breaklines=true, numbers=left, stepnumber=2, firstnumber=1, numberstyle = \tiny, caption=Auftragserzeugung und Verknüpfungen,label=lst:Auftragserzeugung]
+Auftrag *A = new Auftrag();
+
+for (int prozesscounter = 0; prozesscounter < 5; prozesscounter++) //5 Prozess UI Elemente
+{
+    for (int i = 0; i < Avalues[prozesscounter]; i++) //Anzahl der eingegebenen Prozesszahl
+    {
+        Prozess *p = new Prozess();
+        [...]  // Prozess + Prozessschritte kopieren
+        A->Prozesse.append(p);
+        QObject::connect(p, &Prozess::FortschrittUpdated, A, &Auftrag::UpdateFortschritt);
+        QObject::connect(p, &Prozess::ProzessFinished, this, &Fertigungsplanung::StationReady);
+    }
+}
+\end{lstlisting}
+
+Abschließend wird der Auftrag der Auftragsliste angehängt, an die Datenbank gesendet und ein Auftragsitem in der Visualisierung erzeugt (Kapitel \ref{sec:Auftragsuebersicht}). 
 
 \subsubsection{Standardprozesse}
-\inlinetodo{Standardprozesse AblaufDiagramm erzeugen (wie?)}
+\label{sec:Standardprozesse}
 
+Folgend werden die in Abschnitt \ref{sec:Fertigunginit} erwähnten Standardprozesse näher beleuchtet. 
+
+Um ein möglichst ausgeglichenes Fertigungsbild zu schaffen wurden die fünf Standardprozesse so untereinander abgestimmt, dass diese unterschiedlichen Kriterien genügen. 
+
+Zunächst wurde darauf geachtet, dass die Prozesse unterschiedlich viele Prozessschritte beinhalten. Abbildung \ref{fig:Fahrweganalyse} kann entnommen werden, dass die Prozesse zwischen zwei und sechs einzelne Prozessschritte erfordern. In der Abbildung ist weiterhin dargestellt, welche Station als Start und Ziel je Prozessschritt angefahren wird. 
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Abbildungen/Fahrweganalyse.PNG}
+    \caption{Diagramm Fahrweganalyse}		
+    \label{fig:Fahrweganalyse}
+\end{figure}
+
+Zu erkennen ist, dass jeder Prozess bei Station 1 beginnt und in Station 8 endet. Die Einzelnen Prozesse (siehe farbliche Unterscheidung) sind dabei von unten nach oben zu lesen, beginnend mit Prozessschritt 1. 
+
+Aus dem Diagramm können weiterhin potentielle Kollisionsherde und "`Staugefahren"' erkannt werden. Die Standardprozesse wurde so angepasst, dass alle Stationen möglichst gleichmäßig häufig durchfahren werden. Weiterhin kann aus dem Diagramm abgelesen werden, ob durch ungünstige Auftragsplanung ein Deadlock angefahren werden kann, also alle Aufträge irgendwann durch andere Aufträge blockiert sein können. Da keine Schleifen zwischen den Stationen entstanden sind kann gewährleistet werden, dass alle Aufträge in jeder Belegung nach einiger Zeit abgearbeitet werden können, wenn die Werkstücke in Station 8 entnommen werden.
+
+Das Diagramm in Abbildung \ref{fig:Stationsanalyse} zeigt eine genauere Analyse der Stationen. Angenommen wird, dass jeder der Standardprozesse genau ein mal abgearbeitet wird. Auf der linken y-Achse, die zu den bunten Säulen gehört, ist die Belegungsdauer jeder Station in Sekunden angegeben. Die rechte, den hellgelben Säulen zugeordnete y-Achse bezeichnet die Anzahl der Anfahrten an eine Station. 
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Abbildungen/Stationsanalyse.PNG}
+    \caption{Diagramm Stationsanalyse}		
+    \label{fig:Stationsanalyse}
+\end{figure}
+
+Es ist zu erkennen, dass Station 1 und 8 genau fünf mal angefahren werden, also je Prozess ein mal. Die weiteren Stationen 2 bis 7 werden zwei- bis dreimal angefahren. So wird sichergestellt, dass die Stationen möglichst gleichmäßig belastet werden. 
+
+Die farblich unterschiedlichen Säulen zeigen die kürzeste Belegungsdauer der Arbeitsplätze an. Die Balken ergeben sich durch die Dauer eines einzelnen Prozessschrittes an einem Arbeitsplatz. Es  Belegungsdauer für alle Prozesse zwischen 35 und 75 Sekunden je Station liegt. Die 2 Sekunden Bearbeitungsdauer je Prozess an Station 8 sind dabei vernachlässigt worden und gewährleisten nur ein sicheres Herausnehmen der Werkstücke durch den Menschen, ohne dass sich der Roboter noch im Entladezyklus befindet. 
+
+Als Besonderheit ist an Station 5 zu erkennen, dass es drei Anfahrten, aber nur zwei verschiedene Prozesse gibt. Dies liegt darin begründet, dass Prozess 4 Station 5 zwei mal anfährt mit verschieden langen Zeiten. Dadurch ist die Gesamtzeit in Station 5 auch am höchsten, gehört jedoch zu großen Anteilen zum selben Prozess. Station 2 hat die kürzesten Bearbeitungszeiten je Prozess, da diese Station von drei verschiedenen Prozessen angefahren wird. Gegensätzlich dazu ist die Bearbeitungszeit an Station 23 von Prozess 3 mit 45 Sekunden sehr hoch angesetzt, da dieser Prozess keine weitere Station anfährt. 
+
+Es wurde versucht, die durchschnittliche Belegungsdauer der Stationen anzugleichen, um alle Arbeitsplätze möglichst homogen auszulasten. Zu erkennen ist, dass die minimale
+
+Als Nebeneffekt ergibt sich, dass die Roboter möglichst ausgeglichen über die gesamte Fertigungsstraße fahren und die Gefahr von Staus oder Kollisionen dadurch verringert wird. 
 
 \subsection{Roboter Statusänderungen}
 
