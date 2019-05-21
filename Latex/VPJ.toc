@@ -1,23 +1,63 @@
 \select@language {ngerman}
 \contentsline {chapter}{\numberline {1}Einleitung}{1}
 \contentsline {section}{\numberline {1.1}Vorhaben}{1}
-\contentsline {chapter}{\numberline {2}Aufgabenstellung}{3}
-\contentsline {chapter}{\numberline {3}Implementierung}{4}
-\contentsline {section}{\numberline {3.1}Programmstruktur}{4}
-\contentsline {section}{\numberline {3.2}Databasehandler}{4}
-\contentsline {section}{\numberline {3.3}UDP-Handler}{4}
-\contentsline {section}{\numberline {3.4}Fertigungsplanung}{4}
-\contentsline {section}{\numberline {3.5}Mainwindow}{4}
-\contentsline {section}{\numberline {3.6}Weitere Klassen}{4}
-\contentsline {chapter}{\numberline {4}Visualisierung}{6}
-\contentsline {section}{\numberline {4.1}Grundstruktur}{6}
-\contentsline {section}{\numberline {4.2}Live-View}{7}
-\contentsline {section}{\numberline {4.3}Auftrags\IeC {\"u}bersicht}{7}
-\contentsline {section}{\numberline {4.4}Tab-View}{7}
-\contentsline {section}{\numberline {4.5}Roboterstatus}{7}
-\contentsline {section}{\numberline {4.6}Prozesseingabe}{7}
-\contentsline {section}{\numberline {4.7}Auftragseingabe}{7}
-\contentsline {section}{\numberline {4.8}Benutzerinteraktion}{7}
-\contentsline {chapter}{\numberline {5}Simulation}{13}
-\contentsline {chapter}{\numberline {6}Datenbank}{14}
-\contentsline {chapter}{\numberline {A}Inhalt der CD}{17}
+\contentsline {chapter}{\numberline {2}Grundlagen und Konzepte}{3}
+\contentsline {section}{\numberline {2.1}Qt}{3}
+\contentsline {subsection}{\numberline {2.1.1}Eventbasiertes System}{3}
+\contentsline {subsection}{\numberline {2.1.2}State Machines in Qt}{3}
+\contentsline {chapter}{\numberline {3}Aufgabenstellung}{4}
+\contentsline {chapter}{\numberline {4}Schnittstellen}{5}
+\contentsline {section}{\numberline {4.1}Kommunikation zu Gewerk 2}{5}
+\contentsline {subsection}{\numberline {4.1.1}Sequenzdiagramm}{5}
+\contentsline {subsection}{\numberline {4.1.2}Fehlertypen und Behebung}{5}
+\contentsline {subsubsection}{\nonumberline Fehlertyp 1}{5}
+\contentsline {subsubsection}{\nonumberline Fehlertyp 2}{5}
+\contentsline {subsubsection}{\nonumberline Fehlertyp 3}{5}
+\contentsline {chapter}{\numberline {5}Implementierung}{6}
+\contentsline {section}{\numberline {5.1}Programmstruktur}{6}
+\contentsline {section}{\numberline {5.2}Databasehandler}{6}
+\contentsline {section}{\numberline {5.3}UDP-Handler}{6}
+\contentsline {section}{\numberline {5.4}Robotino}{6}
+\contentsline {section}{\numberline {5.5}Auftrag, Prozess, Prozessschritt}{6}
+\contentsline {subsection}{\numberline {5.5.1}Prozessschritt}{7}
+\contentsline {subsection}{\numberline {5.5.2}Prozess}{7}
+\contentsline {subsection}{\numberline {5.5.3}Auftrag}{8}
+\contentsline {section}{\numberline {5.6}Fertigungsplanung}{9}
+\contentsline {subsection}{\numberline {5.6.1}Initialisierung}{9}
+\contentsline {subsubsection}{\nonumberline Auftr\IeC {\"a}ge hinzuf\IeC {\"u}gen}{10}
+\contentsline {subsubsection}{\nonumberline Standardprozesse}{10}
+\contentsline {subsection}{\numberline {5.6.2}Roboter Status\IeC {\"a}nderungen}{12}
+\contentsline {subsubsection}{\nonumberline Roboterstatus ge\IeC {\"a}ndert}{13}
+\contentsline {subsubsection}{\nonumberline Greiferstatus ge\IeC {\"a}ndert}{13}
+\contentsline {subsubsection}{\nonumberline Roboter Error ge\IeC {\"a}ndert}{13}
+\contentsline {subsection}{\numberline {5.6.3}Hard-Code Funktionen}{14}
+\contentsline {subsection}{\numberline {5.6.4}Zustandsdiagramm}{14}
+\contentsline {subsection}{\numberline {5.6.5}State Machine Implementierung}{14}
+\contentsline {subsubsection}{\nonumberline Zustand CheckRobots}{15}
+\contentsline {subsubsection}{\nonumberline Zustand CheckParkplatzRobots}{15}
+\contentsline {subsubsection}{\nonumberline Zustand Wait}{15}
+\contentsline {subsubsection}{\nonumberline Zustand CheckAkku}{16}
+\contentsline {subsubsection}{\nonumberline Zust\IeC {\"a}nde SendLoadingTask, SendParkingTask, SendPositionTask}{16}
+\contentsline {subsubsection}{\nonumberline Zustand CheckAuftrag}{17}
+\contentsline {subsection}{\numberline {5.6.6}Shuffle-Algorithmus}{18}
+\contentsline {section}{\numberline {5.7}Mainwindow}{19}
+\contentsline {section}{\numberline {5.8}Main}{19}
+\contentsline {section}{\numberline {5.9}Weitere Klassen}{19}
+\contentsline {chapter}{\numberline {6}Visualisierung}{21}
+\contentsline {section}{\numberline {6.1}Grundstruktur}{21}
+\contentsline {section}{\numberline {6.2}Live-View}{22}
+\contentsline {section}{\numberline {6.3}Auftrags\IeC {\"u}bersicht}{22}
+\contentsline {section}{\numberline {6.4}Tab-View}{22}
+\contentsline {subsection}{\numberline {6.4.1}Hard-Code Bereich}{22}
+\contentsline {section}{\numberline {6.5}Roboterstatus}{22}
+\contentsline {section}{\numberline {6.6}Prozesseingabe}{22}
+\contentsline {section}{\numberline {6.7}Auftragseingabe}{22}
+\contentsline {section}{\numberline {6.8}Benutzerinteraktion}{22}
+\contentsline {subsection}{\numberline {6.8.1}Tooltips}{22}
+\contentsline {chapter}{\numberline {7}Simulation}{29}
+\contentsline {subsection}{\numberline {7.0.1}Zustandsdiagramm simulierter Roboter}{29}
+\contentsline {subsubsection}{\nonumberline Simulierte Ladefahrt}{30}
+\contentsline {subsubsection}{\nonumberline Simulierter Parkvorgang}{30}
+\contentsline {subsubsection}{\nonumberline Simulierter Transport}{31}
+\contentsline {chapter}{\numberline {8}Datenbank}{32}
+\contentsline {chapter}{\numberline {A}Inhalt der CD}{35}

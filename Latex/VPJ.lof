@@ -4,28 +4,33 @@
 \contentsline {figure}{\numberline {1.2}{\ignorespaces PixyCam Geh\IeC {\"a}usefehler\relax }}{2}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Klassendiagramm\relax }}{4}
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Ablaufdiagramm der Auftragsplanung\relax }}{5}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces \IeC {\"U}bersicht Visualisierung\relax }}{6}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces \IeC {\"U}bersicht Visualisierung im Hard-Code Modus\relax }}{7}
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Visualisierung Live-View\relax }}{8}
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Visualisierung Parkplatz\relax }}{8}
-\contentsline {figure}{\numberline {4.5}{\ignorespaces Visualisierung Ladestation\relax }}{8}
-\contentsline {figure}{\numberline {4.6}{\ignorespaces Station mit verschiedenen Arbeitsplatzstati\relax }}{9}
-\contentsline {figure}{\numberline {4.7}{\ignorespaces Roboter in verschiedenen Stati (vlnr: Greifer offen, Greifer geschlossen, Defect)\relax }}{9}
-\contentsline {figure}{\numberline {4.8}{\ignorespaces Auftragsfortschritt\relax }}{9}
-\contentsline {figure}{\numberline {4.9}{\ignorespaces Pause Button gedr\IeC {\"u}ckt\relax }}{9}
-\contentsline {figure}{\numberline {4.10}{\ignorespaces Tab: Log View\relax }}{10}
-\contentsline {figure}{\numberline {4.11}{\ignorespaces Tab: Manual Control\relax }}{10}
-\contentsline {figure}{\numberline {4.12}{\ignorespaces Tab: Info Area\relax }}{10}
-\contentsline {figure}{\numberline {4.13}{\ignorespaces Tab: Hard-Code\relax }}{11}
-\contentsline {figure}{\numberline {4.14}{\ignorespaces Batterie und Statusanzeige\relax }}{11}
-\contentsline {figure}{\numberline {4.15}{\ignorespaces Roboterstatus-LED blinkend\relax }}{11}
-\contentsline {figure}{\numberline {4.16}{\ignorespaces Visualisierung - Prozesseingabe\relax }}{12}
-\contentsline {figure}{\numberline {4.17}{\ignorespaces Visualisierung - Auftragsvergabe\relax }}{12}
-\contentsline {figure}{\numberline {4.18}{\ignorespaces PixyCam Geh\IeC {\"a}usefehler\relax }}{12}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Ablaufdiagramm des simulierten Roboters\relax }}{13}
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Klassendiagramm\relax }}{6}
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Visualisierung des R\IeC {\"u}ckgabewertes der Funktionen GetNextUnfinishedProzessstep() und GetActualProzessstep()\relax }}{8}
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Diagramm Fahrweganalyse\relax }}{11}
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Diagramm Stationsanalyse\relax }}{12}
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Zustandsdiagramm der Auftragsplanung\relax }}{20}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {6.1}{\ignorespaces \IeC {\"U}bersicht Visualisierung\relax }}{21}
+\contentsline {figure}{\numberline {6.2}{\ignorespaces \IeC {\"U}bersicht Visualisierung im Hard-Code Modus\relax }}{22}
+\contentsline {figure}{\numberline {6.3}{\ignorespaces Visualisierung Live-View\relax }}{23}
+\contentsline {figure}{\numberline {6.4}{\ignorespaces Visualisierung Parkplatz\relax }}{23}
+\contentsline {figure}{\numberline {6.5}{\ignorespaces Visualisierung Ladestation\relax }}{23}
+\contentsline {figure}{\numberline {6.6}{\ignorespaces Station mit verschiedenen Arbeitsplatzstati\relax }}{24}
+\contentsline {figure}{\numberline {6.7}{\ignorespaces Roboter in verschiedenen Stati (vlnr: Greifer offen, Greifer geschlossen, Defekt)\relax }}{24}
+\contentsline {figure}{\numberline {6.8}{\ignorespaces Auftragsfortschritt\relax }}{25}
+\contentsline {figure}{\numberline {6.9}{\ignorespaces Pause Button gedr\IeC {\"u}ckt\relax }}{25}
+\contentsline {figure}{\numberline {6.10}{\ignorespaces Tab: Log View\relax }}{25}
+\contentsline {figure}{\numberline {6.11}{\ignorespaces Tab: Manual Control\relax }}{26}
+\contentsline {figure}{\numberline {6.12}{\ignorespaces Tab: Info Area\relax }}{26}
+\contentsline {figure}{\numberline {6.13}{\ignorespaces Tab: Hard-Code\relax }}{26}
+\contentsline {figure}{\numberline {6.14}{\ignorespaces Batterie und Statusanzeige\relax }}{27}
+\contentsline {figure}{\numberline {6.15}{\ignorespaces Roboterstatus-LED blinkend\relax }}{27}
+\contentsline {figure}{\numberline {6.16}{\ignorespaces Visualisierung - Prozesseingabe\relax }}{27}
+\contentsline {figure}{\numberline {6.17}{\ignorespaces Visualisierung - Auftragsvergabe\relax }}{28}
+\contentsline {figure}{\numberline {6.18}{\ignorespaces PixyCam Geh\IeC {\"a}usefehler\relax }}{28}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {7.1}{\ignorespaces Ablaufdiagramm des simulierten Roboters\relax }}{29}
 \addvspace {10\p@ }
 \addvspace {10\p@ }

@@ -1,5 +1,11 @@
 \begin{thebibliography}{Sch09}
 
+\bibitem[Qt 19]{qt_statemachine}
+The Qt Company Ltd.
+\newblock {\em The State Machine Framework}, 2019.
+\newblock Stand am 09.05.2019:
+  \url{https://doc.qt.io/qt-5/statemachine-api.html}.
+
 \bibitem[Sch09]{festo_dok}
 Schober.
 \newblock {\em Festo Dokumentation Handbuch MPS Transfersystem}.
