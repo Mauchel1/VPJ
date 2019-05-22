@@ -17,11 +17,41 @@ Implementierung
 
 
 \section{Databasehandler}
+
+
+
 \section{UDP-Handler} 
 \label{sec:UdpHandler}
+
+
+
 \section{Robotino} 
 
+Die real existierenden Robotinos werden in der Klasse Robotino abgebildet. In der Klasse werden alle Daten gespeichert, die den Robotino beschreiben. Dazu gehören unter anderem die Position in x, y, der Winkel, eine eindeutige RoboterID. Weiterhin werden alle vom Robotino gesendeten Daten wie Status, Position, Error, Hindernis, Akku und Greifer gespeichert(vgl. \ref{sec:Gewerk2Protokoll}). 
 
+Über ein isAlive-Tag kann validiert werden, dass der Robotino noch erreichbar ist. Das Defekt-Tag wird von Visualisierung und Auftragsplanung berücksichtigt, um den Robotino händisch außer Betrieb zu schalten. 
+
+Es werden demnach deutlich mehr Daten über den Robotino gespeichert, als in der Datenbank hinterlegt werden. Dies kommt auch daher, dass über eine Änderung von manchen Werten ein Signal emittiert wird um über ein Event darauf zu reagieren. Diese Funktionalität ist über die Datenbank nicht gegeben. 
+
+Beim Erzeugen einer Instanz eines Robotinos wird im Konstruktor sowohl die RoboterID festgeschrieben, als auch die IP-Adresse mit dem zugehörigen Sendeport und Empfangsport. Außerdem werden die Timer mit den zugehörigen Timeout-Funktionen verknüpft.
+
+\subsection{Werte aktualisieren}
+
+Wenn der zugehörige UDP-Handler eines Robotinos neue Werte bereitstellt (vgl. sec:UdpHandler) wird die Funktion UpdateValues() aufgerufen. Bei jedem Aufruf der Funktion wird der Robotino als Alive markiert und dies bei einer Änderung als Signal emittiert. Zusätzlich wird der 30 Sekunden laufende AliveTimer gestartet oder zurückgesetzt. 
+
+Wenn sich der anliegende Robotererror geändert hat wird dieser kategorisiert und den bekannten Robotererrortypen (vgl. \ref{sec:Gewerk2Protokoll}) zugeordnet. Folgend wird ein Signal emittiert, welches eine Änderung des Errors anzeigt und den Errortyp beinhaltet.
+
+Bei einer Änderung von Greifer, Akku, Hindernis oder UDPAlive wird jeweils der Wert gespeichert und die Änderung über ein spezifisches Signal emittiert. 
+
+Eine Statusänderung des Robotinos bewirkt eine Vorauswertung des empfangenen Statuswerts. Der zusammengesetzte Status wird wieder in seine drei Bestandteile zerlegt und über ein Signal bekanntgemacht. Bei einem Status von über 200 wird die Roboterposition ebenfalls gespeichert. 
+
+\subsection{Visualisierungsfunktionen}
+
+Bei Empfangen von Navigationsdaten vom Navigationsrechner zu einem Robotino wird in der Funktion UpdatePosition() die Roboterposition angepasst. Dazu wird zunächst überprüft, ob sich die Position um mehr als 2 in X- und Y-Richtung und um mehr als 1 im Winkel geändert hat. Damit wird eine Glättung der Roboterposition erzeugt und ein "`zittern"' in der Visualisierung aufgrund der schwankenden Position unterdrückt. 
+
+Der Sonderfall, dass alle drei empfangenen Werte 0 sind bedeutet, dass der Navigationsrechner den Robotino verloren hat. In diesem Fall wird die Roboterposition nicht aktualisiert und statdessen ein NavigationsTimer gestartet. Wenn nach fünf Sekunden keine neue Robotinoposition erkannt wird, so wird der Robotino in der Visualisierung verdeckt. Dadurch wird eine kurzzeitige Verdeckung durch z.B. die Kabelgänge an den Stationen der Robotino immer noch angezeigt und verschwindet nicht.
+
+Sobald sich der Alive-Tag ändert wird in der Visualisierung die RoboterAlive-LED angepasst. Ein Roboter wird als Alive gewertet bei Aufruf der Funktion UpdateValues(). Wenn der AliveTimer abläuft wird der Robotino als nicht Alive gewertet. Das führt dazu, dass ein Robotino auch als lebend angezeigt wird, wenn die Kommunikation nicht vollständig funktioniert, solange dieser seinen Status an den Fertigungsplanungsrechner sendet. Nach maximal 30 Sekunden wird ein Absturz der Kommunikation erkannt und der Robotino wird ncht länger in der Auftragsvergabe berücksichtigt. 
 
 \section{Auftrag, Prozess, Prozessschritt} 
 \label{sec:AuftragProzessSchritt}
