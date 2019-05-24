@@ -3,14 +3,37 @@
 \chapter{Schnittstellen}
 \label{sec:Schnittstellen}
 
-Schnittstellen
+\inlinetodo{Schnittstellen}
 
-\section{Kommunikation zu Gewerk 2}
-
-
+\section{Kommunikation zu Robotinos}
 \label{sec:Gewerk2Protokoll}
 
-Robotererrortypen beschreiben
+Die Robotinos werden von Gewerk 2 verwaltet und programmiert. Um eine erfolgreiche Kommunikation zwischen Fertigungsplanungsrechner und Robotino zu gewährleisten existieren folgende Vereinbarungen mit Gewerk 2.
+
+\subsection{Sequenzdiagramm}
+\label{sec:sequenzdiagram}
+
+Zunächst wurde eine Struktur entwickelt, in der beschrieben wird, wie die Daten zwischen Robotino und Fertigungsplanungsrechner ausgetauscht werden sollen. Dies wurde anschließend in einem Sequenzdiagramm, Abbildung \ref{fig:Sequenzdiagramm}, dargestellt. 
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Abbildungen/Sequenzdiagramm.PNG}
+    \caption{Sequenzdiagramm}		
+    \label{fig:Sequenzdiagramm}
+\end{figure}
+
+Dem Sequenzdiagramm ist zu entnehmen, dass der Robotino nach Programmstart zyklisch Daten sendet. Die Zykluszeit beträgt 100 ms. Da die Daten über UDP an einen spezifizierten Port versendet werden ist ein Empfänger nicht zwangsweise erforderlich und die Programme können unabhängig voneinander laufen. Der Inhalt der Daten ist in Abschnitt \ref{sec:Telegramme} beschrieben. Solange der Robotino läuft werden die Daten gesendet. Dadurch kann auch ein Ausfall der Kommunikation festgestellt werden. 
+
+Auf Seiten des Fertigungsplanungsrechners wird nur bei Bedarf ein Sendevorgang eingeleitet. Erst wenn ein Auftrag an den Robotino gesendet werden soll wird eine Schleife ausgeführt. In der Schleife wird der Auftrag zyklisch an den Robotino gesendet. Die Zykluszeit beträgt hierbei 700 ms. In Kapitel \ref{sec:StateMachineImplementierung} ist die in einer State-Machine implementierte Schleife beschrieben. Die Schleife kann durch Empfangen einer Statusänderung des Robotinos verlassen werden. Dadurch wird eine erfolgreiche Übertragung des Auftrags sichergestellt werden. Die im Auftrag befindlichen Daten sind in Abschnitt \ref{sec:Telegramme} näher erläutert.
+
+\subsection{Telegramme}
+\label{sec:Telegramme}
+
+Die Telegramme zwischen Robotino und Fertigungsplanungsrechner bestehen aus einer festgelegten Struktur. Dabei ist sowohl die Länge der Telegramme als auch der Inhalt festgeschrieben. In beiden Telegrammen werden Double-Werte in einem Byte versendet. Jedes Byte muss daher kodiert und dekodiert werden. 
+
+\subsubsection{Telegramm vom Fertigungsplanungsrechner zu Gewerk 2}
+
+Der Auftrag, der an den Robotino gesendet wird, enthält 5 Bytes. Eine Aufschlüsselung ist in Tabelle \ref{tab:TelegrammZuG2} dargestellt. 
 
 \begin{table}[!ht]
 	\centering
@@ -28,6 +51,16 @@ Robotererrortypen beschreiben
 	\caption{Telegramm zu Gewerk 2}
 	\label{tab:TelegrammZuG2}
 \end{table}
+
+Das erste Byte klassifiziert die Auftragsart. Diese beschreibt, welche Tätigkeit der Robotino als nächstes tun soll. Auftragsart eins bedeutet, dass der Robotino einen Transportauftrag erhalten hat, also ein Werkstück von einer Position zu einer anderen Position fahren soll. Die Auftragsart 2 zeigt an, dass der Robotino auf einen Parkplatz geschickt wird. Eine Ladefahrt wird mit Auftragsart 3 gekennzeichnet. 
+
+Im zweiten und dritten Byte sind die Positionen angegeben, an welche sich der Robotino bewegen soll. Dabei wird Position 2 nur bei Auftragsart 1 befüllt bzw. ausgewertet, da ein Parken und Laden nur eine Zielposition benötigt. Bei Auftragsart 1 jedoch zeigt Position 1 den Arbeitsplatz an, wo das Werkstück abgeholt werden soll und Position 2 den Ablageort des Werkstücks. 
+
+Über das vierte Byte kann dem Robotino ein Status-Flag gesendet werden. Sobald der Robotino eine Anfrage zu dem Flag sendet wird eine 1 zurückgesendet. Ansonsten ist der Wert 0. Damit kann der Robotino die Funktionalität der Kommunikation validieren.
+
+Mit dem fünften Byte wird eine einfache Erweiterung des Telegramms ermöglicht, sofern mehr Daten übertragen werden sollen. Am Anfang der Ausarbeitung des Projektes war das vierte Byte ebenfalls ein reserviertes Byte. 
+
+\subsubsection{Telegramm von Gewerk 2 zum Fertigungsplanungsrechner}
 
 %00: nichts; 01: unbekanntes Hindernis; 
 %02: anderer Roboter; 03: direkt was gesehen?!? (flackert evtl)
@@ -56,6 +89,8 @@ Robotererrortypen beschreiben
 	\label{tab:TelegrammVonG2}
 \end{table}
 
+Robotererrortypen beschreiben
+
 \begin{figure}[htb]
     \centering
     \includegraphics[width=0.9\textwidth]{Abbildungen/Positionskodierung.PNG}
@@ -65,20 +100,10 @@ Robotererrortypen beschreiben
 
 Positionskodierung
 
-\subsection{Sequenzdiagramm}
-\label{sec:sequenzdiagram}
-
-\begin{figure}[htb]
-    \centering
-    \includegraphics[width=0.9\textwidth]{Abbildungen/Sequenzdiagramm.PNG}
-    \caption{Sequenzdiagramm}		
-    \label{fig:Sequenzdiagramm}
-\end{figure}
-
-\inlinetodo{Sequenzdiagramm Kommunikation}
 \inlinetodo{Telegram Gewerk 2}
 
 \inlinetodo{Port vereinbarung}
+
 \subsection{Fehlertypen und Behebung}
 \label{sec:Error}
 
