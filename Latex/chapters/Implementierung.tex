@@ -23,7 +23,126 @@ Implementierung
 \section{UDP-Handler} 
 \label{sec:UdpHandler}
 
+Der UDP-Handler ist für die Datenkommunikation zwischen dem Fertigungsplanungsrechner und dem Robotino als auch dem Navigationsrechner zuständig. Mittels überladenem Konstruktor kann entweder eine Verbindung zu einem Robotino oder eine Verbindung zum Navigationsrechner aufgebaut werden. 
 
+\subsection{UDP-Handler für Navigationsrechner}
+
+Um auf Daten des Navigationsrechners zu reagieren wird im Konstruktor des HDP-Handler (vgl. Listing \ref{lst:KonstruktorUDPNav}) ein QUdpSocket (vgl. Kapitel \ref{sec:Socket}) erstellt. Der Socket "`horcht"' an dem angegebenen Port auf Daten vom Navigationsrechner. Durch das in Zeile 5 verknüpfte readyRead()-Signal wird die Funktion readPendingNavigationData() aufgerufen. Dieses Signal wird intern vom Socket emittiert, sobald eine Nachricht am spezifizierten Port anliegt. 
+
+\begin{lstlisting}[frame=single, breaklines=true, numbers=left, stepnumber=2, firstnumber=1, numberstyle = \tiny, caption=UDP-Handler Konstruktor für Navigationsdatenaustausch,label=lst:KonstruktorUDPNav]
+UdpHandler::UdpHandler(quint16 port, QObject *parent) : QObject(parent)
+{
+    socket = new QUdpSocket(this);
+    socket->bind(port, QUdpSocket::ShareAddress);
+    connect(socket, SIGNAL(readyRead()), this, SLOT(readPendingNavigationData()));
+    lastSendValues =  QVector<double>(5);
+}
+\end{lstlisting}
+
+Die Funktion readPendingNavigationData(), dargestellt in Listing \ref{lst:UDPReceiveData}, liest den aus dem Socket kommenden Datenstrom aus. Solange neue Daten am Socket anliegen werden diese empfangen, in ein Datagramm geschrieben und anschließend in der Funktion processTheNavigationData() weiterverarbeitet. 
+
+\begin{lstlisting}[frame=single, breaklines=true, numbers=left, stepnumber=2, firstnumber=1, numberstyle = \tiny, caption=Daten über UDP empfangen,label=lst:UDPReceiveData]
+while (socket->hasPendingDatagrams()) {
+    QNetworkDatagram datagram = socket->receiveDatagram();
+    processTheNavigationData(datagram);
+}
+\end{lstlisting}
+
+Das empfangene Datagramm wird zunächst in der Funktion processTheNavigationData (Listing \ref{lst:UDPNav} Zeile 1 - 14) auf die korrekte Länge überprüft. So kann weitgehend ausgeschlossen werden, falsche Daten über den Port zu empfangen. Die Länge von 448 (Zeile 1) ergibt sich aus der Länge der gesendeten Werte multipliziert mit der Länge eines Bytes $56 * 8 = 448$. 
+
+Wenn die Datagrammlänge korrekt ist, wird ein Vektor mit entsprechend vielen Elementen erzeugt. Dieser Vektor wird elementweise in Zeile 8 - 12 befüllt und anschließend an die Funktion prepareNavigationDataforRobot() (Listing \ref{lst:UDPNav} Zeile 15ff) übergeben. 
+
+Die Rohdaten aus dem Datagramm müssen für jedes Element dekodiert werden. Dazu wird in Zeile 10 aus dem Datagramm ein ByteArray der Länge 8 kopiert, welches das Element i beinhaltet. Das erste Element liegt im Datagramm vom ersten bis zum achten Byte vor, das zweite vom 9. bis zum 17. usw. Die so entstehenden ByteArrays werden in Zeile 11 interpretiert als ein Element vom Typ Double. 
+
+\begin{lstlisting}[frame=single, breaklines=true, numbers=left, stepnumber=2, firstnumber=1, numberstyle = \tiny, caption=UDP-Handler Navigationsdatenaustausch,label=lst:UDPNav]
+if (datagram.data().length() != 448)
+{
+    qDebug() << "Received Navigation Data have wrong dimensions: " << datagram.data().length();
+}
+else
+{
+    QVector<double> vektor(56);
+    for(int i = 0; i < 56; i ++)
+    {
+        QByteArray temp = datagram.data().mid(i*8,8);
+        vektor[i] = *reinterpret_cast<const double*>(temp.data());
+    }
+    prepareNavigationDataforRobot(vektor);
+}
+
+QVector<int> posr1(3);
+
+posr1[0] = static_cast<int>(values[0]);
+posr1[1] = static_cast<int>(values[1]);
+posr1[2] = static_cast<int>(qRadiansToDegrees(values[2]));
+[...]
+
+emit NavigationDataReceivedR1(posr1);
+
+\end{lstlisting}
+
+Die entstandenen Doublewerten im übergebenen Vektor werden in der Funktion prepareNavigationDataforRobot() ausgewertet. Zeile 15 ff zeigt dies exemplarisch für den ersten Robotino. Je Robotino wird ein neuer Vektor von 3 Elementen erzeugt, der anschließend mit dem X-, Y-Wert und Winkel in Grad befüllt wird. Über ein Signal wird zuletzt dieser Vektor bekanntgemacht. 
+
+\subsection{UDP-Handler für Robotino}
+
+Der überladene Konstruktor um die UDP-Kommunikation zu einem Robotino aufzubauen ist in Listing \ref{lst:KonstruktorUDPRob} dargestellt. Anders als beim Navigationsrechner werden zwei Ports und eine IP-Adresse übergeben. Zudem eine Flag, die anzeigt, ob die Kommunikation nur simuliert werden soll um keinen realen Robotino, sondern einen Simulierten (siehe Kapitel \ref{sec:Simulation}) einzubinden. 
+
+Im Simulationsmodus wird die State-Machine des simulierten Roboters gestartet und die Sendefunktion des Robotinos mit der Funktion simulatedRobotDataReceived() verbunden.
+
+Im Betrieb mit einem real vorhandenen Robotino wird ähnlich dem Navigationskonstruktor der QUdpSocket an den Receive-Port gebunden und der Nachrichtenempfang mit der Funktion readPendingRobotData() verknüpft. 
+
+\begin{lstlisting}[frame=single, breaklines=true, numbers=left, stepnumber=2, firstnumber=1, numberstyle = \tiny, caption=UDP-Handler Konstruktor für Navigationsdatenaustausch,label=lst:KonstruktorUDPRob]
+UdpHandler::UdpHandler(bool simulated, QHostAddress ip, quint16 sport, quint16 rport, QObject *parent) : QObject(parent)
+{
+    this->ip = ip;
+    this->receivingport = rport;
+    this->sendingport = sport;
+    this->simulated = simulated;
+    lastSendValues =  QVector<double>(5);
+
+    if (!simulated)
+    {
+        socket = new QUdpSocket(this);
+        socket->bind(rport, QUdpSocket::ShareAddress);
+        connect(socket, SIGNAL(readyRead()), this, SLOT(readPendingRobotData()));
+    }
+    else
+    {
+        r.Start();
+        QObject::connect(&r, &SimulatedRobot::StatusDataSimulatedReceived, this, &UdpHandler::simulatedRobotDataReceived);
+    }
+}
+
+\end{lstlisting}
+
+Zusätzlich zu den Lesefunktionen, die Daten über UDP empfangen, gibt es für die Robotinos eine Schreibefunktion WriteData() (Listing \ref{lst:UDPWriteData}), die ermöglicht über UDP eine Nachricht an den Robotino zu senden. Dabei werden zunächst die zu sendenden Werte zwischengespeichert. Im Simulationsmodus werden anstelle einer echten Datenübertragung die zu versendenden Daten direkt in die State-Machine des simulierten Roboters geschrieben (Zeile 2-7). 
+
+Eine tatsächliche Übertragung (Zeile 9ff) erfordert das Verpacken der Daten in ein Datagramm. Dazu wird ein Byte Array erzeugt, an das die Daten angehängt werden. In Zeile 13 werden die als Double vorliegenden Daten neu interpretiert als Pointer auf einen Char, welche mit der Funktion fromRawData als ein Datagramm zurückgegeben werden. 
+
+Das Datagramm wird abschließend über den UDP-Socket mit der Funktion writeDatagram (Zeile 15) an den angegebenen Roboter über den Sende-Port geschickt. 
+
+\begin{lstlisting}[frame=single, breaklines=true, numbers=left, stepnumber=2, firstnumber=1, numberstyle = \tiny, caption=Daten über UDP verschicken,label=lst:UDPWriteData]
+lastSendValues = values;
+if (simulated)
+{
+    r.auftragsart = static_cast<int>(values[0]);
+    r.pos1 = static_cast<int>(values[1]);
+    r.pos2 = static_cast<int>(values[2]);
+}
+else
+{
+    QByteArray Data;
+    for(int i = 0; i < 5; i++)
+    {
+        Data.append(QByteArray::fromRawData(reinterpret_cast<char*>(&values[i]), sizeof(values[i])));
+    }
+    socket->writeDatagram(Data, ip, sendingport);
+}
+\end{lstlisting}
+
+Die Funktion readPendingRobotData gleicht der bereits im UDP-Handler für Navigationsdaten beschriebenen Funktion (Listing \ref{lst:UDPReceiveData}. 
+
+Die nachfolgend aufgerufene Funktion processTheRobotData ist bis auf die Längen der Vektoren und des Datagramms gleich der zuvor in Listing \ref{lst:UDPNav}. Die valide Datagrammlänge beträgt bei den Robotern 72, was sich aus Bytelänge multipliziert mit Datenarraylänge $ 8 * 9 = 72$ ergibt. Die Auswertung des neun Elemente langen Vektors aus Doublewerten erfolgt erst in der Robotinoklasse, welche auf das Signal StatusDataReceived reagiert. Dasselbe Signal wird auch vom simulierten Roboter gesendet, wodurch die Schnittstelle im Simulationsmodus nicht weiter angepasst werden muss. 
 
 \section{Robotino} 
 
