@@ -16,9 +16,76 @@ Implementierung
 
 
 
-\section{Databasehandler}
+\section{Database-Handler}
+\label{sec:Databasehandler}
 
+Über die Klasse DatabaseHandler kann eine Verbindung zu der Datenbank auf dem Fertigungsrechner aufgebaut werden und bietet anschließend einen Funktionspool als definierte Schnittstelle zur Datenbank.
 
+\subsection{Konstruktor, Initialisierung und Sendefunktion}
+
+Neben dem Konstruktor für die Initialisierung der Datenbankschnittstelle gibt es eine Funktion zur Initialisierung der Datenbank und eine in allen anderen Funktionen aufgerufene Sendefunktion. 
+
+\subsubsection{Konstruktor}
+
+Beim Aufruf des Konstruktors, siehe Listing \ref{lst:KonstruktorDB} des Datenbank-Handler wird zunächst eine QSqlDatabase (siehe Kapitel \ref{sec:QTDatabase}) erzeugt. Dazu wird zunächst in Zeile 1 eine Datenbank vom Typ MySql erzeugt. Um eine Verbindung zur vorhandenen Datenbank herzustellen wird in Zeile 2 - 6 die IP-Adresse mit Port, der Datenbankname und eine Zugangsberechtigung mit Benutzername und Passwort angegeben. 
+
+Mit der Funktion open() in Zeile 8 wird versucht eine Verbindung aufzubauen. Über den Rückgabewert der Funktion kann überprüft werden, ob die Verbindung erfolgreich war. Sofern es trotz erfolgreicher Verbindung einen Fehler gibt, beispielsweise fehlende Zugriffsberechtigungen oder anderes, kann dieser wie in Zeile 10 ff dargestellt abgefangen und dargestellt werden. 
+
+\begin{lstlisting}[frame=single, breaklines=true, numbers=left, stepnumber=2, firstnumber=1, numberstyle = \tiny, caption=Databank-Handler Konstruktor ,label=lst:KonstruktorDB]
+db = QSqlDatabase::addDatabase("QMYSQL");
+db.setHostName("192.168.0.107");
+db.setPort(3306);
+db.setDatabaseName("vpj");
+db.setUserName("FP");
+db.setPassword("1234");
+
+bool ok = db.open();
+
+QSqlError err;
+if (err.type() != QSqlError::NoError){
+    qCritical() << err.text();
+}
+\end{lstlisting}
+
+\subsubsection{Initialisierung}
+
+Um die Datenbank zu Programmstart auf einen definierten Anfangszustand zu bringen wurde eine Initialisierungsfunktion (Listing \ref{lst:DBInit}) geschrieben. Darin werden alle Zeitstempel, Aufträge und Prozesse (Werkstücke) gelöscht. 
+
+Weiterhin wird der Roboter in der Datenbank initialisiert mit Status 0 und ein zugeordnetes Werkstück gelöscht. 
+
+Der Parkplatz und Arbeitsplatz wird zurückgesetzt. Dabei wird der Status auf 0 gesetzt und ein zugeordneter Roboter gelöscht. Im Arbeitsplatz wird zusätzlich ein zugeordnetes Werkstück gelöscht.
+
+Der Eintrag des Werkstücks in der Taggen-Tabelle wird zurückgesetzt.
+
+\begin{lstlisting}[frame=single, breaklines=true, numbers=left, stepnumber=2, firstnumber=1, numberstyle = \tiny, caption=Databank-Handler Initialisierung ,label=lst:DBInit]
+SendOverQuary(query, "DELETE FROM vpj.rfid_timestamp;");
+SendOverQuary(query, "UPDATE vpj.roboter SET betriebsstatus=0, Werkstueck_RFID_Werkstueck=NULL;");
+SendOverQuary(query, "UPDATE vpj.parkplatz SET Status=0, Roboter_id_Roboter=NULL;");
+SendOverQuary(query, "UPDATE vpj.arbeitsplatz SET Status=0, Roboter_id_Roboter=NULL, Werkstueck_RFID_Werkstueck=NULL;");
+SendOverQuary(query, "UPDATE vpj.taggen SET Werkstueck_RFID_Werkstueck=NULL WHERE id_taggen=1;");
+SendOverQuary(query, "DELETE FROM vpj.werkstueck;");
+SendOverQuary(query, "DELETE FROM vpj.auftrag;");
+\end{lstlisting}
+
+\subsubsection{Allgemeine Sendefunktion}
+
+Jede Kommunikation mit der Datenbank beginnt mit der Erzeugung einer Query, in Listing \ref{lst:DBQuerySend} Zeile 1 dargestellt. Da dieser Aufruf vor jeder Kommunikation geschieht, wird dieser in allen folgend beschriebenen Funktionen der Übersicht wegen weggelassen, wäre aber immer in der ersten Zeile zu finden.
+
+In der Funktion SendOverQuery() werden die Zeilen 3 und 4 ausgeführt. Dabei wird der String, der den Befehl enthält, in die Query geladen und nachfolgend mit execute() versendet bzw. auf der Datenbank ausgeführt. 
+
+\begin{lstlisting}[frame=single, breaklines=true, caption=Databank-Handler Senden über Query ,label=lst:DBQuerySend]
+QSqlQuery query(db);
+
+q.prepare(name);
+q.exec();
+\end{lstlisting}
+
+\subsection{Getter}
+\inlinetodo{}
+\subsection{Updates}
+\inlinetodo{}
+\subsection{Setter}
+\inlinetodo{}
 
 \section{UDP-Handler} 
 \label{sec:UdpHandler}
