@@ -94,7 +94,7 @@ Der UDP-Handler ist für die Datenkommunikation zwischen dem Fertigungsplanungsr
 
 \subsection{UDP-Handler für Navigationsrechner}
 
-Um auf Daten des Navigationsrechners zu reagieren wird im Konstruktor des HDP-Handler (vgl. Listing \ref{lst:KonstruktorUDPNav}) ein QUdpSocket (vgl. Kapitel \ref{sec:Socket}) erstellt. Der Socket "`horcht"' an dem angegebenen Port auf Daten vom Navigationsrechner. Durch das in Zeile 5 verknüpfte readyRead()-Signal wird die Funktion readPendingNavigationData() aufgerufen. Dieses Signal wird intern vom Socket emittiert, sobald eine Nachricht am spezifizierten Port anliegt. 
+Um auf Daten des Navigationsrechners zu reagieren wird im Konstruktor des HDP-Handler (vgl. Listing \ref{lst:KonstruktorUDPNav}) ein QUdpSocket (vgl. Kapitel \ref{sec:QTSocket}) erstellt. Der Socket "`horcht"' an dem angegebenen Port auf Daten vom Navigationsrechner. Durch das in Zeile 5 verknüpfte readyRead()-Signal wird die Funktion readPendingNavigationData() aufgerufen. Dieses Signal wird intern vom Socket emittiert, sobald eine Nachricht am spezifizierten Port anliegt. 
 
 \begin{lstlisting}[frame=single, breaklines=true, numbers=left, stepnumber=2, firstnumber=1, numberstyle = \tiny, caption=UDP-Handler Konstruktor für Navigationsdatenaustausch,label=lst:KonstruktorUDPNav]
 UdpHandler::UdpHandler(quint16 port, QObject *parent) : QObject(parent)

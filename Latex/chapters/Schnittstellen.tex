@@ -10,6 +10,27 @@
 
 Die Robotinos werden von Gewerk 2 verwaltet und programmiert. Um eine erfolgreiche Kommunikation zwischen Fertigungsplanungsrechner und Robotino zu gewährleisten existieren folgende Vereinbarungen mit Gewerk 2.
 
+Die Kommunikation geschieht über UDP. Da UDP ein verbindungsloses Protokoll ist muss nicht sichergestellt werden dass Robotino oder Fertigungsplanungsrechner immer verbunden sind. Die Nachrichten werden an spezifizierten Ports gesendet und empfangen.
+
+Die in Tabelle \ref{tab:Ports} dargestellte Vereinbarung wurde für die Ports getroffen.
+
+\begin{table}[!ht]
+	\centering
+	\begin{tabular}{|c|c|c|}
+		\hline
+		Roboter IP Adresse & Sendeport &	Empfangsport \\
+		\hline
+		192.168.0.11 & 25010 & 25011 \\
+    192.168.0.12 & 25020 & 25012 \\
+    192.168.0.13 & 25030 & 25013 \\
+    192.168.0.14 & 25040 & 25014 \\
+    192.168.0.25 & 25050 & 25015 \\
+		\hline
+	\end{tabular}
+	\caption{Portvereinbarung}
+	\label{tab:Ports}
+\end{table}
+
 \subsection{Sequenzdiagramm}
 \label{sec:sequenzdiagram}
 
@@ -52,7 +73,7 @@ Der Auftrag, der an den Robotino gesendet wird, enthält 5 Bytes. Eine Aufschlü
 	\label{tab:TelegrammZuG2}
 \end{table}
 
-Das erste Byte klassifiziert die Auftragsart. Diese beschreibt, welche Tätigkeit der Robotino als nächstes tun soll. Auftragsart eins bedeutet, dass der Robotino einen Transportauftrag erhalten hat, also ein Werkstück von einer Position zu einer anderen Position fahren soll. Die Auftragsart 2 zeigt an, dass der Robotino auf einen Parkplatz geschickt wird. Eine Ladefahrt wird mit Auftragsart 3 gekennzeichnet. 
+Das erste Byte klassifiziert die Auftragsart. Diese beschreibt, welche Tätigkeit der Robotino als nächstes tun soll. Auftragsart eins bedeutet, dass der Robotino einen Transportauftrag erhalten hat, also ein Werkstück von einer Position zu einer anderen \Gls{Position} fahren soll. Die Auftragsart 2 zeigt an, dass der Robotino auf einen Parkplatz geschickt wird. Eine Ladefahrt wird mit Auftragsart 3 gekennzeichnet. 
 
 Im zweiten und dritten Byte sind die Positionen angegeben, an welche sich der Robotino bewegen soll. Dabei wird Position 2 nur bei Auftragsart 1 befüllt bzw. ausgewertet, da ein Parken und Laden nur eine Zielposition benötigt. Bei Auftragsart 1 jedoch zeigt Position 1 den Arbeitsplatz an, wo das Werkstück abgeholt werden soll und Position 2 den Ablageort des Werkstücks. 
 
@@ -60,13 +81,29 @@ Im zweiten und dritten Byte sind die Positionen angegeben, an welche sich der Ro
 
 Mit dem fünften Byte wird eine einfache Erweiterung des Telegramms ermöglicht, sofern mehr Daten übertragen werden sollen. Am Anfang der Ausarbeitung des Projektes war das vierte Byte ebenfalls ein reserviertes Byte. 
 
-\subsubsection{Telegramm von Gewerk 2 zum Fertigungsplanungsrechner}
+\subsubsection{Positionskodierung}
+\label{sec:Positionskodierung}
 
-%00: nichts; 01: unbekanntes Hindernis; 
-%02: anderer Roboter; 03: direkt was gesehen?!? (flackert evtl)
-%*1   X1: 1: Auf dem Weg; 2: Bin bei…; 
-%X2 + X3 : Position 
-%1: lebe ich noch? (Antwort senden) 0: ignorieren
+Aus den Positionen, die dem Robotino gesendet werden kann eindeutig bestimmt werden, an welchen Ort der Robotino fahren soll. 
+
+Eine Aufschlüsselung der Positionen ist in Abbildung \ref{fig:Positionskodierung} dargestellt. Hier ist die Anordnung von Stationen, Parkplätzen und Ladestationen im Raum dargestellt, mitsamt ihrer Positionskodierung. 
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Abbildungen/Positionskodierung.PNG}
+    \caption{Positionskodierung}		
+    \label{fig:Positionskodierung}
+\end{figure}
+
+Jede Position ist kodiert in einer Zahl bestehend aus zwei Ziffern. Die erste Ziffer beschreibt dabei die Stationsnummer aufsteigend von 1 bis 8. Parkplätze und Ladestationen haben als Kennung in der ersten Ziffer eine 0. 
+
+Mit der zweiten Ziffer kann die genaue Position innerhalb einer Station spezifiziert werden. In den Stationen 1 bis 8 ist der RFID-Lesekopf mit Ziffer 0 und die Arbeitsplätze mit den Ziffern 1 und 2 kodiert. Die Parkplätze sind aufsteigend mit den Ziffern 1 bis 4 durchnummeriert. Hieran anschließend sind beide Ladestationen mit Ziffer 5 und 6 kodiert. 
+
+So ergibt sich für Beispielsweise Parkplatz 2 eine Kodierung von 02, für die untere Ladestation die Kodierung 06 oder für den oberen Arbeitsplatz an Station 3 die Kodierung 31.
+
+\subsubsection{Telegramm vom Robotino zum Fertigungsplanungsrechner}
+
+Das zyklisch gesendete Telegramm vom Robotino enthält alle Informationen, die zur Auftragsgenerierung und Robotinoanzeige nötig sind. Alle Telegrammeinträge sind in Tabelle \ref{tab:TelegrammVonG2} dargestellt. Das Telegramm enthält neun Einträge, welche je einen Double-Wert enthalten. 
 
 \begin{table}[!ht]
 	\centering
@@ -76,7 +113,7 @@ Mit dem fünften Byte wird eine einfache Erweiterung des Telegramms ermöglicht,
 		\hline
 			1  & Error &  Errortyp  \\
 			2  & Akku  & Prozentwert als Integer \\
-			3  & Hindernis & Hindernistyp \\
+			3  & Hindernis & Hindernistyp zwischen 00 und 03\\
 		  4  & *Reserved &  interner Roboterstatus \\
 		  5  & AliveAbfrage  & 1: Roboterabfrage erfordert Antwort; 0: egal \\
 		  6  & Status & $X_1X_2X_3$; 000: nichts zu tun \\
@@ -89,20 +126,25 @@ Mit dem fünften Byte wird eine einfache Erweiterung des Telegramms ermöglicht,
 	\label{tab:TelegrammVonG2}
 \end{table}
 
-Robotererrortypen beschreiben
+Im ersten Byte sendet der Robotino einen Error. Die einzelnen Errortypen und die nötige Reaktion sind in Kapitel \ref{sec:Error} dargestellt. 
 
-\begin{figure}[htb]
-    \centering
-    \includegraphics[width=0.9\textwidth]{Abbildungen/Positionskodierung.PNG}
-    \caption{Positionskodierung}		
-    \label{fig:Positionskodierung}
-\end{figure}
+Aus dem zweiten Byte kann der aktuelle Akkustand des Robotinos gelesen werden. Dieser liegt zwischen 0, vollständig entladen, und 100, vollständig geladen. 
 
-Positionskodierung
+Über das dritte Byte kann gelesen werden, ob der Robotino ein Hindernis erkannt hat. Beim Empfangen einer 00 ist kein Hindernis im Weg und der Robotino kann sich normal bewegen. Eine Änderung des Wertes kann zunächst nur zu 03 erfolgen. Das bedeutet, der Robotino hat ein Hindernis erkannt, dieses aber noch nicht klassifiziert hat. Über die Zahl 01 wird kodiert, dass der Roboter ein Hindernis erkannt hat, dies aber nicht weiter Klassifizieren kann. Mit einer 02 wird angezeigt, dass das erkannte Hindernis ein anderer Robotino ist. Aufgrund der Umgebungsstörungen kann es sein, dass der Robotino immer wieder abwechselnd eine 00 und eine 01 sendet. 
 
-\inlinetodo{Telegram Gewerk 2}
+Das vierte Byte wird von Gewerk 2 für eine interne Bekanntmachung verschiedener Roboterstati genutzt. Der Wert wird nicht versendet und bleibt immer 0.
 
-\inlinetodo{Port vereinbarung}
+Über das fünfte Byte kann der Robotino eine Anfrage triggern. Sobald eine 1 empfangen wird, so wird im nächsten Telegramm an den Robotino der AliveStatus zu eins gesetzt. Dadurch kann der Robotino validieren, dass die Kommunikation noch vorhanden ist. Ansonsten ist der Wert 0. 
+
+Mit dem sechsten Byte wird der aktuelle Roboterstatus kodiert. Dieser Wert ist für die Auftragsplanung am wichtigsten. Die Zahl besteht immer aus drei Ziffern. Die erste Ziffer dient dabei als Typisierung des Status. Wenn der Status 000 ist, bedeutet das, der Robotino hat nichts zu tun und benötigt einen Auftrag. Auf einem Parkplatz wird keine 000 gesendet. Immer wenn ein Robotino neu eingesetzt wird, seinen aktuellen Transportauftrag abgeschlossen hat, aus einem Errorstatus kommt oder den Ladevorgang an der Lasestation abgeschlossen hat wird eine 000 gesendet. 
+
+Wenn die erste Ziffer eine 1 ist, befindet sich der Robotino auf dem Weg zu einer Position. Bei einer 2 als erste Ziffer ist der Robotino gerade an einer bestimmten Position. Über den Wechsel von 1 auf 2 kann somit das Erreichen einer Position erkannt werden oder der Verlassen einer Position über den Wechsel auf 1. 
+
+Die beiden letzten Ziffern des Status kodieren die Position in der in Abschnitt \ref{sec:Positionskodierung} beschriebenen Art. 
+
+Das der Greifer des Robotinos geschlossen, also voll, ist wird im siebten Byte mit einer 1 angezeigt. Bei offenem Greifer ist der Wert 0.
+
+Das achte und neunte Byte sind für einfache Erweiterung des Telegramms um weitere Informationen geplant gewesen. Bei Projektstart war das vierte und fünfte Byte ebenfalls reserviert, wurde aber während des Projekts zugewiesen. 
 
 \subsection{Fehlertypen und Behebung}
 \label{sec:Error}
