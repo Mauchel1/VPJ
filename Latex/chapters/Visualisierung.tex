@@ -43,7 +43,6 @@ Die Visualisierung lässt sich in insgesamt 6 Bereiche unterteilen. Die Bereiche
     \label{fig:GesamtprogrammBereiche}
 \end{figure}
 
-
 In Bereich II, der Auftragsübersicht, können die Fortschritte der laufenden Aufträge und Prozesse überwacht werden.
 
 Innerhalb des Bereich III können über Tabs vier weitere Fenster aufgerufen werden. Dabei dienen zwei der Anzeige spezifizierter Informationen, wohingegen die anderen beiden Tabs der Kontrolle dienen. Die Kombination aller vier Tabs wird folgend Tab-View genannt.
@@ -80,6 +79,8 @@ In den folgenden Kapiteln werden die einzelnen Bereiche der Abbildung näher bel
     \caption{Visualisierung Parkplatz}		
     \label{fig:Parkplatz}
 \end{figure}
+ParkplatzClicked
+UpdateParkplatz
 
 \begin{figure}[htb]
     \centering
@@ -89,6 +90,9 @@ In den folgenden Kapiteln werden die einzelnen Bereiche der Abbildung näher bel
 \end{figure}
 
 \subsection{Stationen}
+StationClicked
+UpdateStationsplatz
+UpdateStation
 
 \begin{figure}[htb]
     \centering
@@ -98,7 +102,12 @@ In den folgenden Kapiteln werden die einzelnen Bereiche der Abbildung näher bel
 \end{figure}
 
 \subsection{Robotino}
-
+UpdateRobotinoAkku
+UpdateRobotinoAlive
+UpdateRobotinoPosition
+UpdateRobotinoPixmap
+UpdateRobotinoXPixmap
+RobotClicked
 \begin{figure}[htb]
     \centering
     \includegraphics[width=0.13\textwidth]{Abbildungen/RobotinoGoffen.png}
@@ -110,6 +119,14 @@ In den folgenden Kapiteln werden die einzelnen Bereiche der Abbildung näher bel
 
 \section{Auftragsübersicht}
 \label{sec:Auftragsuebersicht}
+on_AuftragsListWidget_itemClicked
+on_AuftragsListWidget_itemDoubleClicked
+AddAuftragsItem
+
+on_pushButton_clicked
+on_pushButton_2_clicked
+on_Pause_clicked
+on_ButtonAuftragBlocked_clicked
 
 \begin{figure}[htb]
     \centering
@@ -127,12 +144,18 @@ In den folgenden Kapiteln werden die einzelnen Bereiche der Abbildung näher bel
 
 \section{Tab-View}
 
+\subsection{Log-View}
+
 \begin{figure}[htb]
     \centering
     \includegraphics[width=0.6\textwidth]{Abbildungen/Log.png}
     \caption{Tab: Log View}		
     \label{fig:Log}
 \end{figure}
+
+\subsection{Manual Control}
+
+on_S8P2weg_clicked...
 
 \begin{figure}[htb]
     \centering
@@ -141,6 +164,9 @@ In den folgenden Kapiteln werden die einzelnen Bereiche der Abbildung näher bel
     \label{fig:ManualControl}
 \end{figure}
 
+\subsection{Timestamp-Area}
+
+SetTimestamps
 \begin{figure}[htb]
     \centering
     \includegraphics[width=0.4\textwidth]{Abbildungen/TimestampsWerkstueck.png}
@@ -151,6 +177,9 @@ In den folgenden Kapiteln werden die einzelnen Bereiche der Abbildung näher bel
 
 \subsection{Hard-Code Bereich}
 \label{sec:HardCode}
+GetPressedHardCodeButton
+ResetButtonsExeptOne
+on_ButtonDefektPlatz_clicked...
 
 \begin{figure}[htb]
     \centering
@@ -167,7 +196,9 @@ In den folgenden Kapiteln werden die einzelnen Bereiche der Abbildung näher bel
 \end{figure}
 
 \section{Roboterstatus}
-
+UpdateRobotinoAlive
+UpdateRobotinoAkku
+ToggleAliveRobotino
 \begin{figure}[htb]
     \centering
     \includegraphics[width=0.5\textwidth]{Abbildungen/Batterie.png}
@@ -186,6 +217,8 @@ In den folgenden Kapiteln werden die einzelnen Bereiche der Abbildung näher bel
 \section{Prozesseingabe}
 \label{sec:Prozesseingabe}
 
+on_sendProzess_clicked
+
 \begin{figure}[htb]
     \centering
     \includegraphics[width=0.5\textwidth]{Abbildungen/Prozesseingabe.png}
@@ -195,6 +228,9 @@ In den folgenden Kapiteln werden die einzelnen Bereiche der Abbildung näher bel
 
 \section{Auftragseingabe}
 \label{sec:Auftragseingabe}
+
+AddAuftragsItem
+on_sendAuftrag_clicked
 
 \begin{figure}[htb]
     \centering
@@ -208,7 +244,8 @@ In den folgenden Kapiteln werden die einzelnen Bereiche der Abbildung näher bel
 
 \subsection{Tooltips}
 \label{sec:tooltips}
-\inlinetodo {Tooltips mit Bildern her und erlaeeeren}
+UpdateStationToolTip
+\inlinetodo {Tooltips mit Bildern her und erklaeeeren}
 
 \section{MainWindow}
 
