@@ -118,14 +118,19 @@ Zusätzlich zur Position beinhaltet jeder Robotino in der Mitte eine Zahl, die d
 
 \subsection{Parkplätze und Ladestationen}
 
+Im unteren Bereich der Live-View befinden sich die vier Parkplätze für die Robotinos. Je nach Zustand werden diese verschieden dargestellt. Sobald ein Parkplatz für einen Robotino reserviert wird oder durch einen Robotino belegt ist wird dieser in hellgelb abgebildet. 
+Ein freier Parkplatz wird, wie in Abbildung \ref{fig:Parkplatz} rechts, blau dargestellt. 
+
+Eine Aktualisierung erfolgt über den Aufruf der Funktion UpdateParkplatz() in der MainWindow. 
+
 \begin{figure}[htb]
     \centering
     \includegraphics[width=0.4\textwidth]{Abbildungen/Parkplatz.png}
     \caption{Visualisierung Parkplatz}		
     \label{fig:Parkplatz}
 \end{figure}
-ParkplatzClicked
-UpdateParkplatz
+
+Wie die Parkplätze werden auch die Ladestationen entweder reserviert (Abb. \ref{fig:Ladestation} oben) in blassem hellgelb dargestellt, oder in kräftigem Gelb für freie Ladestationen (Abb. \ref{fig:Ladestation} unten). 
 
 \begin{figure}[htb]
     \centering
@@ -135,16 +140,23 @@ UpdateParkplatz
 \end{figure}
 
 \subsection{Stationen}
-StationClicked
-UpdateStationsplatz
-UpdateStation
+
+Die Stationen enthalten Informationen über die Werkstücke, die an ihnen bearbeitet werden. Es gibt insgesamt 8 Stationen, wobei immer zwei Stationen horizontal zusammengefasst sind. Ein solcher Stationsverbund ist in Abbildung \ref{fig:Station} abgebildet. Der oberste Kreis einer Station repräsentiert den RFID-Kopf. Darunter befinden sich die beiden Arbeitsplätze. Jeder Arbeitsplatz enthält in seiner Farbkodierung eine Information über das Werkstück. In der Abbildung sind alle möglichen Farbkodierungen dargestellt.
 
 \begin{figure}[htb]
     \centering
     \includegraphics[width=0.18\textwidth]{Abbildungen/Station.png}
-    \caption{Station mit verschiedenen Arbeitsplatzstati}		
+    \caption{Stationen mit verschiedenen Arbeitsplatzstati}		
     \label{fig:Station}
 \end{figure}
+
+Sobald ein Arbeitsplatz reserviert wird, da sich ein Werkstück auf dem Weg dahin befindet ist dieser Gelb dargestellt. Ein roter Arbeitsplatz zeigt an, das dieser defekt ist und nicht mehr angefahren werden kann. Ein defekter Arbeitsplatz wird von der Auftragsplanung nicht mehr berücksichtigt. Diese Einstellung kann mit der Hard-Code Area erzeugt werden. Wenn ein Werkstück an den Arbeitsplatz abgelegt wird befindet sich dieses in Bearbeitung und der Platz wird Orange dargestellt. Sobald die Bearbeitung abgeschlossen ist wechselt die Farbe des Arbeitsplatz auf grün und das Werkstück ist bereit zur Abholung. Ein leerer Arbeitsplatz wird in neutralem grau dargestellt. 
+
+Über die Funktion UpdateStationsplatz() kann die Farbkodierung eines einzelnen Arbeitsplatz anhand des übergebenen Status angepasst werden. 
+
+Zusätzlich zu den Arbeitsplatzstati wird neben jeder Station angezeigt, ob diese reserviert ist. Da nicht zwei Robotinos gleichzeitig zu einer Station fahren sollen, werden diese, sobald sich ein Robotino auf dem Weg dahin befindet oder an einer Station arbeitet, reserviert. Eine reservierte Station ist in der Visualisierung an dem hellgelben X neben der Station zu erkennen. In Abbildung \ref{fig:Station} ist die linke Station reserviert und die rechte Station frei. Mit der Funktion UpdateStation() kann die Reservierung für eine Station angepasst werden. 
+
+Im Normalbetrieb, ohne die Zusatzfunktionalität der Hard-Code Area, bewirkt ein Klick auf einen Arbeitsplatz eine Aktualisierung der Timestamp-Area. 
 
 \section{Auftragsübersicht}
 \label{sec:Auftragsuebersicht}
@@ -198,7 +210,10 @@ on_S8P2weg_clicked...
 
 \subsection{Timestamp-Area}
 
+Wann wird was angezeigt? man muss...
+
 SetTimestamps
+StationClicked
 \begin{figure}[htb]
     \centering
     \includegraphics[width=0.4\textwidth]{Abbildungen/TimestampsWerkstueck.png}
@@ -213,6 +228,7 @@ GetPressedHardCodeButton
 ResetButtonsExeptOne
 on_ButtonDefektPlatz_clicked...
 RobotClicked
+ParkplatzClicked
 \begin{figure}[htb]
     \centering
     \includegraphics[width=0.6\textwidth]{Abbildungen/HardCode.png}
