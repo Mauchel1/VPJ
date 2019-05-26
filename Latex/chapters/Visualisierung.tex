@@ -3,9 +3,56 @@
 \chapter{Visualisierung}
 \label{sec:Visualisierung}
 
-\section{Grundstruktur}
+Die Auftragsplanungssoftware besitzt neben der Logik eine Visualisierung. Diese wurde mit den von Qt bereitgestellten Widgets grafisch programmiert und in der Funktion mainwindow verknüpft und organisiert. 
 
-Coorporate Design
+\section{Design}
+
+Die Leitlinie des Grafikdesigns der HAW war:
+
+\begin{quote}
+"`Fokussiert. Direkt. Verständlich.
+Und vor allem sympathisch."'	
+
+"`Idee der neuen visuellen Sprache ist die Reduktion auf das
+Wesentliche. Ziel soll es sein, einfach und klar die wichtigste
+Aussage zu kommunizieren."'
+\cite[4]{corporate}
+\end{quote}
+
+Beim Design der Software wurde versucht diese Aspekte wieder aufzugreifen. Die Visualisierung sollte ebenso direkt und verständlich sein. Vor allem die Reduktion auf das Wesentliche lag besonders im Fokus. 
+
+Um die Visualisierung im Stil der HAW zu gestalten wurde das Corporate Design bei Farb und Schriftwahl verwendet. Somit sind alle Schriftarten in der Visualisierung Open Sans. Als Farben wurden die vorgegebenen Farbstile "`HAW Hauptblau"' als Umrahmung und Abtrennung aller Bereiche gewählt. Das "`HAW Hellblau"' ist innerhalb der verschiedenen Bereiche als Trennung der Bedienelemente zu sehen. Da dieses blasser ist können alle Bedienelemente gut erkannt und verwendet werden. 
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.3\textwidth]{Abbildungen/VPJ.png}
+    \caption{VPJ-Logo}		
+    \label{fig:VPJLogo}
+\end{figure}
+
+Das entworfene VPJ-Logo (Abb. \ref{fig:VPJLogo}) welches in Taskmanager, Taskleiste, an oberer Bildschirmseite und zentral in der Mitte der Visualisierung zu finden ist, unterliegt ebenfalls den Richtlinien, die im Corporate Design (vgl. \cite{corporate}) festgehalten sind. 
+
+\section{Struktur}
+
+Die Visualisierung lässt sich in insgesamt 6 Bereiche unterteilen. Die Bereiche sind in Abbildung \ref{fig:GesamtprogrammBereiche} dargestellt. Bereich I oben links zeigt die Fertigungsstraße mitsamt Robotern, Parkplätzen und Stationen. Dieser Bereich wird folgend Live-View genannt. 
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Abbildungen/GesamtprogrammBereiche.png}
+    \caption{Übersicht über die Bereiche innerhalb der Visualisierung}		
+    \label{fig:GesamtprogrammBereiche}
+\end{figure}
+
+
+In Bereich II, der Auftragsübersicht, können die Fortschritte der laufenden Aufträge und Prozesse überwacht werden.
+
+Innerhalb des Bereich III können über Tabs vier weitere Fenster aufgerufen werden. Dabei dienen zwei der Anzeige spezifizierter Informationen, wohingegen die anderen beiden Tabs der Kontrolle dienen. Die Kombination aller vier Tabs wird folgend Tab-View genannt.
+
+Bereich IV zeigt den Status der Robotinos an. 
+
+Die beiden Bereiche V und VI werden ausschließlich für die Erzeugung neuer Aufträge oder Prozesse verwendet. 
+
+In Abbildung \ref{fig:Gesamtprogramm} ist eine Übersicht der Visualisierung im laufenden Betrieb dargestellt. 
 
 \begin{figure}[htb]
     \centering
@@ -14,12 +61,7 @@ Coorporate Design
     \label{fig:Gesamtprogramm}
 \end{figure}
 
-\begin{figure}[htb]
-    \centering
-    \includegraphics[width=1\textwidth]{Abbildungen/GesamtprogrammROT.png}
-    \caption{Übersicht Visualisierung im Hard-Code Modus}		
-    \label{fig:GesamtprogrammROT}
-\end{figure}
+In den folgenden Kapiteln werden die einzelnen Bereiche der Abbildung näher beleuchtet und ihre Implementierung in der MainWindow Funktion erläutert. 
 
 \section{Live-View}
 
@@ -29,6 +71,8 @@ Coorporate Design
     \caption{Visualisierung Live-View}		
     \label{fig:LiveView}
 \end{figure}
+
+\subsection{Parkplätze und Ladestationen}
 
 \begin{figure}[htb]
     \centering
@@ -44,18 +88,22 @@ Coorporate Design
     \label{fig:Ladestation}
 \end{figure}
 
+\subsection{Stationen}
+
 \begin{figure}[htb]
     \centering
-    \includegraphics[width=0.2\textwidth]{Abbildungen/Station.png}
+    \includegraphics[width=0.18\textwidth]{Abbildungen/Station.png}
     \caption{Station mit verschiedenen Arbeitsplatzstati}		
     \label{fig:Station}
 \end{figure}
 
+\subsection{Robotino}
+
 \begin{figure}[htb]
     \centering
-    \includegraphics[width=0.1\textwidth]{Abbildungen/RobotinoGoffen.png}
-    \includegraphics[width=0.1\textwidth]{Abbildungen/RobotinoGZu.png}
-    \includegraphics[width=0.1\textwidth]{Abbildungen/RobotinoDefect.png}
+    \includegraphics[width=0.13\textwidth]{Abbildungen/RobotinoGoffen.png}
+    \includegraphics[width=0.13\textwidth]{Abbildungen/RobotinoGZu.png}
+    \includegraphics[width=0.13\textwidth]{Abbildungen/RobotinoDefect.png}
     \caption{Roboter in verschiedenen Stati (vlnr: Greifer offen, Greifer geschlossen, Defekt)}		
     \label{fig:Robotino}
 \end{figure}
@@ -111,6 +159,13 @@ Coorporate Design
     \label{fig:HardCode}
 \end{figure}
 
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=1\textwidth]{Abbildungen/GesamtprogrammROT.png}
+    \caption{Übersicht Visualisierung im Hard-Code Modus}		
+    \label{fig:GesamtprogrammROT}
+\end{figure}
+
 \section{Roboterstatus}
 
 \begin{figure}[htb]
@@ -155,4 +210,7 @@ Coorporate Design
 \label{sec:tooltips}
 \inlinetodo {Tooltips mit Bildern her und erlaeeeren}
 
+\section{MainWindow}
+
+Neben allen bisher bereits beschriebenen Funktionen wird folgend eine Übersicht über die MainWindow-Funktion gegeben. 
 
