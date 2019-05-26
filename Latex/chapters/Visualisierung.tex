@@ -64,12 +64,57 @@ In den folgenden Kapiteln werden die einzelnen Bereiche der Abbildung näher bel
 
 \section{Live-View}
 
+Der größte der Bereiche beinhaltet eine Live-View der Fertigungsstraße, dargestellt in Abbildung \ref{fig:LiveView}. Dabei sind alle Stationen, die Robotinos, Parkplätze und die Ladestationen dargestellt. In der unteren rechten Ecke ist das VPJ-Logo eingebettet. Das Fenster hat feste Maße von 800 x 400 Pixeln, wodurch die realen Raumabmessungen einfach dargestellt werden können. 1 Pixel entspricht im realen Raum 1 cm. 
+
 \begin{figure}[htb]
     \centering
     \includegraphics[width=0.9\textwidth]{Abbildungen/LiveView.png}
     \caption{Visualisierung Live-View}		
     \label{fig:LiveView}
 \end{figure}
+
+\subsection{Robotino}
+
+Der Robotino wird immer an der Position dargestellt, die in der zugehörigen Robotinoklasse hinterlegt ist. Über die Funktion UpdateRobotinoPosition() kann eine Aktualisierung angefordert werden. Sobald der UDP-Handler neue Positionsdaten für einen Robotino empfängt und die neue Position mindestens 2 Pixel von der Alten entfernt liegt, wird diese aktualisiert. 
+
+Die Funktion UpdateRobotinoPosition() prüft zunächst ob der Robotino ein Hindernis erkannt hat. Bei vorliegen eines Hindernis wird für den Robotino ein Bild geladen, welches im Rand den Hindernistyp kodiert. In Abbildung \ref{fig:RobotinoHindernis} sind alle auftretenden Hindernistypen dargestellt. Bei einem unbekannten Hindernis wird der Robotinorand Rot dargestellt, wie rechts abgebildet. Ein noch nicht klassifiziertes Hindernis wird, wie links abgebildet, mit gelbem Rand dargestellt. In der Mitte der Abbildung ist der Robotino mit orangenem Rand abgebildet, der bei einem anderen Robotino als Hindernis angezeigt wird.
+Wenn kein Hindernis erkannt wird bleibt der Rand schwarz. 
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.12\textwidth]{Abbildungen/RobotinoGoffenRandGelb.png}
+    \includegraphics[width=0.12\textwidth]{Abbildungen/RobotinoGoffenRandOrange.png}
+    \includegraphics[width=0.12\textwidth]{Abbildungen/RobotinoGoffenRandRot.png}
+    \caption{Robotino Darstellung bei verschiedenen Hinderniserkennungen}		
+    \label{fig:RobotinoHindernis}
+\end{figure}
+
+Die Darstellung des Robotinos hängt neben den Hindernistypen auch von verschiedenen Stati ab. So wird ein defekter Robotino mit einer Flamme gekennzeichnet (Abb. \ref{fig:Robotino} mittig rechts). Das Einhorn als spezieller Robotino wird ebenfalls in der Darstellung als Einhorn abgebildet, in der Abbildung rechts dargestellt. 
+
+Im Standardfall wird der Robotino wie in Abbildung \ref{fig:Robotino} links abgebildet angezeigt. Hierbei wird unterschieden ob der Greifer des Robotinos offen (links) oder geschlossen (rechts) ist. 
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.13\textwidth]{Abbildungen/RobotinoGoffen.png}
+    \includegraphics[width=0.13\textwidth]{Abbildungen/RobotinoGZu.png}
+    \includegraphics[width=0.13\textwidth]{Abbildungen/RobotinoDefect.png}
+    \includegraphics[width=0.13\textwidth]{Abbildungen/Einhorn.png}
+    \caption{Roboter in verschiedenen Stati (vlnr: Greifer offen, Greifer geschlossen, Defekt, Einhorn)}		
+    \label{fig:Robotino}
+\end{figure}
+
+Nachdem das korrekte Bild für den Robotino ausgewählt wurde wird dieses gleich der Ausrichtung des Robotinos gedreht. In Listing \ref{lst:RobotinoDrehung} ist die Umsetzung im Code zu sehen. Zunächst wird eine Rotationsmatrix rm in Zeile 1 erzeugt. Diese Matrix wird anhand des Winkels des Robotinos konfiguriert. Anschließend wird der Bild des Robotinos in Zeile 3 gedreht und in Zeile 4 angewendet. In Zeile 6 ist die Positionierung des gedrehten Bildes abgebildet. Da die Y-Achse des Robotino invertiert zu der Darstellung ist muss diese als Offset zu 400 angegeben werden. 
+
+\begin{lstlisting}[frame=single, breaklines=true, numbers=left, stepnumber=2, firstnumber=1, numberstyle = \tiny, caption=Robotino Drehung ,label=lst:RobotinoDrehung]
+QMatrix rm;
+rm.rotate(-newPosition[2]);
+QPixmap pixmap = Rlabel->pixmap()->copy().transformed(rm);
+Rlabel->setPixmap(pixmap);
+
+Robotino->move(newPosition[0]/10, 400-(newPosition[1]/10));
+\end{lstlisting}
+
+Zusätzlich zur Position beinhaltet jeder Robotino in der Mitte eine Zahl, die die eindeutige RoboterID repräsentiert. Somit kann sofort erkannt werden, welcher Robotino dargestellt ist. Außerdem ist an der linken Seite einen Akkustand als vertikaler Balken dargestellt. Der Akkustand ist gleich dem der unten im Roboterstatus-View angezeigt wird und wird dort näher beleuchtet. Am Akkustand am Robotino kann direkt erkannt werden, welcher Robotino welchen Akkustand besitzt ohne erst die IDs abgleichen zu müssen.  
 
 \subsection{Parkplätze und Ladestationen}
 
@@ -101,22 +146,6 @@ UpdateStation
     \label{fig:Station}
 \end{figure}
 
-\subsection{Robotino}
-UpdateRobotinoAkku
-UpdateRobotinoAlive
-UpdateRobotinoPosition
-UpdateRobotinoPixmap
-UpdateRobotinoXPixmap
-RobotClicked
-\begin{figure}[htb]
-    \centering
-    \includegraphics[width=0.13\textwidth]{Abbildungen/RobotinoGoffen.png}
-    \includegraphics[width=0.13\textwidth]{Abbildungen/RobotinoGZu.png}
-    \includegraphics[width=0.13\textwidth]{Abbildungen/RobotinoDefect.png}
-    \caption{Roboter in verschiedenen Stati (vlnr: Greifer offen, Greifer geschlossen, Defekt)}		
-    \label{fig:Robotino}
-\end{figure}
-
 \section{Auftragsübersicht}
 \label{sec:Auftragsuebersicht}
 on_AuftragsListWidget_itemClicked
@@ -145,6 +174,9 @@ on_ButtonAuftragBlocked_clicked
 \section{Tab-View}
 
 \subsection{Log-View}
+
+WriteToDebugTextArea
+Alle Logtypen beschreiben!
 
 \begin{figure}[htb]
     \centering
@@ -180,7 +212,7 @@ SetTimestamps
 GetPressedHardCodeButton
 ResetButtonsExeptOne
 on_ButtonDefektPlatz_clicked...
-
+RobotClicked
 \begin{figure}[htb]
     \centering
     \includegraphics[width=0.6\textwidth]{Abbildungen/HardCode.png}
