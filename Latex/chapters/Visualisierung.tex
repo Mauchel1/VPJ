@@ -206,7 +206,7 @@ Eine Liste der vorkommenden Logeinträge ist in Tabelle \ref{tab:Log} zu finden.
 
 \begin{table}[!ht]
 	\centering
-	\begin{tabular}{|c|c|l|}
+	\begin{tabular}{|c|c|p{10cm}|}
 		\hline
 		Nr & Kategorie &	Nachricht \\
 		\hline
@@ -221,28 +221,28 @@ Eine Liste der vorkommenden Logeinträge ist in Tabelle \ref{tab:Log} zu finden.
  		\hline
     8  & Aktion & Action: Robotino 1 move to LoadingStation: 5 \\
     9  & Aktion & Action: Robotino 1 move to ParkingStation: 1 \\
-    10 & Aktion & Action: Robotino 1 move WS 2 from Position 11 to \\ && Position 22 \\
+    10 & Aktion & Action: Robotino 1 move WS 2 from Position 11 to Position 22 \\
  		\hline
     11 & Warnung & Warning: Robot 1 died \\
     12 & Warnung & Warning: Robotino 1 exploded \\
     13 & Info & Info: Robotino 1 repaired \\
 		\hline
-    14 & Error & ERROR: Could not set Station Place ready after \\ && Prozess Timer elapsed \\
-    15 & Error & ERROR: Could not set Station Place full after \\ && Greifer opened \\
-    16 & Error & ERROR: Could not set Source Station Place free \\ && after Robot Greifer closed \\
-    17 & Error & ERROR: Could not set Loading Station Place free \\ && after Robot drove away \\
+    14 & Error & ERROR: Could not set Station Place ready after Prozess Timer elapsed \\
+    15 & Error & ERROR: Could not set Station Place full after Greifer opened \\
+    16 & Error & ERROR: Could not set Source Station Place free after Robot Greifer closed \\
+    17 & Error & ERROR: Could not set Loading Station Place free after Robot drove away \\
     18 & Error & ERROR: Robot not found \\
-    19 & Error & ERROR: Could not set Station place free from \\ && Hard Coding Button \\
-    20 & Error & ERROR: Could not set Station place defect from \\ && Hard Coding Button \\
-    21 & Error & ERROR: Could not set Station free from \\ && Hard Coding Button \\
-    22 & Error & ERROR: Could not set Loading Station Place \\ && reserved after sending Task to Robot \\
-    23 & Error & ERROR: Could not set Parking Station Place \\ && reserved after sending Task to Robot \\
-    24 & Error & ERROR: Could not set Target Station Place \\ && reserved after sending Task to Robot \\
-    25 & Error & ERROR: Could not set Source Station Place \\ && reserved after sending Task to Robot \\
+    19 & Error & ERROR: Could not set Station place free from Hard Code Button \\
+    20 & Error & ERROR: Could not set Station place defect from Hard Code Button \\
+    21 & Error & ERROR: Could not set Station free from Hard Code Button \\
+    22 & Error & ERROR: Could not set Loading Station Place reserved after sending Task to Robot \\
+    23 & Error & ERROR: Could not set Parking Station Place reserved after sending Task to Robot \\
+    24 & Error & ERROR: Could not set Target Station Place reserved after sending Task to Robot \\
+    25 & Error & ERROR: Could not set Source Station Place reserved after sending Task to Robot \\
 		\hline
     26 & Roboter Error & ROBOTERROR: Robot 1 lost Werkstueck \\
-    27 & Roboter Error & ROBOTERROR: Robot 1 was not able \\ && to grab Werkstueck \\
-    28 & Roboter Error & ROBOTERROR: Robot 1 was not able \\ && to plan Route \\
+    27 & Roboter Error & ROBOTERROR: Robot 1 was not able to grab Werkstueck \\
+    28 & Roboter Error & ROBOTERROR: Robot 1 was not able to plan Route \\
 		\hline
 	\end{tabular}
 	\caption{Logeinträge}
@@ -282,10 +282,8 @@ Um die fertig bearbeiteten Teile aus Station 8 zu entfernen können die beiden r
 
 \subsection{Timestamp-Area}
 
-Wann wird was angezeigt? man muss...
+Im dritten Tab der Tab-View erfolgt eine Anzeige der in der Datenbank gespeicherten Timestamps. Es gibt zwei Arten, Timestamps anzeigen zu lassen. Diese sind in Abbildung \ref{fig:InfoArea} dargestellt. 
 
-SetTimestamps
-StationClicked
 \begin{figure}[htb]
     \centering
     \includegraphics[width=0.4\textwidth]{Abbildungen/TimestampsWerkstueck.png}
@@ -294,13 +292,18 @@ StationClicked
     \label{fig:InfoArea}
 \end{figure}
 
+Es können entweder alle Timestamps eines bestimmten Werkstücks (Abb. \ref{fig:InfoArea} links) oder alle Timestamps einer Station (Abb. \ref{fig:InfoArea} rechts) angezeigt werden.
+
+Im Timestamp ist beschrieben, zu welcher Zeit sich ein Werkstück an welcher Station an-, bzw. abgemeldet hat. Man kann feststellen, dass sich an Station 1 nur Werkstücke abmelden und an Station 8 nur Werkstücke anmelden, da diese hier jeweils händisch ergänzt bzw. entnommen werden. 
+
+Um die Timestamps einer Station anzuzeigen muss ein leerer Arbeitsplatz oder der RFID-Platz angeklickt werden. Dadurch wird die Funktion SetTimestamps() aufgerufen, welche das Textview aktualisiert. 
+
+Timestamps für ein spezielles Werkstück können angezeigt werden, indem ein dem Werkstück zugeordneter Arbeitsplatz angeklickt wird. Dabei ist es egal, ob sich das Werkstück gerade auf diesem befindet, oder nur eine Reservierung vorliegt. Alternativ kann, um auch abgeschlossene Werkstücke darstellen zu können, auf das zugehörige Prozessitem in der Auftragsübersicht ein Doppelklick gemacht werden. Dadurch werden die zugehörigen Timestamps dargestellt. 
+
 \subsection{Hard-Code Bereich}
 \label{sec:HardCode}
-GetPressedHardCodeButton
-ResetButtonsExeptOne
-on_ButtonDefektPlatz_clicked...
-RobotClicked
-ParkplatzClicked
+
+Der Hard-Code Tab wird benötigt um die Programmlogik gezielt zu umgehen, oder Stati "`hart"' zu überschreiben oder zu setzen. Dazu wurden die in Abbildung \ref{fig:HardCode} dargestellten Buttons implementiert. Jeder Button hat eine eigene Funktion und wird in den folgenden Abschnitten einzeln beleuchtet. 
 
 \begin{figure}[htb]
     \centering
@@ -309,13 +312,57 @@ ParkplatzClicked
     \label{fig:HardCode}
 \end{figure}
 
+Die Betätigung eines Buttons versetzt die Visualisierung in den "`Hard-Code Modus"'. Der betätigte Button bleibt dabei gedrückt und indiziert, welche Funktionalität aktiv ist. Um nicht versehentlich im Hard-Code Modus Dinge zu überschreiben wird das Live-View rot eingefärbt. Ein Vergleich der normalen Visualisierung und des Hard-Code Modus ist in Abbildung \ref{fig:GesamtprogrammROT} dargestellt. Es ist gut zu erkennen, dass der Hard-Code Modus nicht übersehen werden kann. 
+
 \begin{figure}[htb]
     \centering
     \includegraphics[width=0.45\textwidth]{Abbildungen/Gesamtprogramm.png}
     \includegraphics[width=0.45\textwidth]{Abbildungen/GesamtprogrammROT.png}
-    \caption{Übersicht Visualisierung im Hard-Code Modus}		
+    \caption{Vergleich Visualisierung - Normal VS Hard-Code Modus}		
     \label{fig:GesamtprogrammROT}
 \end{figure}
+
+Der Hard-Code Modus kann durch Betätigen des aktiven Buttons wieder verlassen werden. 
+
+Um sicherzustellen, dass zeitgleich immer nur eine Hard-Code Funktionalität aktiv ist, wird bei Pressen eines Buttons, nach der Button-Listenerfunktion, zuerst die Funktion ResetButtonsExceptOne() aufgerufen, wenn der Button noch nicht aktiv war. In dieser Funktion wird der Hintergrund der Live-View rot eingefärbt. Anschließend werden alle Buttons die sich neben dem angeklickten im Hard-Code Tab befinden deaktiviert. 
+
+Die Funktion GetPressedHardCodeButton() liefert für den Fall, dass ein Button aktiviert ist, diesen als Rückgabewert zurück. 
+
+\subsubsection{Arbeitsplatz im Hard-Code}
+
+Wenn der Button "`Arbeitsplatz defekt"' aktiviert wird, und ein Arbeitsplatz angeklickt so wird der Status dieses Arbeitsplatzes in der Fertigungsstraße zu defekt gesetzt. Die Visualisierung wird dadurch ebenfalls aktiviert. 
+
+Gegenteilig dazu kann wenn der Button "`Arbeitsplatz repariert"' ein zuvor defekt geschalteter Arbeitsplatz durch anklicken wieder freigegeben werden. 
+
+Um bei Anklicken des Arbeitsplatzes nicht nur den Timestamp auszugeben wird in der Funktion StationClicked() zunächst über den Rückgabewert der Funktion GetPressedHardCodeButton() ausgewertet, ob einer der beschriebenen Buttons nicht aktiviert ist. 
+
+\subsubsection{Robotino im Hard-Code}
+
+Ähnlich dem Arbeitsplatz kann über den Button "`Roboter defekt"' der Status des angeklickten Robotinos auf defekt gesetzt werden. Dieser wird dadurch von der Auftragsplanung ausgeschlossen und bekommt als Visualisierung die Flamme. 
+
+Ein Robotino muss defekt geschaltet werden, wenn sich dieser aufgehängt hat, die Kommunikation zum Robotino fehlschlägt oder andere Probleme an dem Robotino auftreten. Ein entfernen eines nicht defekt geschalteten Robotinos führt zu einer Auftragsvergabe an den nicht vorhandenen Roboter. Durch die implementierten Timeouts würde das Programm zwar weiterlaufen, allerdings in deutlich verlangsamter Form, sobald es dem defekten Robotino einen Auftrag erteilen möchte. 
+
+Der Button "`Roboter repariert"' aktiviert den angeklickten Robotino wieder. 
+
+Die dazu verwendete Funktion heißt RobotClicked().
+
+\subsubsection{Freigabefunktionen}
+
+Nach einem Ausfall eines Robotinos, während dieser bereits einen Auftrag erhalten hatte, müssen eventuelle Reservierungen gelöscht werden. Dafür sind die Buttons "`Parkplatz freigeben"', "`Arbeitsplatz freigeben"', und "`Station freigeben"' vorgesehen.
+
+Der Button "`Station freigeben"' bewirkt, dass die angeklickte Station nicht mehr von einem Robotino blockiert wird. Dazu wird in Datenbank und Fertigungsplanung der Stationsstatus als frei markiert. Um eine Station freizugeben kann ein beliebiger zur Station gehöriger Arbeitsplatz angeklickt werden.
+
+Ebenso wird mit Parkplätzen und Ladestationen verfahren. Da sich diese in der Implementierung nicht unterscheiden werden beide über den Button "`Parkplatz freigeben"' wieder auf frei gesetzt. 
+
+Mit dem Button "`Arbeitsplatz freigeben"' können reservierte oder belegte Arbeitsplätze durch anklicken zu freien Arbeitsplätzen zurückgesetzt werden. 
+
+\subsubsection{Auftrag blocken}
+
+Über den Button "`Auftrag blocken"' kann ein Prozess eines Auftrags abgebrochen werden. Dazu muss im Hard-Code Modus der abzubrechende Prozess in der Auftragsübersicht angeklickt werden. Dieser wird sofort rot markiert und intern als geblockt behandelt. 
+
+Ein Auftrag muss geblockt werden, wenn während des Ablaufs ein unvorhergesehenes Ereignis die weitere Bearbeitung des Auftrags verhindert. Dazu zählt beispielsweise ein Totalausfall des bearbeitenden Robotinos, Verlust des Werkstücks oder anderweitig fehlgeschlagener Transport. 
+
+Wenn ein Auftrag geblockt wurde sollte das zugehörige Werkstück aus der Fertigungsstraße entfernt werden. 
 
 \section{Roboterstatus}
 
