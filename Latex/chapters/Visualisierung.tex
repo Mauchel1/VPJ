@@ -185,10 +185,13 @@ on_ButtonAuftragBlocked_clicked
 
 \section{Tab-View}
 
+Der Bereich III unten links wurde als Tab-View umgesetzt. Es kann jederzeit eines von vier verschiedene Tabs ausgewählt werden, welches angezeigt wird. Zwei der Tabs dienen der Anzeige, über die anderen beiden kann das Programm bedient werden. 
+
+Auf die einzelnen Tabs wird in den folgenden Abschnitten genauer eingegangen. 
+
 \subsection{Log-View}
 
-WriteToDebugTextArea
-Alle Logtypen beschreiben!
+Der erste Tab, der auch bei Programmstart geöffnet ist beinhaltet das Log (Abbildung \ref{fig:Log}). In diesem Tab ist keine Eingabe möglich. Im scrollbaren Textfenster werden zu Programmlaufzeit Logeinträge dargestellt, die durch den Programmablauf generiert wurden. 
 
 \begin{figure}[htb]
     \centering
@@ -196,6 +199,69 @@ Alle Logtypen beschreiben!
     \caption{Tab: Log View}		
     \label{fig:Log}
 \end{figure}
+
+Über die Funktion WriteToDebugTextArea() kann ein übergebener String an das Textview angehängt werden. So wird im Textfeld eine neue Zeile hinzugefügt. Dem übergebenen String wird zuvor der aktuelle Zeitstempel vorangestellt. 
+
+Eine Liste der vorkommenden Logeinträge ist in Tabelle \ref{tab:Log} zu finden. 
+
+\begin{table}[!ht]
+	\centering
+	\begin{tabular}{|c|c|l|}
+		\hline
+		Nr & Kategorie &	Nachricht \\
+		\hline
+    1  & Initialisierung & Fertigungsplanung initialisiert \\
+    2  & Initialisierung & Datenbank gestartet \\
+    3  & Initialisierung & Fertigungsplanung gestartet \\
+ 		\hline
+    4  & Feedback & Prozess hinzugefügt \\
+    5  & Feedback & Auftrag hinzugefügt \\
+    6  & Feedback & Add Werkstück to Station 1 Position 1 \\
+    7  & Feedback & Remove Werkstück from Station 8 Position 1 \\
+ 		\hline
+    8  & Aktion & Action: Robotino 1 move to LoadingStation: 5 \\
+    9  & Aktion & Action: Robotino 1 move to ParkingStation: 1 \\
+    10 & Aktion & Action: Robotino 1 move WS 2 from Position 11 to \\ && Position 22 \\
+ 		\hline
+    11 & Warnung & Warning: Robot 1 died \\
+    12 & Warnung & Warning: Robotino 1 exploded \\
+    13 & Info & Info: Robotino 1 repaired \\
+		\hline
+    14 & Error & ERROR: Could not set Station Place ready after \\ && Prozess Timer elapsed \\
+    15 & Error & ERROR: Could not set Station Place full after \\ && Greifer opened \\
+    16 & Error & ERROR: Could not set Source Station Place free \\ && after Robot Greifer closed \\
+    17 & Error & ERROR: Could not set Loading Station Place free \\ && after Robot drove away \\
+    18 & Error & ERROR: Robot not found \\
+    19 & Error & ERROR: Could not set Station place free from \\ && Hard Coding Button \\
+    20 & Error & ERROR: Could not set Station place defect from \\ && Hard Coding Button \\
+    21 & Error & ERROR: Could not set Station free from \\ && Hard Coding Button \\
+    22 & Error & ERROR: Could not set Loading Station Place \\ && reserved after sending Task to Robot \\
+    23 & Error & ERROR: Could not set Parking Station Place \\ && reserved after sending Task to Robot \\
+    24 & Error & ERROR: Could not set Target Station Place \\ && reserved after sending Task to Robot \\
+    25 & Error & ERROR: Could not set Source Station Place \\ && reserved after sending Task to Robot \\
+		\hline
+    26 & Roboter Error & ROBOTERROR: Robot 1 lost Werkstueck \\
+    27 & Roboter Error & ROBOTERROR: Robot 1 was not able \\ && to grab Werkstueck \\
+    28 & Roboter Error & ROBOTERROR: Robot 1 was not able \\ && to plan Route \\
+		\hline
+	\end{tabular}
+	\caption{Logeinträge}
+	\label{tab:Log}
+\end{table}
+
+Aus der Tabelle kann weiterhin entnommen werden, dass die einzelnen Logeinträge in Kategoriern eingeteilt werden können. Die Kategorie Initialisierung zeigt an, dass das Programm erfolgreich gestartet wurde und bereit ist für Eingaben vom Benutzer. 
+
+Die Logeinträge der Kategorie Feedback zeigen dem Benutzer, dass eine von ihm getätigte Eingabe erfolgreich interpretiert und ausgeführt wurde. Dazu zählt das Hinzufügen oder entfernen von Werkstücken an die Stationen oder das Hinzufügen von Prozessen oder Aufträgen. 
+
+Die Aktionen beschreiben die von den Robotinos ausgeführten Tätigkeiten und werden immer bei erfolgreicher Auftragsvergabe an einen Robotino dem Log hinzugefügt. 
+
+Um eine Warnung zu erzeugen muss ein Roboter entweder die Kommunikation verloren haben, oder aktiv auf defekt geschaltet worden sein. 
+
+Auf einen Error muss individuell reagiert werden. Während des regulären Betriebs sollte keiner der Errors auftreten. Ein Error zeigt somit eine Fehlfunktion des Programms an, und weist auf den Moment des Auftritts hin.
+
+Die Roboter-Error werden vom Robotino gesendet. Auf diese muss der Anwender händisch reagieren. Die einzelnen Errortypen und die nötige Reaktion sind in Kapitel \ref{sec:Error} beschrieben. 
+
+Während des normalen Betriebs besteht das Log zum größten Teil aus Einträgen der Kategorie Aktion, ergänzt um einzelne Feedback-Einträge (siehe Snapshot in Abb. \ref{fig:Log}).  
 
 \subsection{Manual Control}
 
@@ -229,6 +295,7 @@ ResetButtonsExeptOne
 on_ButtonDefektPlatz_clicked...
 RobotClicked
 ParkplatzClicked
+
 \begin{figure}[htb]
     \centering
     \includegraphics[width=0.6\textwidth]{Abbildungen/HardCode.png}
@@ -238,7 +305,8 @@ ParkplatzClicked
 
 \begin{figure}[htb]
     \centering
-    \includegraphics[width=1\textwidth]{Abbildungen/GesamtprogrammROT.png}
+    \includegraphics[width=0.45\textwidth]{Abbildungen/Gesamtprogramm.png}
+    \includegraphics[width=0.45\textwidth]{Abbildungen/GesamtprogrammROT.png}
     \caption{Übersicht Visualisierung im Hard-Code Modus}		
     \label{fig:GesamtprogrammROT}
 \end{figure}
