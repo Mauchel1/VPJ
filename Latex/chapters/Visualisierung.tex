@@ -244,15 +244,50 @@ ParkplatzClicked
 \end{figure}
 
 \section{Roboterstatus}
-UpdateRobotinoAlive
-UpdateRobotinoAkku
-ToggleAliveRobotino
+
+In Bereich IV wird der Status jedes Robotinos dargestellt. Dabei ist auf der linken Seite der Alive-Status der Robotinos, und auf der rechten Seite der Akkustand dargestellt (Abb. \ref{fig:Batterie}). 
+
 \begin{figure}[htb]
     \centering
     \includegraphics[width=0.5\textwidth]{Abbildungen/Batterie.png}
     \caption{Batterie und Statusanzeige}		
     \label{fig:Batterie}
 \end{figure}
+
+\subsection{Akkustand}
+
+Innerhalb der MainWindow wird die Funktion UpdateRobotinoAkku genutzt, um den Akkustand zu aktualisieren. Dabei wird unterschieden, wie hoch der Akkustand ist. Bei einem Akkustand von kleiner als 30 Prozent wird der Fortschrittsbalken rot eingefärbt (Abb. \ref{fig:Batterie} R2, R4). Der Robotino wird bei <25 Prozent Akku zur Ladestation geschickt. 
+
+Ein Akkustand von über 77 Prozent wird, wie in Abbildung \ref{fig:Batterie} R1, grün dargestellt. Bei einem Akkustand zwischen 30 und 77 Prozent wird der Fortschrittsbalken gelb dargestellt (Abb. \ref{fig:Batterie} R3). 
+
+Die Anpassung der Farbe geschieht über das Setzen des Stylesheet für den Fortschrittsbalken. In Listing \ref{lst:ProgressbarStylesheet} ist das implementierte Stylesheet für alle Fortschrittsbalken dargestellt. 
+
+\begin{lstlisting}[frame=single, breaklines=true, numbers=left, stepnumber=2, firstnumber=1, numberstyle = \tiny, caption=Progressbar Stylesheet ,label=lst:ProgressbarStylesheet]
+QProgressBar {
+    border: 2px solid grey;
+    border-radius: 5px;
+	text-align: right;
+ }
+
+ QProgressBar::chunk {
+     background-color: #05B8CC;
+     width: 2px;
+ }
+
+font: 8pt "OpenSans";
+background-color: rgb(160 ,190, 220);
+\end{lstlisting}
+
+Indem der in Listing \ref{lst:AkkuStylesheet} dargestellte Code in der UpdateRobotinoAkku() Funktion ausgeführt wird, wird die Farbe des jeweiligen Fortschrittsbalken-Chunk überschrieben und somit angepasst. In Zeile 1 erfolgt die Aktualisierung des Fortschrittsbalken in der Roboterstatus-View. Zeile 2 zeigt die anschließende Aktualisierung des vertikalen Fortschrittsbalken am Robotino. 
+
+\begin{lstlisting}[frame=single, breaklines=true, numbers=left, stepnumber=2, firstnumber=1, numberstyle = \tiny, caption=Stylesheet Aktualisierung der Akku-Progressbar ,label=lst:AkkuStylesheet]
+P->setStyleSheet("QProgressBar::chunk {background-color: green}");
+Pklein->setStyleSheet("QProgressBar::chunk {background-color: green}");
+\end{lstlisting}
+
+\subsection{Alive-Status}
+
+Der linke Bereich des Roboterstatus-View enthält die Information zum Alive-Status des Robotinos (vgl. \ref{sec:Robotino}). Die dargestellte grüne LED blinkt während der Roboter als "`lebend"' gilt. Das blinken ist in Abbildung \ref{fig:Led} abgebildet. 
 
 \begin{figure}[htb]
     \centering
@@ -261,6 +296,15 @@ ToggleAliveRobotino
     \caption{Roboterstatus-LED blinkend}		
     \label{fig:Led}
 \end{figure}
+
+Über die Funktion UpdateRobotinoAlive() kann die LED aktiviert oder deaktiviert werden. Wenn der Roboter nicht mehr "`lebend"' ist wird eine Meldung an das Log geschrieben und die LED grau gesetzt (Abb. \ref{fig:Batterie} R5). 
+
+
+Über den internen blink-Timer wird alle 500 ms die Funktion ToggleAliveRobotino() aufgerufen. In dieser Funktion wird für alle Robotinos, die "`lebend"' sind, die LED zwischen hellgrün und dunkelgrün gewechselt. Dies geschieht über eine Anpassung des Stylesheets von der LED (siehe Listing \ref{lst:LEDtoggle}). 
+
+\begin{lstlisting}[frame=single, breaklines=true, numbers=left, stepnumber=2, firstnumber=1, numberstyle = \tiny, caption=Stylesheet Aktualisierung der Alive-LED ,label=lst:LEDtoggle]
+toggler ? AliveR1->setStyleSheet("QPushButton {background-color: rgb(0,250,50); border-radius: 6px;}") : AliveR1->setStyleSheet("QPushButton {background-color: green; border-radius: 6px;}");
+\end{lstlisting}
 
 \section{Prozesseingabe}
 \label{sec:Prozesseingabe}

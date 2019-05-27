@@ -212,6 +212,7 @@ Die Funktion readPendingRobotData gleicht der bereits im UDP-Handler für Naviga
 Die nachfolgend aufgerufene Funktion processTheRobotData ist bis auf die Längen der Vektoren und des Datagramms gleich der zuvor in Listing \ref{lst:UDPNav}. Die valide Datagrammlänge beträgt bei den Robotern 72, was sich aus Bytelänge multipliziert mit Datenarraylänge $ 8 * 9 = 72$ ergibt. Die Auswertung des neun Elemente langen Vektors aus Doublewerten erfolgt erst in der Robotinoklasse, welche auf das Signal StatusDataReceived reagiert. Dasselbe Signal wird auch vom simulierten Roboter gesendet, wodurch die Schnittstelle im Simulationsmodus nicht weiter angepasst werden muss. 
 
 \section{Robotino} 
+\label{sec:Robotino}
 
 Die real existierenden Robotinos werden in der Klasse Robotino abgebildet. In der Klasse werden alle Daten gespeichert, die den Robotino beschreiben. Dazu gehören unter anderem die Position in x, y, der Winkel, eine eindeutige RoboterID. Weiterhin werden alle vom Robotino gesendeten Daten wie Status, Position, Error, Hindernis, Akku und Greifer gespeichert(vgl. \ref{sec:Gewerk2Protokoll}). 
 
