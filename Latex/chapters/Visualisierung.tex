@@ -265,7 +265,7 @@ Während des normalen Betriebs besteht das Log zum größten Teil aus Einträgen
 
 \subsection{Manual Control}
 
-on_S8P2weg_clicked...
+Der zweite Tab der Tab-View, Abbildung \ref{fig:ManualControl}, enthält Buttons zum manuellen Hinzufügen und Entfernen von Werkstücken. 
 
 \begin{figure}[htb]
     \centering
@@ -273,6 +273,12 @@ on_S8P2weg_clicked...
     \caption{Tab: Manual Control}		
     \label{fig:ManualControl}
 \end{figure}
+
+Über die beiden linken Buttons können dem Rohteillager einzelne Werkstücke zugeteilt werden. Dazu muss zuvor ein Werkstück händisch der realen Fertigungsstraße an entsprechender Position eingelegt werden. 
+
+Um die fertig bearbeiteten Teile aus Station 8 zu entfernen können die beiden rechten Buttons verwendet werden. 
+
+Über einen Action-Listener wird beim Klick auf einen der Button eine zugeordnete Funktion, z.B. on\_S1P2add\_clicked(), aufgerufen. In der aufgerufenen Funktion wird ein Signal emittiert, dass in der Fertigungsplanung ein Werkstück an entsprechender Stelle der Fertigungsstraße hinzufügt oder entfernt. 
 
 \subsection{Timestamp-Area}
 
