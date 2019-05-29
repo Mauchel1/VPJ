@@ -1,6 +1,6 @@
 % !TEX root = ../VPJ.tex
 
-\chapter{Simulation}
+\chapter{Robotersimulation}
 \label{sec:Simulation}
 
 Um verschiedene Programmabläufe und Funktionen zu testen war es wichtig, auch ohne realen Roboter die standardmäßige Programmfunktionalität darstellen zu können. Die Klasse SimulatedRobot erfüllt genau diese Anforderung. 
@@ -11,7 +11,7 @@ SimulatedRobot enthält eine State-Machine mit 13 Zuständen, die den Roboter au
 
 Wie im echten Roboter wird der aktuelle Auftrag und Auftragstyp zwischengespeichert. 
 
-\subsection{Zustandsdiagramm simulierter Roboter}
+\section{Zustandsdiagramm simulierter Roboter}
 
 Das Zustandsdiagramm in Abbildung \ref{fig:simRobot} beschreibt die Zustände und Transitionen eines simulierten Roboters. Das Diagramm wurde anschließend als State Machine (vgl. \ref{sec:StateMachines}) implementiert. 
 
@@ -32,7 +32,7 @@ Der Initialzustand 1 kann über Empfang eines Auftrags zum Laden zu Zustand 10, 
 
 Der Ablauf innerhalb der State-Machine zwischen zwei Aufträgen erfolgt über fest definierter Timer, die Zustandswechsel bewirken und ein Senden des Roboterstatus an den UDP-Handler hervorrufen.
 
-Da innerhalb von QT keine Events verloren gehen kann auf ein periodisches Senden, wie der echte Roboter es tut verzichtet werden.
+Da innerhalb von QT keine Events verloren gehen, kann auf ein periodisches Senden, wie der echte Roboter es tut, verzichtet werden.
 
 \subsubsection{Simulierte Ladefahrt}
 

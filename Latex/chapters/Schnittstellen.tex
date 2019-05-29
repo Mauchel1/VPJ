@@ -1,11 +1,9 @@
 % !TEX root = ../VPJ.tex
 
-\chapter{Schnittstellen}
+\chapter{Schnittstelle zum Robotino}
 \label{sec:Schnittstellen}
 
-\inlinetodo{Schnittstellen}
-
-\section{Kommunikation zu Robotinos}
+%\section{Kommunikation zu Robotinos}
 \label{sec:Gewerk2Protokoll}
 
 Die Robotinos werden von Gewerk 2 verwaltet und programmiert. Um eine erfolgreiche Kommunikation zwischen Fertigungsplanungsrechner und Robotino zu gewährleisten existieren folgende Vereinbarungen mit Gewerk 2.
@@ -31,7 +29,7 @@ Die in Tabelle \ref{tab:Ports} dargestellte Vereinbarung wurde für die Ports ge
 	\label{tab:Ports}
 \end{table}
 
-\subsection{Sequenzdiagramm}
+\section{Sequenzdiagramm}
 \label{sec:sequenzdiagram}
 
 Zunächst wurde eine Struktur entwickelt, in der beschrieben wird, wie die Daten zwischen Robotino und Fertigungsplanungsrechner ausgetauscht werden sollen. Dies wurde anschließend in einem Sequenzdiagramm, Abbildung \ref{fig:Sequenzdiagramm}, dargestellt. 
@@ -47,12 +45,12 @@ Dem Sequenzdiagramm ist zu entnehmen, dass der Robotino nach Programmstart zykli
 
 Auf Seiten des Fertigungsplanungsrechners wird nur bei Bedarf ein Sendevorgang eingeleitet. Erst wenn ein Auftrag an den Robotino gesendet werden soll wird eine Schleife ausgeführt. In der Schleife wird der Auftrag zyklisch an den Robotino gesendet. Die Zykluszeit beträgt hierbei 700 ms. In Kapitel \ref{sec:StateMachineImplementierung} ist die in einer State-Machine implementierte Schleife beschrieben. Die Schleife kann durch Empfangen einer Statusänderung des Robotinos verlassen werden. Dadurch wird eine erfolgreiche Übertragung des Auftrags sichergestellt werden. Die im Auftrag befindlichen Daten sind in Abschnitt \ref{sec:Telegramme} näher erläutert.
 
-\subsection{Telegramme}
+\section{Telegramme}
 \label{sec:Telegramme}
 
 Die Telegramme zwischen Robotino und Fertigungsplanungsrechner bestehen aus einer festgelegten Struktur. Dabei ist sowohl die Länge der Telegramme als auch der Inhalt festgeschrieben. In beiden Telegrammen werden Double-Werte in einem Byte versendet. Jedes Byte muss daher kodiert und dekodiert werden. 
 
-\subsubsection{Telegramm vom Fertigungsplanungsrechner zu Gewerk 2}
+\subsection{Telegramm vom Fertigungsplanungsrechner zu Gewerk 2}
 
 Der Auftrag, der an den Robotino gesendet wird, enthält 5 Bytes. Eine Aufschlüsselung ist in Tabelle \ref{tab:TelegrammZuG2} dargestellt. 
 
@@ -83,7 +81,7 @@ Mit dem fünften Byte wird eine einfache Erweiterung des Telegramms ermöglicht,
 
 Um Robotino 5 mit einzubinden wurde mit Gewerk 4 eine Sonderform des Protokolls vereinbart. Die Vereinbarung sieht vor, die Auftragsart zum starten der Ladefahrt auf 1 zu setzen, wobei die Position 1 die 06 ist. Alle weiteren Felder sollen mit 00 gefüllt werden. Um die Ladefahrt erneut starten zu können kann die Auftragsart auf 0 zurückgesetzt werden. 
 
-\subsubsection{Positionskodierung}
+\subsection{Positionskodierung}
 \label{sec:Positionskodierung}
 
 Aus den Positionen, die dem Robotino gesendet werden kann eindeutig bestimmt werden, an welchen Ort der Robotino fahren soll. 
@@ -103,7 +101,7 @@ Mit der zweiten Ziffer kann die genaue Position innerhalb einer Station spezifiz
 
 So ergibt sich für Beispielsweise Parkplatz 2 eine Kodierung von 02, für die untere Ladestation die Kodierung 06 oder für den oberen Arbeitsplatz an Station 3 die Kodierung 31.
 
-\subsubsection{Telegramm vom Robotino zum Fertigungsplanungsrechner}
+\subsection{Telegramm vom Robotino zum Fertigungsplanungsrechner}
 
 Das zyklisch gesendete Telegramm vom Robotino enthält alle Informationen, die zur Auftragsgenerierung und Robotinoanzeige nötig sind. Alle Telegrammeinträge sind in Tabelle \ref{tab:TelegrammVonG2} dargestellt. Das Telegramm enthält neun Einträge, welche je einen Double-Wert enthalten. 
 
@@ -148,9 +146,34 @@ Das der Greifer des Robotinos geschlossen, also voll, ist wird im siebten Byte m
 
 Das achte und neunte Byte sind für einfache Erweiterung des Telegramms um weitere Informationen geplant gewesen. Bei Projektstart war das vierte und fünfte Byte ebenfalls reserviert, wurde aber während des Projekts zugewiesen. 
 
-\subsection{Fehlertypen und Behebung}
+\section{Fehlertypen und Behebung}
 \label{sec:Error}
 
-\subsubsection{Fehlertyp 1}
+Der Robotino kann über den Errorstatus verschiendene aufgetretene Fehler anzeigen. Drei dieser Fehlertypen und ihre Behandlung sind in den nächsten Abschnitten beschrieben. In Normalfall ist der Error 1. Das bedeutet es ist alles in Ordnung. 
+
 \subsubsection{Fehlertyp 2}
+
+Wenn der Fehlertyp 2 empfangen wurde, bedeutet das, der Robotino hat sein Werkstück verloren. Diese Meldung tritt genau dann auf, wenn der Greifer des Robotinos zwar geschlossen ist, die Lichtschranke jedoch ein Verlust des Werkstücks detektiert. 
+
+Zur Behebung des Errors wird die Auftragsplanung pausiert und das verlorene Werkstück gesucht und aus der Fertigungsstraße entfernt. Anschließend wird der zugehörige Prozess geblockt. Die Zielstation des Robotinos wird per Hand freigegeben und eventuelle Reservierungen vom entfernten Werkstück aufgehoben. 
+
+In der Praxis konnte dieser Fehler nur mit Gewalt hervorgerufen werden, da ein gegriffenes Werkstück sehr stark festgehalten wird und ein Verlust damit unwahrscheinlich ist. 
+
 \subsubsection{Fehlertyp 3}
+
+Wenn der Robotino einen Transportauftrag erhält und am Abholort kein Werkstück greifen kann wird Fehler 3 gesendet. 
+
+Die Fehlerbehebung ist identisch zur Fehlerbehebung von Fehlertyp 2. Es muss erneut geprüft werden, welcher Prozess abgearbeitet werden sollte, und alle diesem Prozess zugeordneten Arbeitsplätze, Stationen o.ä. freigegeben werden. Der Auftrag muss blockiert werden.
+
+Da die Auftragsvergabe die Position jedes Werkstück kennt, kann dieser Fehlerfall in der Praxis nur sehr selten aufgrund einer größeren Störung oder menschlichem Versagen auftreten. Ein möglicher Grund kann sein, dass der Robotino den Arbeitsplatz verfehlt hat oder das Werkstück von einem Anwender unbeabsichtigt entfernt wurde. 
+
+\subsubsection{Fehlertyp 4}
+
+Ein Fehler von Typ 4 bedeutet, dass keine Route planbar ist. In der Visualisierung muss je nach Situation bei auftreten des Fehlers verschieden reagiert werden. 
+
+Wenn der Robotino direkt nach Erhalten eines Auftrags den Error sendet, kann der Auftrag direkt neu vergeben werden. 
+
+Für den Fall, dass der Robotino inmitten eines Transportvorgangs eine Route nicht berechnen kann, muss im schlimmsten Fall der Robotino defekt geschalten werden. Im normalfall sollte der Robotino nachdem der Error auftrat die Route in bestimmten Zeitabständen versuchen neu zu berechnen, daher kann der Error zunächst nur beobachtet werden. Sollte der Robotino neu gestartet werden muss wie bei Fehlertyp 2 vorgegangen werden. 
+
+Wenn der Robotino ohne einen Transportauftrag keine Route planen kann ist dies für die Auftragsplanung nur bedingt relevant und der Error kann als Info angesehen werden. 
+
