@@ -81,6 +81,8 @@ Im zweiten und dritten Byte sind die Positionen angegeben, an welche sich der Ro
 
 Mit dem fünften Byte wird eine einfache Erweiterung des Telegramms ermöglicht, sofern mehr Daten übertragen werden sollen. Am Anfang der Ausarbeitung des Projektes war das vierte Byte ebenfalls ein reserviertes Byte. 
 
+Um Robotino 5 mit einzubinden wurde mit Gewerk 4 eine Sonderform des Protokolls vereinbart. Die Vereinbarung sieht vor, die Auftragsart zum starten der Ladefahrt auf 1 zu setzen, wobei die Position 1 die 06 ist. Alle weiteren Felder sollen mit 00 gefüllt werden. Um die Ladefahrt erneut starten zu können kann die Auftragsart auf 0 zurückgesetzt werden. 
+
 \subsubsection{Positionskodierung}
 \label{sec:Positionskodierung}
 

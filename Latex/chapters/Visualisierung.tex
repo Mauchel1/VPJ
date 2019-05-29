@@ -160,14 +160,8 @@ Im Normalbetrieb, ohne die Zusatzfunktionalität der Hard-Code Area, bewirkt ein
 
 \section{Auftragsübersicht}
 \label{sec:Auftragsuebersicht}
-on_AuftragsListWidget_itemClicked
-on_AuftragsListWidget_itemDoubleClicked
-AddAuftragsItem
 
-on_pushButton_clicked
-on_pushButton_2_clicked
-on_Pause_clicked
-on_ButtonAuftragBlocked_clicked
+Der rechte Bereich (II) in der Visualisierung enthält die Auftragsübersicht. In Abbildung \ref{fig:Auftragsfortschritt} ist zu erkennen, dass sich der Bereich in zwei Teile aufteilt. Der obere Teil ist für die Anzeige der Aufträge und Prozesse zuständig. Im unteren Teil kann über bereitgestellte Buttons interagiert werden.
 
 \begin{figure}[htb]
     \centering
@@ -176,12 +170,104 @@ on_ButtonAuftragBlocked_clicked
     \label{fig:Auftragsfortschritt}
 \end{figure}
 
+\subsection{Auftragsdarstellung}
+
+In der Abbildung ist zu erkennen, dass jeder Auftrag dargestellt wird, inklusive seiner enthaltenen Prozesse. Durch Anklicken eines Auftrags der Liste können die zugehörigen Prozesse eingeblendet (Abb. \ref{fig:Auftragsausblendung} links) oder ausgeblendet (Abb. \ref{fig:Auftragsausblendung} rechts) werden. 
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.4\textwidth]{Abbildungen/AuftragAusgeklappt.png}
+    \includegraphics[width=0.4\textwidth]{Abbildungen/AuftragEingeklappt.png}
+    \caption{Auftrag ein- und ausgeblendet}		
+    \label{fig:Auftragsausblendung}
+\end{figure}
+
+Der im Auftrag (siehe \ref{sec:Auftrag}) und Prozess (siehe \ref{sec:Prozess}) gespeicherte Fortschritt wird im Fortschrittsbalken aktualisiert, wenn die Funktion UpdateAuftragsFortschritt() innerhalb des Auftragsitem aufgerufen wird. Sobald der Fortschritt 100 Prozent erreicht, wird der Balken grün gefärbt. Der Balken eines geblockten Prozesses wird rot eingefärbt(siehe Abb. \ref{fig:Auftragsfortschritt} Auftrag 3 Prozess 1). 
+
+\subsubsection{Auftragsitem}
+
+Das Auftragsitem (siehe Kapitel \ref{sec:Auftragsitem}) wird in der Auftragsübersicht mit einem Textfeld und nebenstehendem Fortschrittsbalken visualisiert (Abb. \ref{fig:Auftragsitem} links). Das Textfeld enthält dabei die Auftragsnummer. Das gesamte Auftragsitem hat eine Höhe von 31 Pixeln, die Breite ist variabel. 
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.4\textwidth]{Abbildungen/Auftragsitem.png}
+    \includegraphics[width=0.4\textwidth]{Abbildungen/Prozessitem.png}
+    \caption{Auftragsitem (links) und Prozessitem (rechts)}		
+    \label{fig:Auftragsitem}
+\end{figure}
+
+Sowohl Auftrags als auch Prozessitem sind als QListWidgetItem (siehe Kapitel \ref{sec:QListWidgetItem}) implementiert.
+
+Wenn ein QListWidgetItem angeklickt wurde, wird die Funktion on\_Auftrags\-List\-Widget\-\_item\-Clicked() aufgerufen. In Listing \ref{lst:AuftragsitemClicked} ist der Code dargestellt, der dabei für ein Auftragsitem ausgeführt wird. Zunächst wird geprüft, ob das angeklickte Item ein Prozessitem oder ein Auftragsitem ist (Zeile 1). Wenn es sich um ein Auftragsitem handelt, wird die Zeile des angeklickten Items zwischengespeichert (Zeile 3). Anschließend wird für jedes nachfolgende Item geprüft, ob es existiert und ein Prozessitem ist. Solange dabei weitere Prozessitems gefunden werden, werden diese ein- oder ausgeblendet, abhängig davon ob diese zuvor ein- oder ausgeblendet waren. Ansonsten wird die Funktion verlassen.
+
+\begin{lstlisting}[frame=single, breaklines=true, numbers=left, stepnumber=2, firstnumber=1, numberstyle = \tiny, caption=Funktionsblock nach Klicken auf Auftragsitem ,label=lst:AuftragsitemClicked]
+if ((item->whatsThis() == WhatsThis[0]))
+{
+    int itemrow = AuftragListWidget->row(item);
+    while (true)
+    {
+        QListWidgetItem* tempitem = AuftragListWidget->item(itemrow+1);
+        if (tempitem == nullptr || (tempitem->whatsThis() == WhatsThis[0]))
+        {
+            break;
+        }
+        tempitem->setHidden(!tempitem->isHidden());
+        itemrow++;
+        continue;
+    }
+}
+\end{lstlisting}
+
+Dadurch kann durch Anklicken eines Auftragsitem die zugehörigen Prozessitems angezeigt oder ausgeblendet werden. Prozesse eines anderen Auftrags werden dabei ignoriert.
+
+\subsubsection{Prozessitem}
+
+Das Prozessitem (Abb. \ref{fig:Auftragsitem} rechts) wird in der Auftragsübersicht ähnlich dem Auftragsitem dargestellt. Der Hauptunterschied ist hierbei, dass das Prozessitem eine Höhe von nur 21 Pixeln besitzt und weiter eingerückt wird, als ein Auftragsitem. Dadurch kann die Hierarchie zwischen Aufträgen und Prozessen einfach erkannt werden. 
+
+Wenn nach Anklicken eines QListWidgetItems dieses in der Funktion on\_\-Auftrags\-List\-Widget\_\-item\-Clicked() als Prozessitem identifiziert wurde, wird der in Listing \ref{lst:ProzessitemClicked} dargestellte Code ausgeführt (Zeile 1). 
+
+\begin{lstlisting}[frame=single, breaklines=true, numbers=left, stepnumber=2, firstnumber=1, numberstyle = \tiny, caption=Funktionsblock nach Klicken auf Prozessitem ,label=lst:ProzessitemClicked]
+else if (item->whatsThis() == WhatsThis[1])
+{
+    Prozessitem *pi = dynamic_cast<Prozessitem*>(AuftragListWidget->itemWidget(item));
+    QPushButton *p = GetPressedHardCodeButton();
+    if (p == ButtonBlockAuftrag)
+    {
+        pi->prozess->SetBlocked();
+        pi->UpdateProzessBlocked();
+    }
+}
+\end{lstlisting}
+
+Dabei wird das QListWidgetItem zunächst dynamisch in Zeile 3 auf ein Prozessitem gecasted. 
+
+In C++ gibt es verschiedene Wege ein Objekt in ein anderes zu casten. Die geläufigsten (regulären) Castvorgänge sind reinterpret\_cast oder const\_cast. Neben diesen gibt es Funktionen wie dynamic\_cast oder static\_cast. Ein regulärer Cast versucht aus allen weiteren möglichen regulären Castvarianten eine geeignete zu finden, die funktioniert. Dynamic\_cast, oder static\_cast wird hierbei nicht berücksichtigt. Der Unterschied zwischen static\_cast und dynamic\_cast ist hauptsächlich, dass für einen static\_cast bekannt sein muss, in was das Objekt gecastet werden soll. Ein dynamic\_cast hingegen kann immer ausgeführt werden und liefert einen Nullpointer zurück, wenn der Cast fehlschlägt. In diesem Fall wurde die weniger verbreitete Funktion dynamic\_cast gewählt, da nur diese alle Anforderungen zur Laufzeit unterstützt (vgl. \cite{cast}). 
+
+Der Cast ist notwendig, da das QListWidgetItem nicht auf die Funktionen zugreifen kann, die das Prozessitem zur Verfügung stellt. 
+
+Nachdem sichergestellt wurde, dass das Objekt ein Prozessitem ist, wird in Zeile 4 ausgewertet, ob der Hard-Code Button zum blockieren eines Prozesses aktiv ist und anschließend dieser Prozess dahingehend aktualisiert.
+
+Bei einem Doppelklick auf ein QListWidgetItem wird die Funktion on\_Auf\-trags\-List\-Widget\_item\-Double\-Clicked() aufgerufen (siehe Listing \ref{lst:ProzessitemDoubleClicked}). Hierin wird überprüft, ob das angeklickte Objekt ein Prozessitem war und dieses gegebenenfalls gecastet. Auf dem gecasteten Objekt kann dann ein Signal emittiert werden, das eine Aktualisierung der Timestamps bewirkt. 
+
+\begin{lstlisting}[frame=single, breaklines=true, numbers=left, stepnumber=2, firstnumber=1, numberstyle = \tiny, caption=Funktionsblock nach Doppelklick auf Prozessitem ,label=lst:ProzessitemDoubleClicked]
+Prozessitem *pi = dynamic_cast<Prozessitem*>(AuftragListWidget->itemWidget(item));
+emit GetTimestampsOnProzessClicked(pi->prozess->lfdId);
+\end{lstlisting}
+
+\subsection{Buttons der Auftragsübersicht}
+
+Um die im Einhorn (Robotino 5) fest einprogrammierte Ladefahrt zu starten wurden die Button "`Einhorn Ladefahrt"' und "`Ladefahrt over"' implementiert. Jede Betätigung des Buttons  "`Einhorn Ladefahrt"' bewirkt ein einmaliges Senden eines definierten Auftrags an Robotino 5 (siehe Kapitel \ref{sec:Telegramme}). Dazu wird die Funktion EinhornLaden im UDP-Handler genutzt. 
+ 
+Über eine Betätigung des Buttons "`Pause"' wird die Auftragsvergabe in der State-Machine der Fertigungsplanung pausiert. Somit werden Keine Transportaufträge mehr an die Robotinos versendet. Ladefahrten oder eine Parkplatzfahrt wird weiterhin zugelassen. Der Pause Button wird getoggelt, das heißt wenn er betätigt wird, bleibt er bis zur erneuten Betätigung aktiv. Um zu erkennen, das die Auftragsplanung pausiert ist ist der Button im aktivierten Zustand, wie in Abbildung \ref{fig:Pause} zu sehen, Rot hervorgehoben.
+
 \begin{figure}[htb]
     \centering
     \includegraphics[width=0.4\textwidth]{Abbildungen/Pause.png}
     \caption{Pause Button gedrückt}		
     \label{fig:Pause}
 \end{figure}
+
+Die Auftragsplanung wird beispielsweise pausiert, wenn ein Robotino ausgefallen ist und über die Hard-Code Area die Fertigungsstraße wieder aufgeräumt werden muss. 
 
 \section{Tab-View}
 
@@ -430,7 +516,7 @@ toggler ? AliveR1->setStyleSheet("QPushButton {background-color: rgb(0,250,50); 
 \section{Prozesseingabe}
 \label{sec:Prozesseingabe}
 
-on_sendProzess_clicked
+Über den Bereich der Prozesseingabe (V) kann der Fertigungsplanung ein neuer Referenzprozess hinzugefügt werden (siehe Abb. \ref{fig:Prozesseingabe}. Durch die Markierung auf der linken Seite können die Prozessschritte ausgewählt werden, die dem Prozess hinzugefügt werden sollen. Über das UI können Prozesse mit 1 bis 5 Prozessschritten erzeugt werden. Nach Auswahl des Prozessschritts kann eine Station zwischen 1 und 7 ausgewählt werden. Sollten zwei aufeinanderfolgende Prozessschritte die selbe Station beinhalten, wird ein Fehler generiert. Zuletzt kann im rechten Eingabefenster die Bearbeitungsdauer an der Station zwischen 1 und 99 Sekunden ausgewählt werden.
 
 \begin{figure}[htb]
     \centering
@@ -439,11 +525,12 @@ on_sendProzess_clicked
     \label{fig:Prozesseingabe}
 \end{figure}
 
+Dazu wird die Funktion on\_sendProzess\_clicked() aufgerufen. In der Funktion werden die Visualisierungseinträge von oben nach unten überprüft und die Prozessschritte zu einem Prozess erzeugt. Der letzte Prozessschritt zu Station 8 wird automatisch ergänzt. Abschließend wird der neue Prozess an die Fertigungsplanung und darüber an die Datenbank gesendet. 
+
 \section{Auftragseingabe}
 \label{sec:Auftragseingabe}
 
-AddAuftragsItem
-on_sendAuftrag_clicked
+In Abbildung \ref{fig:Auftragsvergabe} ist Bereich VI abgebildet, in dem neue Aufträge erzeugt und dem Programm hinzugefügt werden können. 
 
 \begin{figure}[htb]
     \centering
@@ -452,15 +539,77 @@ on_sendAuftrag_clicked
     \label{fig:Auftragsvergabe}
 \end{figure}
 
+Um einen Auftrag zu erzeugen muss die Anzahl der zu bearbeitenden Referenzprozesse angegeben werden. Über die Tooltips (vgl. Abschnitt {sec:tooltips}) kann erkannt werden, was für Prozessschritte in den einzelnen Prozessen abgebildet sind. 
 
-\section{Benutzerinteraktion}
+Bei Betätigung des Buttons "`Absenden"' werden die Felder zurückgesetzt und ein neuer Auftrag wird in der Fertigungsplanung erzeugt. 
 
-\subsection{Tooltips}
+In der Funktion AddAuftragsItem() werden anschließend die UI-Elemente in der Auftragsübersicht erzeugt. Der in Listing \ref{lst:AddAuftragsItem} dargestellte Code enthält die wesentlichen Codezeilen der Funktion. 
+
+\begin{lstlisting}[frame=single, breaklines=true, numbers=left, stepnumber=2, firstnumber=1, numberstyle = \tiny, caption=Funktionsinhalt AddAuftragsItem ,label=lst:AddAuftragsItem]
+QListWidgetItem *listWidgetItem = new QListWidgetItem(AuftragListWidget);
+AuftragListWidget->addItem(listWidgetItem);
+Auftragsitem *auftragsItem = new Auftragsitem(a);
+auftragsItem->SetLabelText("Auftrag " + QString::number(a->id));
+auftragsItem->UpdateAuftragsFortschritt();
+listWidgetItem->setSizeHint (auftragsItem->sizeHint());
+AuftragListWidget->setItemWidget(listWidgetItem, auftragsItem);
+listWidgetItem->setWhatsThis(WhatsThis[0]);
+
+int itemrow = AuftragListWidget->row(listWidgetItem);
+foreach (Prozess *p, a->Prozesse)
+{
+    Prozessitem *prozessItem = new Prozessitem(p);
+    prozessItem->SetLabelText("Prozess " + QString::number(p->referenzId));
+    prozessItem->UpdateProzessFortschritt();
+
+    QListWidgetItem *widgetItem = new QListWidgetItem();
+
+    AuftragListWidget->insertItem(itemrow+1, widgetItem);
+
+    AuftragListWidget->setItemWidget(widgetItem, prozessItem);
+    widgetItem->setSizeHint(prozessItem->sizeHint());
+    widgetItem->setHidden(true);
+    widgetItem->setWhatsThis(WhatsThis[1]);
+    QString temp = "Werkstueck: " + QString::number(p->lfdId);
+    prozessItem->setToolTip(temp);
+    itemrow++;
+}
+\end{lstlisting}
+
+In Zeile 1 wird ein neues ListWidgetItem erzeugt, welches als Elternwidget das AuftragsListWidget gesetzt bekommt. Dieses Item wird nun dem Elternwidget AuftragsListWidget hinzugefügt. In den Zeilen 3 bis 5 wird ein neues Objekt vom Auftragsitem erzeugt, welches der AuftragsListWidget hinzugefügt wird. Dabei ist wichtig die Größe des Items explizit zu setzen, da es sonst eine Höhe von 1 Pixel bekommt. In Zeile 7 wird zuletzt das Auftragsitem der Liste angehängt. Das Item bekommt eine eindeutige Kennung, anhand derer ausgewertet wird, dass es sich um ein Auftragsitem handelt.
+
+Nachdem das Auftragsitem erzeugt wurde werden alle zugehörigen Prozessitems erzeugt das Vorgehen ähnelt den Zeilen 1 - 7, nur werden die Prozessitems dem zuvor erzeugtem AuftragsListWidget an einer bestimmten Stelle eingefügt (Zeile 19). Bei der Erzeugung werden die Prozessitems direkt ausgeblendet (Zeile 23). Zuletzt wird der Tooltip (siehe Abschnitt \ref{sec:tooltips}) für die Prozessitems in Zeile 26 generiert.
+
+Das besondere an dieser Funktion ist, dass dynamisch zur Laufzeit Widget-Elemente erzeugt, und in die in die Visualisierung eingebunden werden. 
+
+\section{Tooltips}
 \label{sec:tooltips}
-UpdateStationToolTip
-\inlinetodo {Tooltips mit Bildern her und erklaeeeren}
 
-\section{MainWindow}
+Um die Benutzerinteraktion zu erleichtern wurden an zwei Stellen innerhalb der Visualisierung Tooltips implementiert. Ein Tooltip ist ein Hinweistext zu einem Element, der sich beim überfahren mit der Maus (hovern) neben dieser öffnet. 
 
-Neben allen bisher bereits beschriebenen Funktionen wird folgend eine Übersicht über die MainWindow-Funktion gegeben. 
+\subsection{Werkstückstooltip}
+
+Sobald die Maus über ein Arbeitsplatz gefahren wird, auf dem ein Werkstück liegt oder eine Reservierung für ein Werkstück befindet wird über den Tooltip angezeigt, welche ID dieses Werkstück besitzt. In Abbildung \ref{fig:Stationstooltip} ist dies anhand einer Reservierung für Werkstück 7 angezeigt. 
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.31\textwidth]{Abbildungen/Werkstueckhover.png}
+    \caption{Tooltip eines Werkstücks}		
+    \label{fig:Stationstooltip}
+\end{figure}
+
+Die Tooltips eines Arbeitsplatz werden über die Funktion UpdateStationToolTip() aktualisiert und über die Fertigungsplanung aufgerufen. 
+
+\subsection{Prozessitemtooltip}
+
+In Abbildung \ref{fig:Prozessitemtooltip} ist exemplarisch der Tooltip für Prozess 4 dargestellt. Dieser wird angezeigt, sobald mit der Maus über den Text des Prozesses gefahren wird. 
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.25\textwidth]{Abbildungen/Prozesshover.png}
+    \caption{Tooltip eines Prozessitem}		
+    \label{fig:Prozessitemtooltip}
+\end{figure}
+
+Der Im Tooltip dargestellte Text wird über die Funktion UpdateProzessLabelTooltip() verändert und aktualisiert. Dazu wird jeder Prozessschritt des Prozesses durchgegangen und ein String generiert, der die Station und die Bearbeitungsdauer enthält. Die einzelnen Strings werden untereinander dargestellt. 
 
