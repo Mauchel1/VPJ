@@ -601,8 +601,99 @@ In den folgenden Abschnitten sind werden die wichtigsten unter ihnen kurz beleuc
 
 \subsection{Main}
 \label{sec:Main}
-\inlinetodo{StateMachine Connections beschreiben / erwähnen - genau eine funktion zu einem State}
+
+Die initial aufgerufene Klasse des Programms ist die Main-Funktion. In dieser wird die Applikation, also das Anzeigefenster samt Logik, gestartet. Der Hauptteil der Funktion verbindet auftretende Signale mit zugehörigen Slots. 
+
+Über eine Property kann in der Main festgelegt werden, ob das Programm im Simulationsmodus gestartet werden soll, oder im realen Betrieb. 
+
+Listing \ref{lst:MainT1} zeigt einige Funktionen, die folgend erwähnt werden. Diese sind aus dem Kontext genommen und stellen nur eine möglichst repräsentative Auswahl mit Reihenfolge der Main Klasse dar. 
+
+\begin{lstlisting}[frame=single, breaklines=true, numbers=left, stepnumber=1, firstnumber=1, numberstyle = \tiny, caption=Main Funktion Teil 1,label=lst:MainT1]
+Robotino robot1(1, QHostAddress("192.168.0.11"), 25010, 25011);
+UdpHandler robot1UDP(simulated, robot1.IP(), robot1.PortSend(), robot1.PortReceive());
+UdpHandler navUDP(25000);
+QObject::connect(&robot1UDP, &UdpHandler::StatusDataReceived, &robot1, &Robotino::UpdateValues);
+QObject::connect(&navUDP, &UdpHandler::NavigationDataReceivedR1, &robot1, &Robotino::UpdatePosition);
+
+QObject::connect(&robot1, &Robotino::PositionChanged, &w, &MainWindow::UpdateRobotino1Position);
+QObject::connect(&robot1, &Robotino::AkkuChanged, &w, &MainWindow::UpdateRobotino1Akku);
+QObject::connect(&robot1, &Robotino::GetUdpResponse, &robot1UDP, &UdpHandler::sendRobotAlive);
+QObject::connect(&robot1, &Robotino::RobotAliveChanged, &w, &MainWindow::UpdateRobotino1Alive);
+QObject::connect(&robot1, &Robotino::GreiferChanged, &w, &MainWindow::UpdateRobotino1Greifer);
+QObject::connect(&robot1, &Robotino::HindernisChanged, &w, &MainWindow::UpdateRobotino1Hindernis);
+
+\end{lstlisting}
+
+Zuerst werden Objekte der Roboterklassen (Zeile 1) erzeugt. Dies geschieht für alle Robotinos. Zugehörig werden alle UdpHandler instanziiert(Zeile 3), welche die Kommunikation zu den Robotinos ermöglichen. Für die Kommunikation zum Navigationsrechner wird der notwendige UDPHandler in Zeile 3 instanziiert. 
+
+Über die connect() Funktion werden die UDP-Handler und Robotino verbunden um auf Statusänderungen (Zeile 4) und Positionsänderungen (Zeile 5) zu reagieren. In den Zeilen 7ff dargestellt sind die Connect-Funktionen um die Visualisierung innerhalb der MainWindow-Klasse zu aktualisieren, und die Statusänderungen des Robotinos korrekt zu behandeln.  
+
+Listing \ref{lst:MainT2} zeigt die anschließende Initialisierung (Zeile 1) der Fertigungsplanung und zugehörige Connect() Funktionen. 
+
+\begin{lstlisting}[frame=single, breaklines=true, numbers=left, stepnumber=1, firstnumber=1, numberstyle = \tiny, caption=Main Funktion Teil 2 - Fertigungsplanung,label=lst:MainT2]
+Fertigungsplanung Fertigung;
+QObject::connect(&w, &MainWindow::NeuerAuftrag, &Fertigung, &Fertigungsplanung::AddAuftrag);
+QObject::connect(&w, &MainWindow::NeuerProzess, &Fertigung, &Fertigungsplanung::AddProzess);
+QObject::connect(&Fertigung, &Fertigungsplanung::DebugAreaString, &w, &MainWindow::WriteToDebugTextArea);
+QObject::connect(&Fertigung.Fs.S1.P1, &Platz::PlatzChanged, &w, &MainWindow::UpdateStationsplatz);
+QObject::connect(&Fertigung.Fs.P1, &Parkplatz::PlatzChanged, &w, &MainWindow::UpdateParkplatz);
+
+\end{lstlisting}
+
+Die Fertigungsplanung wird mit den Funktionen der Auftrags und Prozesserzeugung des MainWindow (Zeile 2 und 3), als auch dem Log-View (Zeile 4) verknüpft. 
+
+Anschließend werden alle Arbeits- und Parkplätze mit der zugehörigen Updatefunktion in der Visualisierung verbunden.
+
+In weiteren nicht dargestellten Connect-Aufrufen werden die Funktionen der Robotinos mit denen der Fertigungsplanung verknüpft. Anschließend werden alle anklickbaren Elemente der Visualisierung mit den zugehörigen Funktionen verbunden. 
+
+\begin{lstlisting}[frame=single, breaklines=true, numbers=left, stepnumber=1, firstnumber=1, numberstyle = \tiny, caption=Main Funktion Teil 3 - Datenbank und StateMachine,label=lst:MainT3]
+DatabaseHandler dbhandler;
+dbhandler.InitDB();
+
+Fertigung.r1 = &robot1;
+Fertigung.r1UDP = &robot1UDP;
+Fertigung.db = &dbhandler;
+Fertigung.InitProzesses();
+Fertigung.AddTransitionsToStates();
+Fertigung.AddStatesToStateMachine();
+QObject::connect(Fertigung.StateCheckRobots, &QState::entered, &Fertigung, &Fertigungsplanung::CheckRobots);
+Fertigung.Start();
+\end{lstlisting}
+
+Nachdem so alle UDP- und internen Verbindungen hergestellt wurden, wird die Datenbank initialisiert und die Verbindung hergestellt (Listing \ref{lst:MainT3} Zeile 1f). 
+
+Alle Verknüpfungen zwischen Fertigungsplanung und DatenbankHandler und Visualisierung werden nachfolgend erzeugt. Das Konzept entspricht dem oben beschriebenen. 
+
+Der Fertigungsplanung werden nun alle erzeugten Objekte der Robotinos und aller Handler gesetzt (Zeilen 4 - 6). 
+
+Zuletzt wird die Zustandsmaschine der Fertigungsplanung vorbereitet. Dies geschieht in Zeilen 7ff. Besonders hervorzuheben ist hierbei, dass jeder Zustand des Zustandsautomaten eine eigene Funktion besitzt, die beim entered()-Event aufgerufen wird. So ruft beispielsweise das Betreten des Zustands StateCheckRobots (Zeile 10) die Funktion CheckRobots auf. 
+
+Abschließend wird die Zustandsmaschine in Zeile 11 gestartet und die Main Funktion wird geschlossen. 
+
 \subsection{Timestamp}
+
+Um die in der Datenbank erzeugten Timestamps zwischenzuspeichern und anzuzeigen wurde eine Timestamp Klasse entworfen. 
+
+Die Klasse enthält, zusätzlich zu dem Timestamp selbst, den zugehörigen Platz, das Werkstück und einen Status. Die Properties werden einmalig über den Konstruktor gesetzt. 
+
+Die Klasse stellt weiterhin eine Funktion bereit, die es ermöglicht aus den so vorliegenden Daten einen String zu generieren. Dazu wird ein QDateTime Objekt erzeugt, dessen Zeit auf LocalTime gesetzt wird. Mit diesem kann nachfolgend ein einheitlicher String erzeugt werden. 
+
+\subsection{Fertigungsstrasse}
+
+Um auf Events innerhalb der Prozesskette zu reagieren wurde zusätzlich zu der in der Datenbank abgelegten Fertigungsstrasse diese in Qt abgelegt. Beide werden redundant gepflegt und in Auftragsvergabe berücksichtigt. 
+
+Die Fertigungsstrasse stellt Funktionen zur Verfügung, die ermöglichen einen Arbeitsplatz oder eine Station anhand ihrer ID zurückzugeben. Außerdem sind alle acht Stationen, Parkplätze und Ladestationen hier in eingebetteten Klassen abgebildet. 
+
+Die Klasse der Stationen enthält neben zwei Arbeitsplätzen eine ID. 
+
+In die Klasse der Arbeitsplätze wurden neben Status und ID die Signale implementiert, die eine Arbeitsplatzänderung anzeigen. Es existieren weiterhin Funktionen um den Status des Arbeitsplatz zu beeinflussen. 
+
 \subsection{Auftrags- und Prozessitem}
 \label{sec:Auftragsitem}
+
+Die in der Auftragsübersicht (siehe \ref{sec:Auftragsuebersicht}) dargestellten Items werden in zwei unterschiedlichen Klassen implementiert. 
+
+Auf der einen Seite gibt es die Klasse Prozessitem, die für die Visualisierung eines Prozesses benötigt wird. Ergänzend dazu existiert eine Klasse Auftragsitem, welche die Darstellung eines Auftrags in der Auftragsübersicht ermöglicht. Die beiden Klassen unterscheiden sich neben der Behandlung von Aufträgen oder Prozessen darin, dass im Prozessitem Funktionen bereitgestellt werden, mit denen ein Prozessitem geblockt werden kann.
+
+Beide der Klassen stellen für sich eine vollständige Implementierung einer Visualisierung dar, inklusive Connect und Updatefunktionen. Im Rahmen der Dokumentation wird ausschließlich die weitaus umfassendere MainWindow Klasse genauer beschrieben, da diese alle Funktionalitäten beider ItemKlassen abdeckt. 
 
