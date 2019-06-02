@@ -3,9 +3,11 @@
 \chapter{Implementierung}
 \label{sec:Implementierung}
 
-Implementierung
+In diesem Kapitel geht es um die Implementierung des Programms in Qt. Dazu wird zunächst eine Übersicht über die Programmstruktur gegeben. Anschließend werden die wichtigsten Klassen näher beleuchtet und ihre Funktion erläutert. 
 
 \section{Programmstruktur}
+
+In Abbildung \ref{fig:Klassendiagramm} ist eine Übersicht der wichtigsten Klassen dargestellt. 
 
 \begin{figure}[htb]
     \centering
@@ -14,7 +16,25 @@ Implementierung
     \label{fig:Klassendiagramm}
 \end{figure}
 
+Die initiale Klasse bildet die Main, oben links. In der Main werden die anderen Klassen erzeugt, sowie Verbindungen zwischen den Klassen hergestellt.
 
+Nach dem Ablauf der Main ist die Klasse Fertigungsplanung die kontinuierlich laufende Klasse des Programms. In der Fertigungsplanung findet die Auftragsvergabe statt. Für den Überblick auf die Aufträge enthält die Fertigungsplanung eine Liste von Aufträgen. Jeder dieser Aufträge enthält eine Liste von Prozessen, welche wiederum eine Liste von Prozessschritten beinhalten. 
+
+Innerhalb der Fertigungsplanung wird die Fertigungsstraße in einer Klasse abgebildet. Diese besteht wiederum aus Parkplätzen und Stationen. Jede Station enthält einzelne Arbeitsplätze. 
+
+Mit der in der Fertigungsplanung implementierten State-Machine wird die Auftragsplanung durchgeführt.
+
+Auf der linken Seite der Abbildung ist die Robotino Klasse dargestellt. Diese enthält alle Stati und Informationen zu den Robotinos. Je real existierenden Robotino wird ein Objekt dieser Klasse erzeugt.
+
+Im Simulationsbetrieb wird die Klasse SimulatedRobot genutzt um die Statusänderungen der Robotinos nachzubilden. Diese Klasse wird mit dem UDP-Handler verbunden. 
+
+Der UDP-Handler ist die Schnittstelle (Interface) zwischen dem Programm und den Robotinos, sowie dem Navigations-PC. Die Klasse stellt Funktionen zum Datenaustausch und ersten Datenauswertung zur Verfügung. 
+
+Ähnlich dem UDP-Handler sorgt die Klasse Datenbankhandler für die Bereitstellung von Funktionen um auf die Datenbank zugreifen zu können. Die initiale Verbindung zur Datenbank erfolgt ebenfalls über diese Klasse.
+
+In der Klasse Mainwindow erfolgt die Visualisierung und Verknüpfungen zur grafischen Oberfläche. Diese Klasse ist im Kapitel \ref{sec:Visualisierung} näher beleuchtet.
+
+Neben den genannten Klassen existieren noch weitere kleinere Klassen, um die aufgezeigten zu Verwalten oder zu verbinden. 
 
 \section{Database-Handler}
 \label{sec:Databasehandler}
@@ -81,10 +101,32 @@ q.exec();
 \end{lstlisting}
 
 \subsection{Getter}
+
+Um auf Daten in der Datenbank zuzugreifen wurden Funktionen bereitgestellt, die diese zurückgeben. So kann über die Getter festgestellt werden, ob sich ein Werkstück im Lager befindet oder ob ein Roboter oder eine Station frei oder reserviert ist. Eine Funktion liefert alle in der Datenbank existierenden Prozesse zurück. 
+
+Es kann der nächste freie Parkplatz oder die nächste freie Ladestation zurückgegeben werden. Bei Übergabe einer Station kann das zugehörige Werkstück oder andersherum bei Übergabe des Werkstück die zugehörige Station  und zugeföriger Robotino gefunden werden. 
+
+Es kann einfach festgestellt werden, ob sich ein Robotino aktuell auf einem Parkplatz befindet.
+
+Zuletzt werden über zwei Funktionen die Timestamps von Werkstück oder Station bereitgestellt.
+
 \inlinetodo{}
 \subsection{Updates}
+
+Um die Daten der Datenbank zu aktualisieren wurden weitere Funktionen bereitgestellt. Mit den Update-Funktionen kann der Arbeitsplatz-Status oder der Prozessfortschritt aktualisiert werden. 
+
+Die Robotino-Akkustände sowie deren Stati können auch aktualisiert werden.
+
+Dem Arbeitsplatz kann außerdem ein Werkstück oder Robotino zugewiesen, oder entfernt, werden. 
+
+Über eine Update-Funktion wird der Schreibe-Tag, der die RFIDs beinhaltet aktualisiert. 
 \inlinetodo{}
 \subsection{Setter}
+
+Über Setter-Funktionen können Einträge in der Datenbank gesetzt werden. Die beiden Hauptfunktionen hier setzen die erzeugten Aufträge oder erzeugten Prozesse.
+
+Innerhalb der SendProzess-Funktion wird unterschieden, ob die Datenbank den Prozess bereits beinhaltet, dieser also nur aktualisiert, oder dieser neu erzeugt werden muss. 
+
 \inlinetodo{}
 
 \section{UDP-Handler} 
@@ -243,14 +285,14 @@ Sobald sich der Alive-Tag ändert wird in der Visualisierung die RoboterAlive-LE
 \section{Auftrag, Prozess, Prozessschritt} 
 \label{sec:AuftragProzessSchritt}
 
-Die im Programm auftretenden Aufträge sind in einer bestimmten Struktur organisiert. Diese variiert zu der in der Datenbank abgespeicherten Struktur. So wird über die Visualisierung ein Auftrag angelegt. Jeder so angelegte Auftrag beinhaltet ein oder mehrere Prozesse. In der Datenbank sind dies komplementär gesehen die Werkstücke. Jeder Prozess besteht aus mehreren Prozessschritten, die den genauen Ablauf eines Prozesses beschreiben. 
+Die im Programm auftretenden Aufträge sind in einer bestimmten Struktur organisiert. Diese variiert zu der in der Datenbank abgespeicherten Struktur. So wird über die Visualisierung ein Auftrag angelegt. Jeder so angelegte \Gls{Auftrag} beinhaltet ein oder mehrere Prozesse. In der Datenbank sind dies komplementär gesehen die Werkstücke. Jeder \Gls{Prozess} besteht aus mehreren Prozessschritten, die den genauen Ablauf eines Prozesses beschreiben. 
 
 Auftrag, Prozess und Prozessschritt sind in verschiedene Klassen geschrieben. Folgend werden diese Klassen näher beleuchtet. 
 
 \subsection{Prozessschritt}
 \label{sec:Prozessschritt}
 
-Ein Prozessschritt besteht aus genau einer Stations-ID verknüpft mit einer festen Bearbeitungsdauer in Sekunden. Dies beschreibt für einen Teil eines Prozesses. In einer Fortschritts-Flag wird festgehalten, ob der Prozessschritt bereits bearbeitet wurde, oder noch bearbeitet werden muss. 
+Ein \Gls{Prozessschritt} besteht aus genau einer Stations-ID verknüpft mit einer festen Bearbeitungsdauer in Sekunden. Dies beschreibt für einen Teil eines Prozesses. In einer Fortschritts-Flag wird festgehalten, ob der Prozessschritt bereits bearbeitet wurde, oder noch bearbeitet werden muss. 
 
 Der Prozessfortschritt kann ein Signal emittieren, welches anzeigt, dass sich der Fortschritt geändert hat.
 
@@ -321,7 +363,7 @@ Auftrag *A = new Auftrag();
 
 for (int prozesscounter = 0; prozesscounter < 5; prozesscounter++) //5 Prozess UI Elemente
 {
-    for (int i = 0; i < Avalues[prozesscounter]; i++) //Anzahl der eingegebenen Prozesszahl
+    for (int i = 0; i < Avalues[prozesscounter]; i++)    //Anzahl der eingegebenen Prozesszahl
     {
         Prozess *p = new Prozess();
         [...]  // Prozess + Prozessschritte kopieren
@@ -551,11 +593,16 @@ Um die nächste Zahl hinzuzufügen wird im dritten Schritt (Listing \ref{lst:shu
  
 Zuletzt wird die noch fehlende Zahl der Liste ergänzt (Listing \ref{lst:shuffle} Zeile 22ff) und die Liste zurückgegeben. 
 
-\section{Mainwindow}
-
-\section{Main}
-\label{sec:Main}
-\inlinetodo{StateMachine Connections beschreiben / erwähnen - genau eine funktion zu einem State}
 \section{Weitere Klassen}
 
+Neben den bisher ausführlicher beschriebenen Klassen gibt es noch weitere Klassen, die für Organisation, Strukturierung oder als Hilfe für bestimmte Teilgebiete dienen. 
+
+In den folgenden Abschnitten sind werden die wichtigsten unter ihnen kurz beleuchtet.
+
+\subsection{Main}
+\label{sec:Main}
+\inlinetodo{StateMachine Connections beschreiben / erwähnen - genau eine funktion zu einem State}
+\subsection{Timestamp}
+\subsection{Auftrags- und Prozessitem}
+\label{sec:Auftragsitem}
 
