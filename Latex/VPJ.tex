@@ -13,7 +13,7 @@
 \input{configuration/configuration}    % load all settings
 \newcommand{\inlinetodo}[1]{\todo[inline,linecolor=blue,backgroundcolor=blue!25,bordercolor=blue,size=\normalsize]{#1}}
 
-\hyphenation{Ba-che-lor-the-sis Mas-ter-the-sis}
+\hyphenation{Ba-che-lor-the-sis Mas-ter-the-sis Auf-trags-List-Wid-get item-Double-Clicked}
 
 % Cover page here, no page number
 \input{./style/coverpage}
@@ -26,8 +26,49 @@
 % Abstract page here
 \input{./style/abstractpage}
 
+\newpage
+
+  \vspace{1.5cm}
+  \begin{minipage}[b][0cm][b]{\textwidth}
+    \fontsize{22pt}{20pt}
+    \selectfont
+    \begin{center}
+      Glossar  	  
+  	\end{center}
+  \end{minipage}
+
+\renewcommand{\arraystretch}{1.5}
+\begin{table}[!ht]
+	\centering
+	\begin{tabular}{|c|p{10cm}|}
+		\hline
+		\textbf{Begriff} &	\textbf{Beschreibung} \\
+		\hline
+    Auftrag & Ein Auftrag ist das vom Benutzer eingegebene Konstrukt aus verschiedenen Prozessen \\
+		\hline
+    Arbeitsplatz & Ein einzelner Bearbeitungsplatz an einer Station\\
+		\hline
+    Einhorn & Eigenname von Robotino 5  \\
+		\hline
+    Fertigungsstraße & Zusammenfassung aller Stationen und Arbeitsplätze  \\
+		\hline
+    Position & Fertigungsplanung \\
+		\hline
+    Prozess & Ein Prozess beschreibt die Abfolge unterschiedlich vieler Prozessschritte. Im Zusammenhang der Datenbank wird der Begriff Werkstück verwendet  \\
+		\hline
+    Prozessschritt & Enthält genau einen Arbeitsplatz mit Bearbeitungsdauer \\
+		\hline
+    Station & Der Zusammenschluss aus einem RFID Lese- Schreibgerät und den dahinterliegenden beiden Arbeitsplätzen \\
+		\hline
+    Werkstück & Ein Werkstück symbolisiert exakt einen "`Stein"' in der Fertigungsstraße. Ein Werkstück entspricht immer genau einem Prozess\\
+		\hline
+	\end{tabular}
+	\label{tab:Glossar}
+\end{table}
+
 % Table of contents here
 \tableofcontents
+
 
 % path to the chapters folder is set to find the images used there
 \graphicspath{ {./chapters/} }
@@ -38,17 +79,15 @@
 \clearpage
 \pagenumbering{arabic}
 \input{chapters/Einleitung}
-%\input{chapters/Vorhandenes_System}
 \input{chapters/Grundlagen}
-%\input{chapters/Aufgabenstellung}
 \input{chapters/Schnittstellen}
 \input{chapters/Implementierung}
 \input{chapters/Visualisierung}
 \input{chapters/Robotersimulation}
-\input{chapters/Datenbank}
-%\input{chapters/Test}
-%\input{chapters/Auswertung}
-%\input{chapters/Fazit}
+%\input{chapters/Fertigungsrechner.tex}
+%\input{chapters/Datenbank.tex}
+%\input{chapters/Fertigungsueberwachung.tex}
+\input{chapters/Fazit}
 
 \listoffigures
 %\listoftables
@@ -68,7 +107,7 @@
 \newpage
 \clearpage
 \thispagestyle{empty}
-%\Istatement
+\input{style/statement_i.tex}
 
 % appendix
 \end{document}
