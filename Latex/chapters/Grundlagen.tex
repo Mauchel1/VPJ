@@ -1,21 +1,19 @@
 % !TEX root = ../VPJ.tex
 
-\chapter{Grundlagen und Konzepte}
+\chapter{Grundlagen und Konzepte von Qt}
 \label{sec:Grundlagen}
 
 In diesem Kapitel werden einige Grundlagen erläutert, die zum Verständnis der späteren Kapitel der Arbeit beitragen. 
 
-\section{Qt}
-
-Qt ist eine plattformübergreifende Anwendungsentwicklungsumgebung für Desktopanwendungen, eingebettete und mobile Systeme. Unterstützt werden unter anderem Linux, OS X,  Windows, Android, iOS, BlackBerry oder Sailfish OS. 
+Qt ist eine plattformübergreifende Anwendungsentwicklungsumgebung für Desktop\-anwendungen, eingebettete und mobile Systeme. Unterstützt werden unter anderem Linux, OS X,  Windows, Android, iOS, BlackBerry oder Sailfish OS. 
 
 Die Umgebung ist in C++ geschrieben, weshalb vorwiegend in dieser Sprache programmiert wird. Eine Besonderheit an Qt ist die Benutzung eines Signal-Slot-Systems. 
 
-Ähnlich anderen Entwicklungsumgebungen bietet Qt mit einem implementierten Designer Möglichkeiten zur GUI-Programmierung mit vorgefertigten Widgets (vgl. \cite{qt_allgemein}).
+Ähnlich anderen Entwicklungsumgebungen bietet Qt mit einem implementierten Designer, Möglichkeiten zur GUI-Programmierung mit vorgefertigten Widgets (vgl. \cite{qt_allgemein}).
 
 Die nächsten Abschnitte zeigen einige Besonderheiten von Qt und Konzepte, die in der Ausarbeitung des Projekts verwendet wurden. 
 
-\subsection{Eventbasiertes System}
+\section{Eventbasiertes System}
 \label{sec:Eventbasiert}
 
 Innerhalb von Qt werden Signale und Slots zur Kommunikation zwischen Objekten genutzt. Das Signal-Slot Konzept ersetzt das in anderen Umgebungen verwendete Callback-System, welches beispielsweise in Eclipse bei der Java-Programmierung oder in Visual Studio mit C\# verwendet wird. 
@@ -27,9 +25,9 @@ Innerhalb von Qt werden Signale und Slots zur Kommunikation zwischen Objekten ge
     \label{fig:signalslots}
 \end{figure}
 
-In Abbildung \ref{fig:signalslots} ist das Konzept visuell dargestellt. Ein Signal wird immer dann emittiert, wenn ein bestimmtes Event auftritt. Die in Qt verwendeten Widgets stellen bereits viele dieser Signale bereit, können jedoch um eigene ergänzt werden. 
+In Abbildung \ref{fig:signalslots} ist das Konzept visuell dargestellt. Ein Signal wird immer dann emittiert, wenn ein bestimmtes Event auftritt. Die in Qt verwendeten Widgets stellen bereits viele dieser Signale bereit, können jedoch um Eigene ergänzt werden. 
 
-Das Gegenstück zu den Signalen sind Slots, welche als Antwort auf ein Signal aufgerufen wird. Es können beliebig viele Signale an einen Slot gebunden werden. Es ist ebenfalls möglich Signale direkt an weitere Signale zu binden. 
+Das Gegenstück zu den Signalen sind Slots, welche als Antwort auf ein Signal aufgerufen werden. Es können beliebig viele Signale an einen Slot gebunden werden. Es ist ebenfalls möglich Signale direkt an weitere Signale zu binden. 
 
 Ein Slot kann wie eine normale Funktion auch mittels Funktionsaufruf verwendet werden.  
 
@@ -43,36 +41,36 @@ QObject::connect(const QObject *sender, const char *signal, const QObject *recei
 
 In Listing \ref{lst:Connect} ist der Connect-Aufruf vollständig dargestellt. Hinzuzufügen ist, dass der letzte Übergabeparameter, ConnectionType, optional ist, da er als Standardwert QT::AutoConnection beinhaltet. Die ersten beiden Parameter enthalten also immer die Senderseite, die letzten beiden Parameter die Empfängerseite. Dabei ist zuerst das Objekt anzugeben, welches sendet oder empfängt und danach das Signal, bzw. der Slot, der genutzt werden soll. 
 
-\subsection{Sockets}
+\section{Sockets}
 \label{sec:QTSocket}
 
 Die Kommunikation über UDP wird in Qt mit einem QUdpSocket bereitgestellt. Der Socket bietet Funktionen, mit denen UDP-Datagramme gesendet und empfangen werden können. 
 
 Um einen Datenaustausch zu ermöglichen wird der Socket mittels einer Bind()-Methode an eine spezielle Adresse und einen Port gebunden. Vorteil dieser Implementierung ist, dass beim Erhalt einer Nachricht ein readyRead()-Signal emittiert wird, auf das sich verbunden werden kann. 
 
-Sobald das readyRead() Signal emittiert wurde liefert hasPendingDatagrams() true zurück. Das Datagramm kann anschließend über readDatagram() oder receiveDatagram() ausgelesen werden (vgl. \cite{qt_socket}).
+Sobald das readyRead()-Signal emittiert wurde, liefert hasPendingDatagrams() true zurück. Das Datagramm kann anschließend über readDatagram() oder receiveDatagram() ausgelesen werden (vgl. \cite{qt_socket}).
 
 Außerdem unterstützt die Klasse UDP multicast.
 
-Wenn ein Datagram nicht ausgelesen wird, wird kein weiteres readyRead-Signal emittiert, bis dieses ausgelesen wurde. 
+Wenn ein Datagramm nicht ausgelesen wird, wird kein weiteres readyRead()-Signal emittiert, bis dieses ausgelesen wurde. 
 
-\subsection{Datenbank in Qt}
+\section{Datenbank in Qt}
 \label{sec:QTDatabase}
 
-Um möglichst Einfach Datenbanken in Qt zu implementieren wird die Klasse QSqlDatabase (vgl. \cite{qt_database}) bereitgestellt. Diese Klasse ist für die Verbindung und Kommunikation an eine bestehende Datenbank zuständig. Der Datenbanktyp wird über den eingeladenen Treiber bestimmt. In dieser Arbeit sollte auf eine Datenbank vom Typ MYSQL zugegriffen werden.
+Um möglichst einfach Datenbanken in Qt zu implementieren, wird die Klasse QSqlDatabase (vgl. \cite{qt_database}) bereitgestellt. Diese Klasse ist für die Verbindung und Kommunikation an eine bestehende Datenbank zuständig. Der Datenbanktyp wird über den eingeladenen Treiber bestimmt. In dieser Arbeit sollte auf eine Datenbank vom Typ MYSQL zugegriffen werden.
 
 Um den Treiber der Entwicklungsumgebung von Qt bekannt zu machen war es notwendig eine MYSQL Library einzubinden. Dies konnte gelöst werden, indem die Datei "`MySQLLib.dll"', welche zum Beispiel im MySQL Connector zu finden ist (Pfad: C:\textbackslash Program Files\textbackslash MySQL\textbackslash MySQL Connector.C 6.1\textbackslash lib), an einen Ort kopiert wird, dessen Pfad von der Entwicklungsumgebung erkannt wird. Ein Möglicher Ort ist C:\textbackslash Windows. 
 
-Nachdem sich mit dem Setzten von Nutzername, Passwort, Datenbankname und Host auf die Datenbank verbunden wurde können die gegebenen Funktionen verwendet werden. 
+Nachdem sich mit dem Setzten von Nutzername, Passwort, Datenbankname und Host auf die Datenbank verbunden wurde, können die gegebenen Funktionen verwendet werden. 
 
 In dieser Arbeit wurde eine QSqlQuery innerhalb der QSqlDatabase verwendet, um die Daten der Datenbank auszulesen und zu manipulieren. Die Query stellt Funktionen zur Verfügung, mit denen die gängigen SELECT, INSERT und UPDATE Befehle umgesetzt werden können.  
 
-\subsection{State Machines in Qt}
+\section{State Machines in Qt}
 \label{sec:StateMachines}
 
-Um entwickelte Zustandsautomaten zu implementieren bietet Qt ein Konzept "`State Machines"' mit dazugehörigen Klassen. 
+Um entwickelte Zustandsautomaten zu implementieren, bietet Qt ein Konzept "`State Machines"' mit dazugehörigen Klassen. 
 
-Dieses Konzept basiert darauf, einen in beispielsweise UML vorliegenden Zustandsgrafen möglichst einfach zu implementieren. 
+Dieses Konzept basiert darauf, einen, in beispielsweise UML vorliegenden, Zustandsgrafen möglichst einfach zu implementieren. 
 
 Eine einfache Zustandsmaschine, dargestellt in Abbildung \ref{fig:StateMachineexample}, kann wie folgt implementiert werden:
 
@@ -92,7 +90,7 @@ Zunächst wird die State Machine und ihre Zustände erzeugt (Listing \ref{lst:SM
     QState *s3 = new QState();
 \end{lstlisting}
 
-Anschließend werden jedem Zustand alle für diesen Zustand vorhandenen Transitionen mit der QState::addTransition() Funktion hinzugefügt (Listing \ref{lst:SM2}). Dabei wird angegeben, bei welchem Event (Signal) die Transition ausgeführt werden soll. Wenn ein Transitionssignal auserhalb des Zustands auftritt wird die Transition nicht ausgeführt. 
+Anschließend werden jedem Zustand alle für diesen Zustand vorhandenen Transitionen mit der QState::addTransition() Funktion hinzugefügt (Listing \ref{lst:SM2}). Dabei wird angegeben, bei welchem Event (Signal) die Transition ausgeführt werden soll. Wenn ein Transitionssignal außerhalb des Zustands auftritt, wird die Transition nicht ausgeführt. 
 
 \begin{lstlisting}[frame=single, breaklines=true, numbers=left, stepnumber=2, firstnumber=1, numberstyle = \tiny, caption=State Machine Beispiel Teil 2 ,label=lst:SM2]
     s1->addTransition(button, SIGNAL(clicked()), s2);
@@ -109,19 +107,19 @@ Listing \ref{lst:SM3} zeigt, wie anschließend die Zustände dem Zustandsautomat
     machine.setInitialState(s1);
 \end{lstlisting}
 
-Abschließend muss die Zustandsmaschine gestartet werden. Ab diesem Zeitpunkt reagiert der Automat auf die Transitionen und wechselt zwischen den Zuständen. 
+Abschließend muss die Zustandsmaschine gestartet werden (Listing \ref{lst:SM4}). Ab diesem Zeitpunkt reagiert der Automat auf die Transitionen und wechselt zwischen den Zuständen. 
 
 \begin{lstlisting}[frame=single, breaklines=true, numbers=left, stepnumber=2, firstnumber=1, numberstyle = \tiny, caption=State Machine Beispiel Teil 4 ,label=lst:SM4]
     machine.start();
 \end{lstlisting}
 
-Hauptvorteil der so implementierten Zustandsmaschine ist, dass diese vollkommen aysnchron zum restlichen Programm abläuft- somit müssen keine zusätzlichen Schleifen in Tasks gestartet werden. 
+Hauptvorteil der so implementierten Zustandsmaschine ist, dass diese vollkommen asynchron zum restlichen Programm abläuft. Somit müssen keine zusätzlichen Schleifen in Tasks gestartet werden. 
 
-Um Funktionen mit einem Zustand zu verknüpfen kann eine Signal, welches jeder Zustand emittiert genutzt werden. Beim Eingang in einen Zustand wird das Signal entered() emittiert, beim verlassen eines Zustands das Signal exited(). In dieser Arbeit wurde ausschließlich mit dem entered() Signal gearbeitet, da dies die Anforderungen ausreichend erfüllt hat. 
+Um Funktionen mit einem Zustand zu verknüpfen kann ein Signal, welches jeder Zustand emittiert, genutzt werden. Bei dem Eingang in einen Zustand wird das Signal entered() emittiert, bei dem Verlassen eines Zustands das Signal exited(). In dieser Arbeit wurde ausschließlich mit dem entered() Signal gearbeitet, da dies die Anforderungen ausreichend erfüllt hat. 
 
-Das aufgezeigte Beispiel und weitergehende Erklärungen zu State Machines und den weiteren Klassen sind in \cite{qt_statemachine} zu finden. Darunter sind auch Konzepte zu finden, die ermöglichen Eigenschaften direkt an einen Zustand zu binden. 
+Das aufgezeigte Beispiel und weitergehende Erklärungen zu State Machines und den weiteren Klassen sind in \cite{qt_statemachine} zu finden. Darunter sind auch Konzepte zu finden, die ermöglichen, Eigenschaften direkt an einen Zustand zu binden. 
 
-\subsection{QListWidget}
+\section{QListWidget}
 \label{sec:QListWidgetItem}
 
 Das QListWidget ermöglicht es, selbst programmierte QListWidgetItems in einer Liste zu organisieren und darzustellen. Zusätzlich werden diverse Funktionen bereitgestellt, mit denen sich die QListWidgetItems ordnen, ergänzen oder finden lassen (vgl. \cite{qt_listwidget}). 
