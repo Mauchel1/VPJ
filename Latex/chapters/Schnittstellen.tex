@@ -6,9 +6,9 @@
 %\section{Kommunikation zu Robotinos}
 \label{sec:Gewerk2Protokoll}
 
-Die Robotinos werden von Gewerk 2 verwaltet und programmiert. Um eine erfolgreiche Kommunikation zwischen Fertigungsplanungsrechner und Robotino zu gewährleisten existieren folgende Vereinbarungen mit Gewerk 2.
+Die Robotinos werden von Gewerk 2 verwaltet und programmiert. Um eine erfolgreiche Kommunikation zwischen Fertigungsplanungsrechner und Robotino zu gewährleisten, existieren folgende Vereinbarungen mit Gewerk 2.
 
-Die Kommunikation geschieht über UDP. Da UDP ein verbindungsloses Protokoll ist muss nicht sichergestellt werden dass Robotino oder Fertigungsplanungsrechner immer verbunden sind. Die Nachrichten werden an spezifizierten Ports gesendet und empfangen.
+Die Kommunikation geschieht über UDP. Da UDP ein verbindungsloses Protokoll ist, muss nicht sichergestellt werden, dass Robotino oder Fertigungsplanungsrechner immer verbunden sind. Die Nachrichten werden an spezifizierten Ports gesendet und empfangen.
 
 Die in Tabelle \ref{tab:Ports} dargestellte Vereinbarung wurde für die Ports getroffen.
 
@@ -41,9 +41,9 @@ Zunächst wurde eine Struktur entwickelt, in der beschrieben wird, wie die Daten
     \label{fig:Sequenzdiagramm}
 \end{figure}
 
-Dem Sequenzdiagramm ist zu entnehmen, dass der Robotino nach Programmstart zyklisch Daten sendet. Die Zykluszeit beträgt 500 ms. Da die Daten über UDP an einen spezifizierten Port versendet werden ist ein Empfänger nicht zwangsweise erforderlich und die Programme können unabhängig voneinander laufen. Der Inhalt der Daten ist in Abschnitt \ref{sec:Telegramme} beschrieben. Solange der Robotino läuft werden die Daten gesendet. Dadurch kann auch ein Ausfall der Kommunikation festgestellt werden. 
+Dem Sequenzdiagramm ist zu entnehmen, dass der Robotino nach Programmstart zyklisch Daten sendet. Die Zykluszeit beträgt 500 ms. Da die Daten über UDP an einen spezifizierten Port versendet werden, ist ein Empfänger nicht zwangsweise erforderlich und die Programme können unabhängig voneinander laufen. Der Inhalt der Daten ist in Abschnitt \ref{sec:Telegramme} beschrieben. Solange der Robotino läuft werden die Daten gesendet. Dadurch kann auch ein Ausfall der Kommunikation festgestellt werden. 
 
-Auf Seiten des Fertigungsplanungsrechners wird nur bei Bedarf ein Sendevorgang eingeleitet. Erst wenn ein Auftrag an den Robotino gesendet werden soll wird eine Schleife ausgeführt. In der Schleife wird der Auftrag zyklisch an den Robotino gesendet. Die Zykluszeit beträgt hierbei 700 ms. In Kapitel \ref{sec:StateMachineImplementierung} ist die in einer State-Machine implementierte Schleife beschrieben. Die Schleife kann durch Empfangen einer Statusänderung des Robotinos verlassen werden. Dadurch wird eine erfolgreiche Übertragung des Auftrags sichergestellt werden. Die im Auftrag befindlichen Daten sind in Abschnitt \ref{sec:Telegramme} näher erläutert.
+Auf Seiten des Fertigungsplanungsrechners wird nur bei Bedarf ein Sendevorgang eingeleitet. Erst wenn ein Auftrag an den Robotino gesendet werden soll, wird eine Schleife ausgeführt. In der Schleife wird der Auftrag zyklisch an den Robotino gesendet. Die Zykluszeit beträgt hierbei 700 ms. In Kapitel \ref{sec:StateMachineImplementierung} ist die in einer State-Machine implementierte Schleife beschrieben. Die Schleife kann durch Empfangen einer Statusänderung des Robotinos verlassen werden. Dadurch wird eine erfolgreiche Übertragung des Auftrags sichergestellt werden. Die im Auftrag befindlichen Daten sind in Abschnitt \ref{sec:Telegramme} näher erläutert.
 
 \section{Telegramme}
 \label{sec:Telegramme}
@@ -71,20 +71,20 @@ Der Auftrag, der an den Robotino gesendet wird, enthält 5 Bytes. Eine Aufschlü
 	\label{tab:TelegrammZuG2}
 \end{table}
 
-Das erste Byte klassifiziert die Auftragsart. Diese beschreibt, welche Tätigkeit der Robotino als nächstes tun soll. Auftragsart eins bedeutet, dass der Robotino einen Transportauftrag erhalten hat, also ein Werkstück von einer Position zu einer anderen Position fahren soll. Die Auftragsart 2 zeigt an, dass der Robotino auf einen Parkplatz geschickt wird. Eine Ladefahrt wird mit Auftragsart 3 gekennzeichnet. 
+Das erste Byte klassifiziert die Auftragsart. Diese beschreibt, welche Tätigkeit der Robotino als nächstes tun soll. Auftragsart 1 bedeutet, dass der Robotino einen Transportauftrag erhalten hat, also ein Werkstück von einer Position zu einer anderen Position fahren soll. Die Auftragsart 2 zeigt an, dass der Robotino auf einen Parkplatz geschickt wird. Eine Ladefahrt wird mit Auftragsart 3 gekennzeichnet. 
 
-Im zweiten und dritten Byte sind die Positionen angegeben, an welche sich der Robotino bewegen soll. Dabei wird Position 2 nur bei Auftragsart 1 befüllt bzw. ausgewertet, da ein Parken und Laden nur eine Zielposition benötigt. Bei Auftragsart 1 jedoch zeigt Position 1 den Arbeitsplatz an, wo das Werkstück abgeholt werden soll und Position 2 den Ablageort des Werkstücks. 
+Im zweiten und dritten Byte sind die Positionen angegeben, an welche sich der Robotino bewegen soll. Dabei wird Position 2 nur bei Auftragsart 1 befüllt bzw. ausgewertet, da ein Parken und Laden nur eine Zielposition benötigt. Bei Auftragsart 1 jedoch zeigt Position 1 den Arbeitsplatz an, wo das Werkstück abgeholt werden soll, und Position 2 den Ablageort des Werkstücks. 
 
 Über das vierte Byte kann dem Robotino ein Status-Flag gesendet werden. Sobald der Robotino eine Anfrage zu dem Flag sendet wird eine 1 zurückgesendet. Ansonsten ist der Wert 0. Damit kann der Robotino die Funktionalität der Kommunikation validieren.
 
 Mit dem fünften Byte wird eine einfache Erweiterung des Telegramms ermöglicht, sofern mehr Daten übertragen werden sollen. Am Anfang der Ausarbeitung des Projektes war das vierte Byte ebenfalls ein reserviertes Byte. 
 
-Um Robotino 5 mit einzubinden wurde mit Gewerk 4 eine Sonderform des Protokolls vereinbart. Die Vereinbarung sieht vor, die Auftragsart zum starten der Ladefahrt auf 1 zu setzen, wobei die Position 1 die 06 ist. Alle weiteren Felder sollen mit 00 gefüllt werden. Um die Ladefahrt erneut starten zu können kann die Auftragsart auf 0 zurückgesetzt werden. 
+Um Robotino 5 mit einzubinden wurde mit Gewerk 4 eine Sonderform des Protokolls vereinbart. Die Vereinbarung sieht vor, die Auftragsart zum Starten der Ladefahrt auf 1 zu setzen, wobei die Position 1 die 06 ist. Alle weiteren Felder sollen mit 00 gefüllt werden. Um die Ladefahrt erneut starten zu können, kann die Auftragsart auf 0 zurückgesetzt werden. 
 
 \subsection{Positionskodierung}
 \label{sec:Positionskodierung}
 
-Aus den Positionen, die dem Robotino gesendet werden kann eindeutig bestimmt werden, an welchen Ort der Robotino fahren soll. 
+Aus den Positionen, die dem Robotino gesendet werden, kann eindeutig bestimmt werden, an welchen Ort der Robotino fahren soll. 
 
 Eine Aufschlüsselung der Positionen ist in Abbildung \ref{fig:Positionskodierung} dargestellt. Hier ist die Anordnung von Stationen, Parkplätzen und Ladestationen im Raum dargestellt, mitsamt ihrer Positionskodierung. 
 
@@ -130,7 +130,7 @@ Im ersten Byte sendet der Robotino einen Error. Die einzelnen Errortypen und die
 
 Aus dem zweiten Byte kann der aktuelle Akkustand des Robotinos gelesen werden. Dieser liegt zwischen 0, vollständig entladen, und 100, vollständig geladen. 
 
-Über das dritte Byte kann gelesen werden, ob der Robotino ein Hindernis erkannt hat. Beim Empfangen einer 00 ist kein Hindernis im Weg und der Robotino kann sich normal bewegen. Eine Änderung des Wertes kann zunächst nur zu 03 erfolgen. Das bedeutet, der Robotino hat ein Hindernis erkannt, dieses aber noch nicht klassifiziert hat. Über die Zahl 01 wird kodiert, dass der Roboter ein Hindernis erkannt hat, dies aber nicht weiter Klassifizieren kann. Mit einer 02 wird angezeigt, dass das erkannte Hindernis ein anderer Robotino ist. Aufgrund der Umgebungsstörungen kann es sein, dass der Robotino immer wieder abwechselnd eine 00 und eine 01 sendet. 
+Über das dritte Byte kann gelesen werden, ob der Robotino ein Hindernis erkannt hat. Beim Empfangen einer 00 ist kein Hindernis im Weg und der Robotino kann sich normal bewegen. Eine Änderung des Wertes kann zunächst nur zu 03 erfolgen. Das bedeutet, der Robotino hat ein Hindernis erkannt, dieses aber noch nicht klassifiziert hat. Über die Zahl 01 wird kodiert, dass der Roboter ein Hindernis erkannt hat, dieses aber nicht weiter klassifizieren kann. Mit einer 02 wird angezeigt, dass das erkannte Hindernis ein anderer Robotino ist. Aufgrund der Umgebungsstörungen kann es sein, dass der Robotino immer wieder abwechselnd eine 00 und eine 01 sendet. 
 
 Das vierte Byte wird von Gewerk 2 für eine interne Bekanntmachung verschiedener Roboterstati genutzt. Der Wert wird nicht versendet und bleibt immer 0.
 
@@ -149,7 +149,7 @@ Das achte und neunte Byte sind für einfache Erweiterung des Telegramms um weite
 \section{Fehlertypen und Behebung}
 \label{sec:Error}
 
-Der Robotino kann über den Errorstatus verschiendene aufgetretene Fehler anzeigen. Drei dieser Fehlertypen und ihre Behandlung sind in den nächsten Abschnitten beschrieben. In Normalfall ist der Error 1. Das bedeutet es ist alles in Ordnung. 
+Der Robotino kann über den Errorstatus verschiedene aufgetretene Fehler anzeigen. Drei dieser Fehlertypen und ihre Behandlung sind in den nächsten Abschnitten beschrieben. Im Normalfall ist der Error 1. Das bedeutet es ist alles in Ordnung. 
 
 \subsubsection{Fehlertyp 2}
 
@@ -161,7 +161,7 @@ In der Praxis konnte dieser Fehler nur mit Gewalt hervorgerufen werden, da ein g
 
 \subsubsection{Fehlertyp 3}
 
-Wenn der Robotino einen Transportauftrag erhält und am Abholort kein Werkstück greifen kann wird Fehler 3 gesendet. 
+Wenn der Robotino einen Transportauftrag erhält und am Abholort kein Werkstück greifen kann, wird Fehlertyp 3 gesendet. 
 
 Die Fehlerbehebung ist identisch zur Fehlerbehebung von Fehlertyp 2. Es muss erneut geprüft werden, welcher Prozess abgearbeitet werden sollte, und alle diesem Prozess zugeordneten Arbeitsplätze, Stationen o.ä. freigegeben werden. Der Auftrag muss blockiert werden.
 
@@ -169,11 +169,11 @@ Da die Auftragsvergabe die Position jedes Werkstück kennt, kann dieser Fehlerfa
 
 \subsubsection{Fehlertyp 4}
 
-Ein Fehler von Typ 4 bedeutet, dass keine Route planbar ist. In der Visualisierung muss je nach Situation bei auftreten des Fehlers verschieden reagiert werden. 
+Ein Fehler von Typ 4 bedeutet, dass keine Route planbar ist. In der Visualisierung muss je nach Situation bei Auftreten des Fehlers verschieden reagiert werden. 
 
 Wenn der Robotino direkt nach Erhalten eines Auftrags den Error sendet, kann der Auftrag direkt neu vergeben werden. 
 
-Für den Fall, dass der Robotino inmitten eines Transportvorgangs eine Route nicht berechnen kann, muss im schlimmsten Fall der Robotino defekt geschalten werden. Im normalfall sollte der Robotino nachdem der Error auftrat die Route in bestimmten Zeitabständen versuchen neu zu berechnen, daher kann der Error zunächst nur beobachtet werden. Sollte der Robotino neu gestartet werden muss wie bei Fehlertyp 2 vorgegangen werden. 
+Für den Fall, dass der Robotino inmitten eines Transportvorgangs eine Route nicht berechnen kann, muss im schlimmsten Fall der Robotino defekt geschaltet werden. Im Normalfall sollte der Robotino nachdem der Error auftrat die Route in bestimmten Zeitabständen versuchen neu zu berechnen, daher kann der Error zunächst nur beobachtet werden. Sollte der Robotino neu gestartet werden, muss wie bei Fehlertyp 2 vorgegangen werden. 
 
-Wenn der Robotino ohne einen Transportauftrag keine Route planen kann ist dies für die Auftragsplanung nur bedingt relevant und der Error kann als Info angesehen werden. 
+Wenn der Robotino ohne einen Transportauftrag keine Route planen kann, ist dies für die Auftragsplanung nur bedingt relevant und der Error kann als Info angesehen werden. 
 

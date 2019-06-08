@@ -18,38 +18,38 @@ In Abbildung \ref{fig:Klassendiagramm} ist eine Übersicht der wichtigsten Klass
 
 Die initiale Klasse bildet die Main, oben links. In der Main werden die anderen Klassen erzeugt, sowie Verbindungen zwischen den Klassen hergestellt.
 
-Nach dem Ablauf der Main ist die Klasse Fertigungsplanung die kontinuierlich laufende Klasse des Programms. In der Fertigungsplanung findet die Auftragsvergabe statt. Für den Überblick auf die Aufträge enthält die Fertigungsplanung eine Liste von Aufträgen. Jeder dieser Aufträge enthält eine Liste von Prozessen, welche wiederum eine Liste von Prozessschritten beinhalten. 
+Nach dem Ablauf der Main ist die Klasse Fertigungsplanung die kontinuierlich laufende Klasse des Programms. In der Fertigungsplanung findet die Auftragsvergabe statt. Für den Überblick über die Aufträge enthält die Fertigungsplanung eine Liste von Aufträgen. Jeder dieser Aufträge enthält eine Liste von Prozessen, welche wiederum eine Liste von Prozessschritten beinhalten. 
 
 Innerhalb der Fertigungsplanung wird die Fertigungsstraße in einer Klasse abgebildet. Diese besteht wiederum aus Parkplätzen und Stationen. Jede Station enthält einzelne Arbeitsplätze. 
 
 Mit der in der Fertigungsplanung implementierten State-Machine wird die Auftragsplanung durchgeführt.
 
-Auf der linken Seite der Abbildung ist die Robotino Klasse dargestellt. Diese enthält alle Stati und Informationen zu den Robotinos. Je real existierenden Robotino wird ein Objekt dieser Klasse erzeugt.
+Auf der linken Seite der Abbildung ist die Robotino Klasse dargestellt. Diese enthält alle Stati und Informationen zu den Robotinos. Je real existierendem Robotino wird ein Objekt dieser Klasse erzeugt.
 
-Im Simulationsbetrieb wird die Klasse SimulatedRobot genutzt um die Statusänderungen der Robotinos nachzubilden. Diese Klasse wird mit dem UDP-Handler verbunden. 
+Im Simulationsbetrieb wird die Klasse SimulatedRobot genutzt, um die Statusänderungen der Robotinos nachzubilden. Diese Klasse wird mit dem UDP-Handler verbunden. 
 
-Der UDP-Handler ist die Schnittstelle (Interface) zwischen dem Programm und den Robotinos, sowie dem Navigations-PC. Die Klasse stellt Funktionen zum Datenaustausch und ersten Datenauswertung zur Verfügung. 
+Der UDP-Handler ist die Schnittstelle (Interface) zwischen dem Programm und den Robotinos, sowie dem Navigations-PC. Die Klasse stellt Funktionen zum Datenaustausch und zur ersten Datenauswertung zur Verfügung. 
 
-Ähnlich dem UDP-Handler sorgt die Klasse Datenbankhandler für die Bereitstellung von Funktionen um auf die Datenbank zugreifen zu können. Die initiale Verbindung zur Datenbank erfolgt ebenfalls über diese Klasse.
+Ähnlich dem UDP-Handler sorgt die Klasse Datenbankhandler für die Bereitstellung von Funktionen, um auf die Datenbank zugreifen zu können. Die initiale Verbindung zur Datenbank erfolgt ebenfalls über diese Klasse.
 
-In der Klasse Mainwindow erfolgt die Visualisierung und Verknüpfungen zur grafischen Oberfläche. Diese Klasse ist im Kapitel \ref{sec:Visualisierung} näher beleuchtet.
+In der Klasse Mainwindow erfolgt die Visualisierung und Verknüpfung zur grafischen Oberfläche. Diese Klasse ist im Kapitel \ref{sec:Visualisierung} näher beleuchtet.
 
-Neben den genannten Klassen existieren noch weitere kleinere Klassen, um die aufgezeigten zu Verwalten oder zu verbinden. 
+Neben den genannten Klassen existieren noch weitere kleinere Klassen, um die Aufgezeigten zu verwalten oder zu verbinden. 
 
 \section{Database-Handler}
 \label{sec:Databasehandler}
 
-Über die Klasse DatabaseHandler kann eine Verbindung zu der Datenbank auf dem Fertigungsrechner aufgebaut werden und bietet anschließend einen Funktionspool als definierte Schnittstelle zur Datenbank.
+Über die Klasse DatabaseHandler kann eine Verbindung zu der Datenbank auf dem Fertigungsrechner aufgebaut werden. Die Klasse bietet anschließend einen Funktionspool als definierte Schnittstelle zur Datenbank.
 
 \subsection{Konstruktor, Initialisierung und Sendefunktion}
 
-Neben dem Konstruktor für die Initialisierung der Datenbankschnittstelle gibt es eine Funktion zur Initialisierung der Datenbank und eine in allen anderen Funktionen aufgerufene Sendefunktion. 
+Neben dem Konstruktor für die Initialisierung der Datenbankschnittstelle gibt es eine Funktion zur Initialisierung der Datenbank und eine, in allen anderen Funktionen aufgerufene, Sendefunktion. 
 
 \subsubsection{Konstruktor}
 
-Beim Aufruf des Konstruktors, siehe Listing \ref{lst:KonstruktorDB} des Datenbank-Handler wird zunächst eine QSqlDatabase (siehe Kapitel \ref{sec:QTDatabase}) erzeugt. Dazu wird zunächst in Zeile 1 eine Datenbank vom Typ MySql erzeugt. Um eine Verbindung zur vorhandenen Datenbank herzustellen wird in Zeile 2 - 6 die IP-Adresse mit Port, der Datenbankname und eine Zugangsberechtigung mit Benutzername und Passwort angegeben. 
+Beim Aufruf des Konstruktors, siehe Listing \ref{lst:KonstruktorDB}, des Datenbank-Handler wird zunächst eine QSqlDatabase (siehe Kapitel \ref{sec:QTDatabase}) erzeugt. Dazu wird zunächst in Zeile 1 eine Datenbank vom Typ MySql erzeugt. Um eine Verbindung zur vorhandenen Datenbank herzustellen wird in Zeile 2 - 6 die IP-Adresse mit Port, der Datenbankname und eine Zugangsberechtigung mit Benutzername und Passwort angegeben. 
 
-Mit der Funktion open() in Zeile 8 wird versucht eine Verbindung aufzubauen. Über den Rückgabewert der Funktion kann überprüft werden, ob die Verbindung erfolgreich war. Sofern es trotz erfolgreicher Verbindung einen Fehler gibt, beispielsweise fehlende Zugriffsberechtigungen oder anderes, kann dieser wie in Zeile 10 ff dargestellt abgefangen und dargestellt werden. 
+Mit der Funktion open() in Zeile 8 wird versucht eine Verbindung aufzubauen. Über den Rückgabewert der Funktion kann überprüft werden, ob die Verbindung erfolgreich war. Sofern es trotz erfolgreicher Verbindung einen Fehler gibt, beispielsweise fehlende Zugriffsberechtigungen oder anderes, kann dieser, wie in Zeile 10ff dargestellt, abgefangen und angezeigt werden. 
 
 \begin{lstlisting}[frame=single, breaklines=true, numbers=left, stepnumber=2, firstnumber=1, numberstyle = \tiny, caption=Databank-Handler Konstruktor ,label=lst:KonstruktorDB]
 db = QSqlDatabase::addDatabase("QMYSQL");
@@ -69,9 +69,9 @@ if (err.type() != QSqlError::NoError){
 
 \subsubsection{Initialisierung}
 
-Um die Datenbank zu Programmstart auf einen definierten Anfangszustand zu bringen wurde eine Initialisierungsfunktion (Listing \ref{lst:DBInit}) geschrieben. Darin werden alle Zeitstempel, Aufträge und Prozesse (Werkstücke) gelöscht. 
+Um die Datenbank zu Programmstart auf einen definierten Anfangszustand zu bringen, wurde eine Initialisierungsfunktion (Listing \ref{lst:DBInit}) geschrieben. Darin werden alle Zeitstempel, Aufträge und Prozesse (Werkstücke) gelöscht. 
 
-Weiterhin wird der Roboter in der Datenbank initialisiert mit Status 0 und ein zugeordnetes Werkstück gelöscht. 
+Weiterhin wird der Roboter in der Datenbank mit Status 0 initialisiert und ein zugeordnetes Werkstück gelöscht. 
 
 Der Parkplatz und Arbeitsplatz wird zurückgesetzt. Dabei wird der Status auf 0 gesetzt und ein zugeordneter Roboter gelöscht. Im Arbeitsplatz wird zusätzlich ein zugeordnetes Werkstück gelöscht.
 
@@ -102,15 +102,14 @@ q.exec();
 
 \subsection{Getter}
 
-Um auf Daten in der Datenbank zuzugreifen wurden Funktionen bereitgestellt, die diese zurückgeben. So kann über die Getter festgestellt werden, ob sich ein Werkstück im Lager befindet oder ob ein Roboter oder eine Station frei oder reserviert ist. Eine Funktion liefert alle in der Datenbank existierenden Prozesse zurück. 
+Um auf Daten in der Datenbank zuzugreifen, wurden Funktionen bereitgestellt, die diese zurückgeben. So kann über die Getter festgestellt werden, ob sich ein Werkstück im Lager befindet oder ob ein Roboter oder eine Station frei oder reserviert ist. Eine Funktion liefert alle in der Datenbank existierenden Prozesse zurück. 
 
-Es kann der nächste freie Parkplatz oder die nächste freie Ladestation zurückgegeben werden. Bei Übergabe einer Station kann das zugehörige Werkstück oder andersherum bei Übergabe des Werkstück die zugehörige Station  und zugeföriger Robotino gefunden werden. 
+Es kann der nächste freie Parkplatz oder die nächste freie Ladestation zurückgegeben werden. Bei Übergabe einer Station kann das zugehörige Werkstück oder andersherum bei Übergabe des Werkstücks die zugehörige Station und zugehöriger Robotino gefunden werden. 
 
 Es kann einfach festgestellt werden, ob sich ein Robotino aktuell auf einem Parkplatz befindet.
 
 Zuletzt werden über zwei Funktionen die Timestamps von Werkstück oder Station bereitgestellt.
 
-\inlinetodo{}
 \subsection{Updates}
 
 Um die Daten der Datenbank zu aktualisieren wurden weitere Funktionen bereitgestellt. Mit den Update-Funktionen kann der Arbeitsplatz-Status oder der Prozessfortschritt aktualisiert werden. 
@@ -119,20 +118,18 @@ Die Robotino-Akkustände sowie deren Stati können auch aktualisiert werden.
 
 Dem Arbeitsplatz kann außerdem ein Werkstück oder Robotino zugewiesen, oder entfernt, werden. 
 
-Über eine Update-Funktion wird der Schreibe-Tag, der die RFIDs beinhaltet aktualisiert. 
-\inlinetodo{}
+Über eine Update-Funktion wird der Schreib-Tag, der die RFIDs beinhaltet aktualisiert. 
+
 \subsection{Setter}
 
 Über Setter-Funktionen können Einträge in der Datenbank gesetzt werden. Die beiden Hauptfunktionen hier setzen die erzeugten Aufträge oder erzeugten Prozesse.
 
-Innerhalb der SendProzess-Funktion wird unterschieden, ob die Datenbank den Prozess bereits beinhaltet, dieser also nur aktualisiert, oder dieser neu erzeugt werden muss. 
-
-\inlinetodo{}
+Innerhalb der SendProzess-Funktion wird unterschieden, ob die Datenbank den Prozess bereits beinhaltet, dieser also nur aktualisiert, oder neu erzeugt werden muss. 
 
 \section{UDP-Handler} 
 \label{sec:UdpHandler}
 
-Der UDP-Handler ist für die Datenkommunikation zwischen dem Fertigungsplanungsrechner und dem Robotino als auch dem Navigationsrechner zuständig. Mittels überladenem Konstruktor kann entweder eine Verbindung zu einem Robotino oder eine Verbindung zum Navigationsrechner aufgebaut werden. 
+Der UDP-Handler ist für die Datenkommunikation zwischen dem Fertigungsplanungsrechner und dem Robotino, als auch dem Navigationsrechner zuständig. Mittels überladenem Konstruktor kann entweder eine Verbindung zu einem Robotino oder eine Verbindung zum Navigationsrechner aufgebaut werden. 
 
 \subsection{UDP-Handler für Navigationsrechner}
 
@@ -148,7 +145,7 @@ UdpHandler::UdpHandler(quint16 port, QObject *parent) : QObject(parent)
 }
 \end{lstlisting}
 
-Die Funktion readPendingNavigationData(), dargestellt in Listing \ref{lst:UDPReceiveData}, liest den aus dem Socket kommenden Datenstrom aus. Solange neue Daten am Socket anliegen werden diese empfangen, in ein Datagramm geschrieben und anschließend in der Funktion processTheNavigationData() weiterverarbeitet. 
+Die Funktion readPendingNavigationData(), dargestellt in Listing \ref{lst:UDPReceiveData}, liest den aus dem Socket kommenden Datenstrom aus. Solange neue Daten am Socket anliegen, werden diese empfangen, in ein Datagramm geschrieben und anschließend in der Funktion processTheNavigationData() weiterverarbeitet. 
 
 \begin{lstlisting}[frame=single, breaklines=true, numbers=left, stepnumber=2, firstnumber=1, numberstyle = \tiny, caption=Daten über UDP empfangen,label=lst:UDPReceiveData]
 while (socket->hasPendingDatagrams()) {
@@ -159,7 +156,7 @@ while (socket->hasPendingDatagrams()) {
 
 Das empfangene Datagramm wird zunächst in der Funktion processTheNavigationData (Listing \ref{lst:UDPNav} Zeile 1 - 14) auf die korrekte Länge überprüft. So kann weitgehend ausgeschlossen werden, falsche Daten über den Port zu empfangen. Die Länge von 448 (Zeile 1) ergibt sich aus der Länge der gesendeten Werte multipliziert mit der Länge eines Bytes $56 * 8 = 448$. 
 
-Wenn die Datagrammlänge korrekt ist, wird ein Vektor mit entsprechend vielen Elementen erzeugt. Dieser Vektor wird elementweise in Zeile 8 - 12 befüllt und anschließend an die Funktion prepareNavigationDataforRobot() (Listing \ref{lst:UDPNav} Zeile 15ff) übergeben. 
+Wenn die Datagrammlänge korrekt ist, wird ein Vektor mit entsprechend vielen Elementen erzeugt. Dieser Vektor wird elementweise in Zeile 8 - 12 befüllt und anschließend an die Funktion prepareNavigationDataforRobot() (Listing \ref{lst:UDPNav} Zeile 16ff) übergeben. 
 
 Die Rohdaten aus dem Datagramm müssen für jedes Element dekodiert werden. Dazu wird in Zeile 10 aus dem Datagramm ein ByteArray der Länge 8 kopiert, welches das Element i beinhaltet. Das erste Element liegt im Datagramm vom ersten bis zum achten Byte vor, das zweite vom 9. bis zum 17. usw. Die so entstehenden ByteArrays werden in Zeile 11 interpretiert als ein Element vom Typ Double. 
 
@@ -190,15 +187,15 @@ emit NavigationDataReceivedR1(posr1);
 
 \end{lstlisting}
 
-Die entstandenen Doublewerten im übergebenen Vektor werden in der Funktion prepareNavigationDataforRobot() ausgewertet. Zeile 15 ff zeigt dies exemplarisch für den ersten Robotino. Je Robotino wird ein neuer Vektor von 3 Elementen erzeugt, der anschließend mit dem X-, Y-Wert und Winkel in Grad befüllt wird. Über ein Signal wird zuletzt dieser Vektor bekanntgemacht. 
+Die entstandenen Doublewerte im übergebenen Vektor werden in der Funktion prepareNavigationDataforRobot() ausgewertet. Zeile 16ff zeigt dies exemplarisch für den ersten Robotino. Je Robotino wird ein neuer Vektor von 3 Elementen erzeugt, der anschließend mit dem X-, Y-Wert und Winkel in Grad befüllt wird. Über ein Signal wird zuletzt dieser Vektor bekanntgemacht. 
 
 \subsection{UDP-Handler für Robotino}
 
-Der überladene Konstruktor um die UDP-Kommunikation zu einem Robotino aufzubauen ist in Listing \ref{lst:KonstruktorUDPRob} dargestellt. Anders als beim Navigationsrechner werden zwei Ports und eine IP-Adresse übergeben. Zudem eine Flag, die anzeigt, ob die Kommunikation nur simuliert werden soll um keinen realen Robotino, sondern einen Simulierten (siehe Kapitel \ref{sec:Simulation}) einzubinden. 
+Der überladene Konstruktor, um die UDP-Kommunikation zu einem Robotino aufzubauen, ist in Listing \ref{lst:KonstruktorUDPRob} dargestellt. Anders als beim Navigationsrechner werden zwei Ports und eine IP-Adresse übergeben. Zudem eine Flag, die anzeigt, ob die Kommunikation nur simuliert werden soll, um keinen realen Robotino, sondern einen Simulierten (siehe Kapitel \ref{sec:Simulation}) einzubinden. 
 
 Im Simulationsmodus wird die State-Machine des simulierten Roboters gestartet und die Sendefunktion des Robotinos mit der Funktion simulatedRobotDataReceived() verbunden.
 
-Im Betrieb mit einem real vorhandenen Robotino wird ähnlich dem Navigationskonstruktor der QUdpSocket an den Receive-Port gebunden und der Nachrichtenempfang mit der Funktion readPendingRobotData() verknüpft. 
+Im Betrieb mit einem real vorhandenen Robotino wird, ähnlich dem Navigationskonstruktor, der QUdpSocket an den Receive-Port gebunden und der Nachrichtenempfang mit der Funktion readPendingRobotData() verknüpft. 
 
 \begin{lstlisting}[frame=single, breaklines=true, numbers=left, stepnumber=2, firstnumber=1, numberstyle = \tiny, caption=UDP-Handler Konstruktor für Navigationsdatenaustausch,label=lst:KonstruktorUDPRob]
 UdpHandler::UdpHandler(bool simulated, QHostAddress ip, quint16 sport, quint16 rport, QObject *parent) : QObject(parent)
@@ -224,9 +221,9 @@ UdpHandler::UdpHandler(bool simulated, QHostAddress ip, quint16 sport, quint16 r
 
 \end{lstlisting}
 
-Zusätzlich zu den Lesefunktionen, die Daten über UDP empfangen, gibt es für die Robotinos eine Schreibefunktion WriteData() (Listing \ref{lst:UDPWriteData}), die ermöglicht über UDP eine Nachricht an den Robotino zu senden. Dabei werden zunächst die zu sendenden Werte zwischengespeichert. Im Simulationsmodus werden anstelle einer echten Datenübertragung die zu versendenden Daten direkt in die State-Machine des simulierten Roboters geschrieben (Zeile 2-7). 
+Zusätzlich zu den Lesefunktionen, die Daten über UDP empfangen, gibt es für die Robotinos eine Schreibefunktion WriteData() (Listing \ref{lst:UDPWriteData}), die ermöglicht, über UDP eine Nachricht an den Robotino zu senden. Dabei werden zunächst die zu sendenden Werte zwischengespeichert. Im Simulationsmodus werden anstelle einer echten Datenübertragung die zu versendenden Daten direkt in die State-Machine des simulierten Roboters geschrieben (Zeile 2-7). 
 
-Eine tatsächliche Übertragung (Zeile 9ff) erfordert das Verpacken der Daten in ein Datagramm. Dazu wird ein Byte Array erzeugt, an das die Daten angehängt werden. In Zeile 13 werden die als Double vorliegenden Daten neu interpretiert als Pointer auf einen Char, welche mit der Funktion fromRawData als ein Datagramm zurückgegeben werden. 
+Eine tatsächliche Übertragung (Zeile 9ff) erfordert das Verpacken der Daten in ein Datagramm. Dazu wird ein Byte-Array erzeugt, an das die Daten angehängt werden. In Zeile 13 werden die als Double vorliegenden Daten neu interpretiert als Pointer auf einen Char, welche mit der Funktion fromRawData als ein Datagramm zurückgegeben werden. 
 
 Das Datagramm wird abschließend über den UDP-Socket mit der Funktion writeDatagram (Zeile 15) an den angegebenen Roboter über den Sende-Port geschickt. 
 
@@ -249,18 +246,18 @@ else
 }
 \end{lstlisting}
 
-Die Funktion readPendingRobotData gleicht der bereits im UDP-Handler für Navigationsdaten beschriebenen Funktion (Listing \ref{lst:UDPReceiveData}. 
+Die Funktion readPendingRobotData gleicht der bereits im UDP-Handler für Navigationsdaten beschriebenen Funktion (Listing \ref{lst:UDPReceiveData}). 
 
-Die nachfolgend aufgerufene Funktion processTheRobotData ist bis auf die Längen der Vektoren und des Datagramms gleich der zuvor in Listing \ref{lst:UDPNav}. Die valide Datagrammlänge beträgt bei den Robotern 72, was sich aus Bytelänge multipliziert mit Datenarraylänge $ 8 * 9 = 72$ ergibt. Die Auswertung des neun Elemente langen Vektors aus Doublewerten erfolgt erst in der Robotinoklasse, welche auf das Signal StatusDataReceived reagiert. Dasselbe Signal wird auch vom simulierten Roboter gesendet, wodurch die Schnittstelle im Simulationsmodus nicht weiter angepasst werden muss. 
+Die nachfolgend aufgerufene Funktion processTheRobotData ist, bis auf die Längen der Vektoren und des Datagramms, gleich der zuvor in Listing \ref{lst:UDPNav} gezeigten. Die valide Datagrammlänge beträgt bei den Robotern 72, was sich aus Bytelänge multipliziert mit Datenarraylänge $ 8 * 9 = 72$ ergibt. Die Auswertung des neun Elemente langen Vektors aus Doublewerten erfolgt erst in der Robotinoklasse, welche auf das Signal StatusDataReceived reagiert. Dasselbe Signal wird auch vom simulierten Roboter gesendet, wodurch die Schnittstelle im Simulationsmodus nicht weiter angepasst werden muss. 
 
 \section{Robotino} 
 \label{sec:Robotino}
 
-Die real existierenden Robotinos werden in der Klasse Robotino abgebildet. In der Klasse werden alle Daten gespeichert, die den Robotino beschreiben. Dazu gehören unter anderem die Position in x, y, der Winkel, eine eindeutige RoboterID. Weiterhin werden alle vom Robotino gesendeten Daten wie Status, Position, Error, Hindernis, Akku und Greifer gespeichert(vgl. \ref{sec:Gewerk2Protokoll}). 
+Die real existierenden Robotinos werden in der Klasse Robotino abgebildet. In der Klasse werden alle Daten gespeichert, die den Robotino beschreiben. Dazu gehören unter anderem die Position in x, y, der Winkel und eine eindeutige RoboterID. Weiterhin werden alle vom Robotino gesendeten Daten wie Status, Position, Error, Hindernis, Akku und Greifer gespeichert (vgl. \ref{sec:Gewerk2Protokoll}). 
 
 Über ein isAlive-Tag kann validiert werden, dass der Robotino noch erreichbar ist. Das Defekt-Tag wird von Visualisierung und Auftragsplanung berücksichtigt, um den Robotino händisch außer Betrieb zu schalten. 
 
-Es werden demnach deutlich mehr Daten über den Robotino gespeichert, als in der Datenbank hinterlegt werden. Dies kommt auch daher, dass über eine Änderung von manchen Werten ein Signal emittiert wird um über ein Event darauf zu reagieren. Diese Funktionalität ist über die Datenbank nicht gegeben. 
+Es werden demnach deutlich mehr Daten über den Robotino gespeichert, als in der Datenbank hinterlegt werden. Dies kommt auch daher, dass über eine Änderung von manchen Werten ein Signal emittiert wird, um über ein Event darauf zu reagieren. Diese Funktionalität ist über die Datenbank nicht gegeben. 
 
 Beim Erzeugen einer Instanz eines Robotinos wird im Konstruktor sowohl die RoboterID festgeschrieben, als auch die IP-Adresse mit dem zugehörigen Sendeport und Empfangsport. Außerdem werden die Timer mit den zugehörigen Timeout-Funktionen verknüpft.
 
@@ -268,7 +265,7 @@ Beim Erzeugen einer Instanz eines Robotinos wird im Konstruktor sowohl die Robot
 
 Wenn der zugehörige UDP-Handler eines Robotinos neue Werte bereitstellt (vgl. sec:UdpHandler) wird die Funktion UpdateValues() aufgerufen. Bei jedem Aufruf der Funktion wird der Robotino als Alive markiert und dies bei einer Änderung als Signal emittiert. Zusätzlich wird der 30 Sekunden laufende AliveTimer gestartet oder zurückgesetzt. 
 
-Wenn sich der anliegende Robotererror geändert hat wird dieser kategorisiert und den bekannten Robotererrortypen (vgl. \ref{sec:Gewerk2Protokoll}) zugeordnet. Folgend wird ein Signal emittiert, welches eine Änderung des Errors anzeigt und den Errortyp beinhaltet.
+Wenn sich der anliegende Robotererror geändert hat, wird dieser kategorisiert und den bekannten Robotererrortypen (vgl. Kapitel \ref{sec:Gewerk2Protokoll}) zugeordnet. Folgend wird ein Signal emittiert, welches eine Änderung des Errors anzeigt und den Errortyp beinhaltet.
 
 Bei einer Änderung von Greifer, Akku, Hindernis oder UDPAlive wird jeweils der Wert gespeichert und die Änderung über ein spezifisches Signal emittiert. 
 
@@ -278,9 +275,9 @@ Eine Statusänderung des Robotinos bewirkt eine Vorauswertung des empfangenen St
 
 Bei Empfangen von Navigationsdaten vom Navigationsrechner zu einem Robotino wird in der Funktion UpdatePosition() die Roboterposition angepasst. Dazu wird zunächst überprüft, ob sich die Position um mehr als 2 in X- und Y-Richtung und um mehr als 1 im Winkel geändert hat. Damit wird eine Glättung der Roboterposition erzeugt und ein "`zittern"' in der Visualisierung aufgrund der schwankenden Position unterdrückt. 
 
-Der Sonderfall, dass alle drei empfangenen Werte 0 sind bedeutet, dass der Navigationsrechner den Robotino verloren hat. In diesem Fall wird die Roboterposition nicht aktualisiert und statdessen ein NavigationsTimer gestartet. Wenn nach fünf Sekunden keine neue Robotinoposition erkannt wird, so wird der Robotino in der Visualisierung verdeckt. Dadurch wird eine kurzzeitige Verdeckung durch z.B. die Kabelgänge an den Stationen der Robotino immer noch angezeigt und verschwindet nicht.
+Der Sonderfall, dass alle drei empfangenen Werte 0 sind bedeutet, dass der Navigationsrechner den Robotino verloren hat. In diesem Fall wird die Roboterposition nicht aktualisiert und statdessen ein NavigationsTimer gestartet. Wenn nach fünf Sekunden keine neue Robotinoposition erkannt wird, so wird der Robotino in der Visualisierung verdeckt. Dadurch wird eine kurzzeitige Verdeckung durch z.B. die Kabelgänge an den Stationen ignoriert und der Robotino wird immer noch angezeigt und verschwindet nicht.
 
-Sobald sich der Alive-Tag ändert wird in der Visualisierung die RoboterAlive-LED angepasst. Ein Roboter wird als Alive gewertet bei Aufruf der Funktion UpdateValues(). Wenn der AliveTimer abläuft wird der Robotino als nicht Alive gewertet. Das führt dazu, dass ein Robotino auch als lebend angezeigt wird, wenn die Kommunikation nicht vollständig funktioniert, solange dieser seinen Status an den Fertigungsplanungsrechner sendet. Nach maximal 30 Sekunden wird ein Absturz der Kommunikation erkannt und der Robotino wird ncht länger in der Auftragsvergabe berücksichtigt. 
+Sobald sich der Alive-Tag ändert, wird in der Visualisierung die RoboterAlive-LED angepasst. Ein Roboter wird als Alive gewertet, bei Aufruf der Funktion UpdateValues(). Wenn der AliveTimer abläuft wird der Robotino als nicht Alive gewertet. Das führt dazu, dass ein Robotino auch als lebend angezeigt wird, wenn die Kommunikation nicht vollständig funktioniert, solange dieser seinen Status an den Fertigungsplanungsrechner sendet. Nach maximal 30 Sekunden wird ein Absturz der Kommunikation erkannt und der Robotino wird nicht länger in der Auftragsvergabe berücksichtigt. 
 
 \section{Auftrag, Prozess, Prozessschritt} 
 \label{sec:AuftragProzessSchritt}
@@ -292,7 +289,7 @@ Auftrag, Prozess und Prozessschritt sind in verschiedene Klassen geschrieben. Fo
 \subsection{Prozessschritt}
 \label{sec:Prozessschritt}
 
-Ein Prozessschritt besteht aus genau einer Stations-ID verknüpft mit einer festen Bearbeitungsdauer in Sekunden. Dies beschreibt für einen Teil eines Prozesses. In einer Fortschritts-Flag wird festgehalten, ob der Prozessschritt bereits bearbeitet wurde, oder noch bearbeitet werden muss. 
+Ein Prozessschritt besteht aus genau einer Stations-ID verknüpft mit einer festen Bearbeitungsdauer in Sekunden. Dies beschreibt einen Teil eines Prozesses. In einer Fortschritts-Flag wird festgehalten, ob der Prozessschritt bereits bearbeitet wurde, oder noch bearbeitet werden muss. 
 
 Der Prozessfortschritt kann ein Signal emittieren, welches anzeigt, dass sich der Fortschritt geändert hat.
 
@@ -303,15 +300,15 @@ Ein Prozess, in der Datenbank Werkstück, beinhaltet eine Liste von Prozessschri
 
 Mit der eindeutigen ID kann später ein Prozess innerhalb des Programms wiedergefunden werden. Nur die in Aufträgen befindlichen Prozesse erhalten eine aufsteigende laufende Nummer als eindeutige ID. Die in der Initialisierung erzeugten Prozesse oder die über die Visualisierung erzeugten Prozesse (folgend Referenzprozesse) erhalten keine spezielle eindeutige ID, sondern eine aufsteigende eindeutige ReferenzID. Dies führt dazu, nicht alle Informationen in den einzelnen Prozessen halten zu müssen, sondern auf den initialisierten Referenzprozess zugreifen zu können. 
 
-Die ReferenzID eines Prozesses einhält die eindeutige ID des zugehörigen Referenzprozesses. 
+Die ReferenzID eines Prozesses enthält die eindeutige ID des zugehörigen Referenzprozesses. 
 
-Zur Prozesskontrolle gibt es zusätzlich noch verschiedene Flags die den Status des Prozesses widerspiegeln. Dazu gehört ein Blocked- und ein InProgress-Flag. Das InProgress-Flag wird gesetzt, sobald ein Werkstück an einer Station bearbeitet wird. Das Blocked-Flag kann über die Hard-Code Area (vgl. Kapitel \ref{sec:HardCode}) gesetzt werden und verhindert eine weitere Bearbeitung. 
+Zur Prozesskontrolle gibt es zusätzlich noch verschiedene Flags, die den Status des Prozesses widerspiegeln. Dazu gehört ein Blocked- und ein InProgress-Flag. Das InProgress-Flag wird gesetzt, sobald ein Werkstück an einer Station bearbeitet wird. Das Blocked-Flag kann über die Hard-Code Area (vgl. Kapitel \ref{sec:HardCode}) gesetzt werden und verhindert eine weitere Bearbeitung. 
 
 Jeder Prozess enthält einen Timer, der die verbrauchte Zeit an einem Arbeitsplatz kontrolliert. Der Timer wird gestartet, sobald ein Werkstück an einer Station bearbeitet wird, die nötige Zeit wird dem zugehörigen Prozessschritt entnommen. Bei Ablauf des Timers wird die Funktion TimerElapsed() aufgerufen, in der der zugehörige Prozessschrittfortschritt auf fertig gesetzt und das InProgress-Flag zurückgesetzt wird. 
 
-Über die beiden Signale ProzessFinished und FortschrittUpdated kann bekannt gemacht werden, dass sich ein Fortschritt eines Prozesses geändert hat oder die Arbeit an einer Station beendet wurde und das Werkstück bereit ist für Abholung.
+Über die beiden Signale ProzessFinished und FortschrittUpdated kann bekannt gemacht werden, dass sich ein Fortschritt eines Prozesses geändert hat, oder die Arbeit an einer Station beendet wurde und das Werkstück bereit ist für Abholung.
 
-Mit der im Prozess enthaltenen Funktion UpdateFortschritt() wird der Fortschritt eines Prozesses anhand der beinhalteten Prozessschritte aktualisiert. Dazu wird die Prozessschrittliste durchgegangen und für jeden Prozessschritt, der als fertig markiert wurde ein entsprechender Fortschritt zum Prozessfortschritt addiert. Die einzelnen Prozessschritte sind dabei so gewichtet, dass die Summe aus allen Prozessschritten, wenn alle abgeschlossen sind, 100 ergibt. Durch Rundungsfehler können in der aktuellen Umsetzung nicht mehr als 25 Prozessschritte je Prozess sauber dargestellt werden. Sollten mehr Prozessschritte erforderlich sein, so müsste die Fortschrittsberechnung angepasst werden.
+Mit der im Prozess enthaltenen Funktion UpdateFortschritt() wird der Fortschritt eines Prozesses anhand der beinhalteten Prozessschritte aktualisiert. Dazu wird die Prozessschrittliste durchgegangen und für jeden Prozessschritt, der als fertig markiert wurde, ein entsprechender Fortschritt zum Prozessfortschritt addiert. Die einzelnen Prozessschritte sind dabei so gewichtet, dass die Summe aus allen Prozessschritten, wenn alle abgeschlossen sind, 100 ergibt. Durch Rundungsfehler können in der aktuellen Umsetzung nicht mehr als 25 Prozessschritte je Prozess sauber dargestellt werden. Sollten mehr Prozessschritte erforderlich sein, so müsste die Fortschrittsberechnung angepasst werden.
 
 \begin{figure}[htb]
     \centering
@@ -322,7 +319,7 @@ Mit der im Prozess enthaltenen Funktion UpdateFortschritt() wird der Fortschritt
 
 Um auf den richtigen Prozessschritt innerhalb der Liste zuzugreifen sind zwei unterschiedliche Funktionen implementiert. Beide Funktionen unterscheiden sich ausschließlich in ihrem Rückgabewert. In Abbildung \ref{fig:GetProzessstepFunktionen} sind alle möglichen Fälle Prozessschrittliste leer oben links, ein oder mehrere Prozessschritte in der Liste oben rechts und unten links und Liste voll unten rechts dargestellt. Dabei ist zu erkennen, dass die Funktion GetNextUnfinishedProzessstep() immer den nächsten Prozessschritt zurückliefert, der noch nicht bearbeitet wurde. Bei voller Liste wird NULL zurückgegeben. Anders hierzu die Funktion GetActualProzessstep(), die NULL bei leerer Liste zurückgibt und sonst den letzten fertigen Prozessschritt. 
 
-Die Funktion GetActualProzessstep() wird in der Fertigungsplanung zur Planung der Aufträge verwendet (siehe \ref{sec:CheckAuftrag}). GetNextUnfinishedProzessstep() findet Anwendung sobald auf einem aktuellen Prozess eine Änderung auftritt oder umgesetzt werden soll. Wenn beispielsweise der Timer abgelaufen ist, wird in der Funktion TimerElapsed() über der zurückgegebene Prozessschritt als fertig markiert.
+Die Funktion GetActualProzessstep() wird in der Fertigungsplanung zur Planung der Aufträge verwendet (siehe \ref{sec:CheckAuftrag}). GetNextUnfinishedProzessstep() findet Anwendung sobald auf einem aktuellen Prozess eine Änderung auftritt oder umgesetzt werden soll. Wenn beispielsweise der Timer abgelaufen ist, wird über die Funktion TimerElapsed() der zurückgegebene Prozessschritt als fertig markiert.
 
 \subsection{Auftrag}
 \label{sec:Auftrag}
@@ -331,14 +328,15 @@ Die Klasse Auftrag enthält eine Liste von Prozessen und darin enthaltenen Proze
 
 Mit dem Signal FortschrittUpdated kann bekannt gemacht werden, dass sich der Fortschritt geändert hat und z.B. die Visualisierung aktualisiert werden. Das Signal wird gesendet, sobald die Funktion UpdateFortschritt() aufgerufen wurde. In dieser Funktion werden alle enthaltenen Prozesse auf ihren Fortschritt überprüft und im Auftrag gegebenenfalls angepasst. Die Fertigungsplanung verknüpft Auftrag, Prozess und Prozessschritt derartig, dass ein Fortschrittsupdate innerhalb eines Prozessschrittes eine Aktualisierung des Prozessfortschritt hervorruft. Dies wiederum lässt den entsprechenden Auftragsfortschritt aktualisieren (siehe Listing \ref{lst:Auftragserzeugung}).
 
-Ein bestimmter Prozess aus der Liste kann über die Funktion GetProzessByID() mit seiner eindeutige ID zurückgegeben werden. 
+Ein bestimmter Prozess aus der Liste kann über die Funktion GetProzessByID() anhand seiner eindeutigen ID zurückgegeben werden. 
 
-Weiterhin werden zwei Funktionen bereitgestellt, die von der Fertigungsplanung genutzt werden um Prozesse oder Prozessschritte zu erhalten. Die Funktion GetNextUnfinishedProzesssteps() gibt, mit Hilfe der Funktion GetNextUnfinishedProzessstep() aus dem Prozess, eine Liste aller entsprechenden Prozessschritte zurück (vgl. Abschnitt \ref{sec:Prozess}). Über die Funktion GetAllUnfinishedProzesses() werden alle Prozesse zurückgegeben, die noch unfertige Prozessschritte enthalten, sofern diese nicht blockiert sind. Hiermit werden in der Fertigungsplanung die zu bearbeitenden Prozesse ausgewählt (siehe \ref{sec:CheckAuftrag}).
+Weiterhin werden zwei Funktionen bereitgestellt, die von der Fertigungsplanung genutzt werden, um Prozesse oder Prozessschritte zu erhalten. Die Funktion GetNextUnfinishedProzesssteps() gibt, mit Hilfe der Funktion GetNextUnfinishedProzessstep() aus dem Prozess, eine Liste aller entsprechenden Prozessschritte zurück (vgl. Abschnitt \ref{sec:Prozess}). Über die Funktion GetAllUnfinishedProzesses() werden alle Prozesse zurückgegeben, die noch unfertige Prozessschritte enthalten, sofern diese nicht blockiert sind. Hiermit werden in der Fertigungsplanung die zu bearbeitenden Prozesse ausgewählt (siehe \ref{sec:CheckAuftrag}).
 
 \section{Fertigungsplanung}
 \label{sec:Fertigungsplanung}
 
-Die Klasse Fertigungsplanung enthält alle verfügbaren Roboter, die Datenbankschnittstelle, die abzuarbeitenden Aufträge (vgl. Abschnitt \ref{sec:AuftragProzessSchritt}), die Fertigungsstraße und eine State Machine zur Verteilung von Roboteraufträgen. Außerdem wird auf Events reagiert, die von der Visualisierung oder anderen Quellen kommen. Zu den Events gehören Statusänderungen des Roboters, hinzufügen von Aufträgen oder Prozessen und Funktionen, die über die Hard-Code Area (vgl. Kapitel \ref{sec:HardCode}) angestoßen werden können. 
+Die Klasse Fertigungsplanung enthält alle verfügbaren Roboter, die Datenbankschnittstelle, die abzuarbeitenden Aufträge (vgl. Abschnitt \ref{sec:AuftragProzessSchritt}), die Fertigungsstraße und eine State Machine zur Verteilung von Roboteraufträgen. Außerdem wird auf Events reagiert, die von der Visualisierung oder anderen Quellen kommen. Zu den Events gehören Statusänderungen des Roboters, Hinzufügen von Aufträgen oder Prozessen und Funktionen, die über die Hard-Code Area (vgl. Kapitel \ref{sec:HardCode}) angestoßen werden können. 
+
 In der Fertigungsplanungsklasse werden somit alle Funktionalitäten gebündelt, die nicht direkt mit der Visualisierung zusammenhängen. 
 
 \subsection{Initialisierung}
@@ -346,17 +344,17 @@ In der Fertigungsplanungsklasse werden somit alle Funktionalitäten gebündelt, 
 
 Um die Fertigungsplanung zu initialisieren wird zunächst in der Funktion InitProzesses() ein Grundzustand hergestellt, in der mindestens 5 Prozesse vorhanden sind. Dazu werden zunächst über einen Datenbankaufruf alle dort verfügbaren Prozesse in eine Liste geschrieben. 
 
-Sollte die Liste weniger als 5 Elemente beinhalten, also in der Datenbank zu Programmstart weniger als 5 Prozesse vorhanden sein, so werden 5 neue zuvor definierte Prozesse (Abschnitt \ref{sec:Standardprozesse}) angelegt und die Liste so überschrieben. 
+Sollte die Liste weniger als 5 Elemente beinhalten, also in der Datenbank zu Programmstart weniger als 5 Prozesse vorhanden sein, so werden 5 neue, zuvor definierte Prozesse (Abschnitt \ref{sec:Standardprozesse}) angelegt und die Liste so überschrieben. 
 
 Die erzeugten Prozesse werden abschließend in die Datenbank geschrieben. Außerdem erhalten alle Prozesse gemäß ihrer Schritte und Dauer in der Visualisierung einen entsprechenden Tooltip (vgl. Kapitel \ref{sec:tooltips}). 
 
-Die Prozessliste kann über die Funktion AddProzess() dynamisch während das Programm läuft erweitert werden. Dies geschieht bei absenden eines eingestelltes Prozesses in der Visualisierung (\ref{sec:Prozesseingabe}). 
+Die Prozessliste kann über die Funktion AddProzess() dynamisch, während das Programm läuft, erweitert werden. Dies geschieht bei Absenden eines eingestelltes Prozesses in der Visualisierung (\ref{sec:Prozesseingabe}). 
 
 \subsubsection{Aufträge hinzufügen}
 
 Durch Einstellen und Absenden eines Auftrags in der Visualisierung (\ref{sec:Auftragseingabe}) wird die Funktion AddAuftrag() aufgerufen. In dieser Funktion wird zunächst ein leeres Auftragsobjekt erzeugt und diesem die nächst höhere Auftragsnummer aus der Datenbank zugeordnet.  
 
-Für jeden Prozesseintrag aus der Visualisierung wird nun die angegebene Anzahl des jeweiligen Prozesses eine Prozesskopie erzeugt. Den so kopierten Prozessen werden alle zugehörigen Prozessschritte als Kopie angehängt, um eigenständige Aufträge zu erhalten. Zuletzt werden die Prozesse und Aufträge miteinander verknüpft (siehe Listing \ref{lst:Auftragserzeugung}).
+Für jeden Prozesseintrag aus der Visualisierung wird nun die angegebene Anzahl des jeweiligen Prozesses als Prozesskopie erzeugt. Den so kopierten Prozessen werden alle zugehörigen Prozessschritte als Kopie angehängt, um eigenständige Aufträge zu erhalten. Zuletzt werden die Prozesse und Aufträge miteinander verknüpft (siehe Listing \ref{lst:Auftragserzeugung}).
 
 \begin{lstlisting}[frame=single, breaklines=true, numbers=left, stepnumber=2, firstnumber=1, numberstyle = \tiny, caption=Auftragserzeugung und Verknüpfungen,label=lst:Auftragserzeugung]
 Auftrag *A = new Auftrag();
@@ -392,11 +390,11 @@ Zunächst wurde darauf geachtet, dass die Prozesse unterschiedlich viele Prozess
     \label{fig:Fahrweganalyse}
 \end{figure}
 
-Zu erkennen ist, dass jeder Prozess bei Station 1 beginnt und in Station 8 endet. Die Einzelnen Prozesse (siehe farbliche Unterscheidung) sind dabei von unten nach oben zu lesen, beginnend mit Prozessschritt 1. 
+Zu erkennen ist, dass jeder Prozess bei Station 1 beginnt und in Station 8 endet. Die einzelnen Prozesse (siehe farbliche Unterscheidung) sind dabei von unten nach oben zu lesen, beginnend mit Prozessschritt 1. 
 
-Aus dem Diagramm können weiterhin potentielle Kollisionsherde und "`Staugefahren"' erkannt werden. Die Standardprozesse wurde so angepasst, dass alle Stationen möglichst gleichmäßig häufig durchfahren werden. Weiterhin kann aus dem Diagramm abgelesen werden, ob durch ungünstige Auftragsplanung ein Deadlock angefahren werden kann, also alle Aufträge irgendwann durch andere Aufträge blockiert sein können. Da keine Schleifen zwischen den Stationen entstanden sind kann gewährleistet werden, dass alle Aufträge in jeder Belegung nach einiger Zeit abgearbeitet werden können, wenn die Werkstücke in Station 8 entnommen werden.
+Aus dem Diagramm können weiterhin potentielle Kollisionsherde und "`Staugefahren"' erkannt werden. Die Standardprozesse wurden so angepasst, dass alle Stationen möglichst gleichmäßig häufig durchfahren werden. Weiterhin kann aus dem Diagramm abgelesen werden, ob durch ungünstige Auftragsplanung ein Deadlock angefahren werden kann, also alle Aufträge irgendwann durch andere Aufträge blockiert sein können. Da keine Schleifen zwischen den Stationen entstanden sind kann gewährleistet werden, dass alle Aufträge in jeder Belegung nach einiger Zeit abgearbeitet werden können, wenn die Werkstücke in Station 8 entnommen werden.
 
-Das Diagramm in Abbildung \ref{fig:Stationsanalyse} zeigt eine genauere Analyse der Stationen. Angenommen wird, dass jeder der Standardprozesse genau ein mal abgearbeitet wird. Auf der linken y-Achse, die zu den bunten Säulen gehört, ist die Belegungsdauer jeder Station in Sekunden angegeben. Die rechte, den hellgelben Säulen zugeordnete y-Achse bezeichnet die Anzahl der Anfahrten an eine Station. 
+Das Diagramm in Abbildung \ref{fig:Stationsanalyse} zeigt eine genauere Analyse der Stationen. Angenommen wird, dass jeder der Standardprozesse genau ein mal abgearbeitet wird. Auf der linken y-Achse, die zu den bunten Säulen gehört, ist die Belegungsdauer jeder Station in Sekunden angegeben. Die rechte, den hellgelben Säulen zugeordnete y-Achse, bezeichnet die Anzahl der Anfahrten an eine Station. 
 
 \begin{figure}[htb]
     \centering
@@ -407,26 +405,26 @@ Das Diagramm in Abbildung \ref{fig:Stationsanalyse} zeigt eine genauere Analyse 
 
 Es ist zu erkennen, dass Station 1 und 8 genau fünf mal angefahren werden, also je Prozess ein mal. Die weiteren Stationen 2 bis 7 werden zwei- bis dreimal angefahren. So wird sichergestellt, dass die Stationen möglichst gleichmäßig belastet werden. 
 
-Die farblich unterschiedlichen Säulen zeigen die kürzeste Belegungsdauer der Arbeitsplätze an. Die Balken ergeben sich durch die Dauer eines einzelnen Prozessschrittes an einem Arbeitsplatz. Es  Belegungsdauer für alle Prozesse zwischen 35 und 75 Sekunden je Station liegt. Die 2 Sekunden Bearbeitungsdauer je Prozess an Station 8 sind dabei vernachlässigt worden und gewährleisten nur ein sicheres Herausnehmen der Werkstücke durch den Menschen, ohne dass sich der Roboter noch im Entladezyklus befindet. 
+Die farblich unterschiedlichen Säulen zeigen die kürzeste Belegungsdauer der Arbeitsplätze an. Die Balken ergeben sich aus der Dauer eines einzelnen Prozessschrittes an einem Arbeitsplatz. Es ist zu erkennen, dass die Belegungsdauer für alle Prozesse zwischen 35 und 75 Sekunden, je Station liegt. Die 2 Sekunden Bearbeitungsdauer je Prozess an Station 8 sind dabei vernachlässigt worden und gewährleisten nur ein sicheres Herausnehmen der Werkstücke durch den Menschen, ohne dass sich der Roboter noch im Entladezyklus befindet. 
 
-Als Besonderheit ist an Station 5 zu erkennen, dass es drei Anfahrten, aber nur zwei verschiedene Prozesse gibt. Dies liegt darin begründet, dass Prozess 4 Station 5 zwei mal anfährt mit verschieden langen Zeiten. Dadurch ist die Gesamtzeit in Station 5 auch am höchsten, gehört jedoch zu großen Anteilen zum selben Prozess. Station 2 hat die kürzesten Bearbeitungszeiten je Prozess, da diese Station von drei verschiedenen Prozessen angefahren wird. Gegensätzlich dazu ist die Bearbeitungszeit an Station 23 von Prozess 3 mit 45 Sekunden sehr hoch angesetzt, da dieser Prozess keine weitere Station anfährt. 
+Als Besonderheit ist an Station 5 zu erkennen, dass es drei Anfahrten, aber nur zwei verschiedene Prozesse gibt. Dies liegt darin begründet, dass Prozess 4 Station 5 zwei mal anfährt, mit verschieden langen Zeiten. Dadurch ist zwar die Gesamtzeit in Station 5 am höchsten, gehört jedoch zu großen Anteilen zum selben Prozess. Station 2 hat die kürzesten Bearbeitungszeiten je Prozess, da diese Station von drei verschiedenen Prozessen angefahren wird. Gegensätzlich dazu ist die Bearbeitungszeit an Station 23 von Prozess 3 mit 45 Sekunden sehr hoch angesetzt, da dieser Prozess keine weitere Station anfährt. 
 
-Es wurde versucht, die durchschnittliche Belegungsdauer der Stationen anzugleichen, um alle Arbeitsplätze möglichst homogen auszulasten. Zu erkennen ist, dass die minimale
+Es wurde versucht, die durchschnittliche Belegungsdauer der Stationen anzugleichen, um alle Arbeitsplätze möglichst homogen auszulasten. 
 
 Als Nebeneffekt ergibt sich, dass die Roboter möglichst ausgeglichen über die gesamte Fertigungsstraße fahren und die Gefahr von Staus oder Kollisionen dadurch verringert wird. 
 
 \subsection{Roboter Statusänderungen}
 
-Wenn eine der in der Fertigungsplanung enthalten Roboterklassen ein Event feuert, welches eine Statusänderung beinhaltet (vgl. Kapitel \ref{sec:UdpHandler}), wird über Funktionen in der Fertigungsplanung auf diese reagiert. So wird der Greifer oder das Statusflag eines Roboters bei einer Änderung aktualisiert. Beim Empfanges eines Errorevents des Roboter wird je nach Errortyp eine Meldung ausgegeben und individuell auf die Robotererror reagiert. 
+Wenn eine der, in der Fertigungsplanung enthalten, Roboterklassen ein Event feuert, welches eine Statusänderung beinhaltet (vgl. Kapitel \ref{sec:UdpHandler}), wird über Funktionen in der Fertigungsplanung auf diese reagiert. So wird der Greifer oder das Statusflag eines Roboters bei einer Änderung aktualisiert. Beim Empfanges eines Errorevents des Roboters wird je nach Errortyp eine Meldung ausgegeben und individuell auf die Robotererror reagiert. 
 
-Weiterhin wird durch Ablauf des Timers eines Arbeitsplatzes dieser in der Fertigungsstraße aktualisiert und auf bereit geschaltet. 
+Weiterhin wird durch Ablauf des Timers eines Arbeitsplatzes, dieser in der Fertigungsstraße aktualisiert und auf bereit geschaltet. 
 
 
 \subsubsection{Roboterstatus geändert}
 
-Bei Änderung des Roboterstatus wird die Funktion OnRobotStatusChanged() aufgerufen. Dabei wird zunächst der aufrufende Roboter ausgewählt und zwischengespeichert. Sollte sich der Status des Roboter auf eins geändert haben, also der Roboter auf dem Weg zu etwas ist, so wird unterschieden ob sich der Roboter auf einem Parkplatz oder einem Arbeitsplatz befunden hat.
+Bei Änderung des Roboterstatus wird die Funktion OnRobotStatusChanged() aufgerufen. Dabei wird zunächst der aufrufende Roboter ausgewählt und zwischengespeichert. Sollte sich der Status des Roboters auf eins geändert haben, also der Roboter auf dem Weg zu etwas sein, so wird unterschieden ob sich der Roboter auf einem Parkplatz oder einem Arbeitsplatz befunden hat.
 
-Von einem Parkplatz (auch Ladestation) kommend wird dieser in der Datenbank und der Visualisierung wieder freigegeben. Wenn der Roboter zuletzt an einer Station war, so wird diese jetzt für andere Roboter freigegeben und der Roboter wird in der Datenbank aus dem Arbeitsplatz gelöscht. 
+Von einem Parkplatz (auch Ladestation) kommend, wird dieser in der Datenbank und der Visualisierung wieder freigegeben. Wenn der Roboter zuletzt an einer Station war, so wird diese jetzt für andere Roboter freigegeben und der Roboter wird in der Datenbank aus dem Arbeitsplatz gelöscht. 
 
 \subsubsection{Greiferstatus geändert}
 
@@ -434,7 +432,7 @@ Die Prozessaktualisierungen basieren auf der Änderung des Greifers des Roboters
 
 Das Schließen des Greifers eines Roboters bedeutet somit immer, dass ein Werkstück aufgenommen wurde. Somit wird in der Datenbank der Arbeitsplatz, an dem sich der Roboter befindet freigegeben und kann für andere Aufträge genutzt werden. Der Arbeitsplatz wird in der Visualisierung und der Datenbank freigegeben. Zuletzt wird der Tooltip des Arbeitsplatzes (vgl. Kapitel \ref{sec:tooltips}) auf einen leeren String gesetzt. 
 
-Beim Öffnen des Greifers wird ein Werkstück in einen Arbeitsplatz einer Station gelegt. Daraufhin wird die Zuordnung des Werkstücks zu dem entsprechenden Roboter gelöscht. Mit der Werkstücks-ID kann nun aus der Auftragsliste der zugehörige Prozess identifiziert werden. Der Timer des so gefundenen Prozesses wird jetzt gestartet, somit läuft die Bearbeitung des Werkstücks an dem Arbeitsplatz. In der Visualisierung und Datenbank wird der Arbeitsplatz von reserviert auf belegt aktualisiert.
+Bei dem Öffnen des Greifers wird ein Werkstück in einen Arbeitsplatz einer Station gelegt. Daraufhin wird die Zuordnung des Werkstücks zu dem entsprechenden Roboter gelöscht. Mit der Werkstücks-ID kann nun aus der Auftragsliste der zugehörige Prozess identifiziert werden. Der Timer des so gefundenen Prozesses wird jetzt gestartet, somit läuft die Bearbeitung des Werkstücks an dem Arbeitsplatz. In der Visualisierung und Datenbank wird der Arbeitsplatz von reserviert auf belegt aktualisiert.
 
 Weiterhin wird das Werkstück, dass dem Roboter zu diesem Zeitpunkt zugeordnet ist an der Station an der sich der Roboter zuletzt aufgehalten hat gelöscht und der zugehörige Arbeitsplatz wird freigegeben. 
 
@@ -442,7 +440,7 @@ Weiterhin wird das Werkstück, dass dem Roboter zu diesem Zeitpunkt zugeordnet i
 
 Bei Auftreten eines Errors im Roboter wird je nach Typ eine Error-Meldung ins Log geschrieben. 
 
-Die Error-Meldungen des Roboters wurden bewusst nicht automatisiert behandelt, da dem Benutzer die Kontrolle über das Gesamtsystem behalten sollte. Somit muss je nach Fehlertyp eine unterschiedlicher Lösungsweg verfolgt werden. 
+Die Error-Meldungen des Roboters wurden bewusst nicht automatisiert behandelt, da der Benutzer die Kontrolle über das Gesamtsystem behalten sollte. Somit muss je nach Fehlertyp ein unterschiedlicher Lösungsweg verfolgt werden. 
 
 Die auftretenden Fehler und der Lösungsweg ist in Kapitel \ref{sec:Error} zu finden. 
 
@@ -454,7 +452,7 @@ Die mit der Hard-Code Area erzeugten Befehle aus der Visualisierung (vgl. Kapite
 
 Das Zustandsdiagramm in Abbildung \ref{fig:Auftragsplanung} beschreibt die Logik der Auftragsvergabe an die Roboter. Das Diagramm wurde anschließend als State Machine (vgl. \ref{sec:StateMachines}) implementiert. 
 
-\begin{figure}[htb]
+\begin{figure}[!htb]
     \centering
     \includegraphics[width=0.8\textwidth]{Abbildungen/Auftragsplanung_rotated.PNG}
     \caption{Zustandsdiagramm der Auftragsplanung}		
@@ -471,25 +469,25 @@ Im Quellcode werden zunächst alle Zustände erzeugt und der State Machine hinzu
 Um die State Machine zu starten wird, nachdem der Initialzustand bekannt gemacht wurde, die Start-Funktion aufgerufen. Eine verkürzte Darstellung der Aufrufe ist in Listing \ref{lst:StartStateMachine} abgebildet. 
 
 \begin{lstlisting}[frame=single, breaklines=true, numbers=left, stepnumber=2, firstnumber=1, numberstyle = \tiny, caption=Start und Initialisierung der State Machine,label=lst:StartStateMachine]
-    QStateMachine StateMachine;
-    QState *StateCheckRobots = new QState;
+QStateMachine StateMachine;
+QState *StateCheckRobots = new QState;
 
-    StateMachine.addState(StateCheckRobots);
-    StateCheckRobots->addTransition(this, SIGNAL(nextState()), StateCheckAkku);
+StateMachine.addState(StateCheckRobots);
+StateCheckRobots->addTransition(this, SIGNAL(nextState()), StateCheckAkku);
 
-    StateMachine.setInitialState(StateCheckRobots);
-    StateMachine.start();
+StateMachine.setInitialState(StateCheckRobots);
+StateMachine.start();
 
-    QObject::connect(StateCheckRobots, &QState::entered, this, &Fertigungsplanung::CheckRobots);
+QObject::connect(StateCheckRobots, &QState::entered, this, &Fertigungsplanung::CheckRobots);
 \end{lstlisting}
 
 \subsubsection{Zustand CheckRobots}
 
-Im Initialzustand der State Machine, CheckRobots, werden alle vier Roboter nacheinander auf Bereitschaft überprüft. Die Reihenfolge der zu überprüfenden Roboter wird dabei durch einen hierfür entwickelten Shuffle-Algorithmus (\ref{sec:shuffle}) bestimmt. 
+Im Initialzustand der State Machine, CheckRobots, werden alle vier Roboter nacheinander auf Bereitschaft geprüft. Die Reihenfolge der zu überprüfenden Roboter wird dabei durch einen hierfür entwickelten Shuffle-Algorithmus (\ref{sec:shuffle}) bestimmt. 
 
-Ein Roboter gilt als bereit, wenn er als Status 0 zurückgibt, nicht als defekt markiert ist und als lebend gilt. Sobald ein geprüfter Roboter alle drei Kriterien erfüllt wird dieser ausgewählt und in den weiteren Zuständen, gefolgt von CheckAkku, genutzt. Die anderen Roboter werden bis zum nächsten Aufruf des Zustands CheckRobots vernachlässigt.
+Ein Roboter gilt als bereit, wenn er als Status 0 zurückgibt, nicht als defekt markiert ist und als lebend gilt. Sobald ein geprüfter Roboter alle drei Kriterien erfüllt, wird dieser ausgewählt und in den weiteren Zuständen, gefolgt von CheckAkku, genutzt. Die anderen Roboter werden bis zum nächsten Aufruf des Zustands CheckRobots vernachlässigt.
 
-Sollte keiner der vier Roboter alle drei Kriterien erfüllen wird in den Zustand CheckParkplatzRobots gewechselt.
+Sollte keiner der vier Roboter alle drei Kriterien erfüllen, wird in den Zustand CheckParkplatzRobots gewechselt.
 
 \subsubsection{Zustand CheckParkplatzRobots}
 
@@ -497,13 +495,13 @@ Wie im Zustand CheckRobots werden alle vier Roboter anhand von Kriterien auf Ber
 
 Anstatt den Roboterstatus wie beim Zustand CheckRobots auf 0 zu prüfen, wird ein Status zwischen 201 und 204 erwartet. Diese vier Stati repräsentieren die vier Parkplätze auf denen sich ein Roboter befinden kann. 
 
-Durch die Aufteilung der Zustände CheckRobots und CheckParkplatzRobots erfolgt eine Priorisierung der Roboter, die sich bereits in den Stationen befinden und einen Auftrag fertig abgearbeitet haben. Nur wenn kein Roboter in den Stationen verfügbar ist wird auf die auf den Parkplatz befindlichen Roboter zurückgegriffen. Dadurch werden Situationen vermindert, in denen sich die Roboter bei der Stationsarbeit gegenseitig behindern.
+Durch die Aufteilung der Zustände CheckRobots und CheckParkplatzRobots erfolgt eine Priorisierung der Roboter, die sich bereits in den Stationen befinden und einen Auftrag fertig abgearbeitet haben. Nur wenn kein Roboter in den Stationen verfügbar ist, wird auf die, auf den Parkplatz befindlichen, Roboter zurückgegriffen. Dadurch werden Situationen vermindert, in denen sich die Roboter bei der Stationsarbeit gegenseitig behindern.
 
-Sollte keiner der auf den Parkplatz befindlichen Roboter alle weiteren Kriterien erfüllen wird in den Zustand Wait gewechselt.
+Sollte keiner der auf den Parkplatz befindlichen Roboter alle weiteren Kriterien erfüllen, wird in den Zustand Wait gewechselt.
 
 \subsubsection{Zustand Wait}
 
-Da in Qt aufgrund der eventbasierten Programmierung (vgl. \ref{sec:Eventbasiert}) keine Endlosschleifen vorgesehen sind wurde im Zustand "`Wait"' mittels Timer die Zustandsmaschine künstlich verlangsamt. Ein Entfernen des Zustands führt zum Programmabsturz, da in kürzester Zeit die interne Eventliste voll geschrieben wird. Auf externe Events wie Mauseingaben oder Ereignisse vom Betriebssystem könnte somit nicht mehr reagiert werden. 
+Da in Qt aufgrund der eventbasierten Programmierung (vgl. \ref{sec:Eventbasiert}) keine Endlosschleifen vorgesehen sind, wurde im Zustand "`Wait"' mittels Timer die Zustandsmaschine künstlich verlangsamt. Ein Entfernen des Zustands führt zum Programmabsturz, da in kürzester Zeit die interne Eventliste voll geschrieben wird. Auf externe Events wie Mauseingaben oder Ereignisse vom Betriebssystem könnte somit nicht mehr reagiert werden. 
 
 Durch den Zustand Wait können andere Programmevents und Ereignisse des Betriebssystems abgearbeitet werden, während 2000 ms auf das timeout()-Signal des Timers gewartet wird. 
 
@@ -511,9 +509,9 @@ Nach Ablauf des Timers wird in den Initialzustand CheckRobots gewechselt.
 
 \subsubsection{Zustand CheckAkku}
 
-Der Zustand CheckAkku gewährleistet einen Tiefentenladungsschutz der Roboter. Sobald ein Roboter in den ersten beiden Zuständen ausgewählt wurde wird überprüft, ob sein Akkustand größer gleich 25 Prozent ist. Es wird davon ausgegangen, dass kein Auftrag plus eine Fahrt zum Laden mehr als 25 Prozent Akku verbraucht. Der Wert wurde empirisch ermittelt. 
+Der Zustand CheckAkku gewährleistet einen Tiefentenladungsschutz der Roboter. Sobald ein Roboter in den ersten beiden Zuständen ausgewählt wurde, wird überprüft, ob sein Akkustand größer gleich 25 Prozent ist. Es wird davon ausgegangen, dass kein Auftrag plus eine Fahrt zum Laden mehr als 25 Prozent Akku verbraucht. Der Wert wurde empirisch ermittelt. 
 
-Sollte der Akkustand unter 25 Prozent liegen, wird der Roboter über Zustand SendLoadingTask zu einer freien Ladestation geschickt. Wenn keine Ladestation frei ist wird in den Zustand Wait gewechselt. 
+Sollte der Akkustand unter 25 Prozent liegen, wird der Roboter über Zustand SendLoadingTask zu einer freien Ladestation geschickt. Wenn keine Ladestation frei ist, wird in den Zustand Wait gewechselt. 
 Bei einem Akkustand von über 25 Prozent wird der Zustand CheckAuftrag aufgerufen. 
 
 \subsubsection{Zustände SendLoadingTask, SendParkingTask, SendPositionTask}
@@ -522,13 +520,13 @@ Um bei Kommunikation mit den Robotern in den Zuständen SendLoadingTask, SendPos
 
 Aus allen den drei Send......Task Zuständen und ihren zugehörigen Wartezuständen kann über ein Ablauf eines Timers in den Zustand Timeout gewechselt werden. Der Timer wird beim erstmaligen Eintritt in einen der Zustände Send......Task gestartet und läuft nach 25 Sekunden ab. Dieser Timer gewährt eine Absturzsicherheit des Programms bei Roboterausfall oder anderweitigem Fehlschlagen der Kommunikation. 
 
-In allen drei Send.....Task Zuständen wird ein erfolgreicher Sendevorgang damit erkannt, dass der Roboterstatus nicht mehr 0 ist, und der Roboter sich nicht mehr auf einem Parkplatz befindet. Solange die beiden Bedingungen nicht erfüllt sind wird weiter an den Roboter gesendet. 
+In allen drei Send.....Task Zuständen wird ein erfolgreicher Sendevorgang dadurch erkannt, dass der Roboterstatus nicht mehr 0 ist, und der Roboter sich nicht mehr auf einem Parkplatz befindet. Solange die beiden Bedingungen nicht erfüllt sind wird weiter an den Roboter gesendet. 
 
 Wenn im Zustand SendLoadingTask die Nachricht erfolgreich versendet wurde, wird der Timer für das Timeout gestoppt, und die benötigte Ladestation in der Visualisierung und in der Datenbank reserviert. Abschließend wird in den Initialzustand gewechselt.
 
 Der Zustand SendParkingTask verhält sich Analog dem SendLoadingTask, nur wird bei erfolgreicher Nachrichtenversendung der benötigte Parkplatz reserviert.
 
-Bei dem Zustand SendPositionTask, in dem ein Auftrag aus der Planung an den Roboter verschickt wurde, werden nach erfolgreichem Nachrichtenversand mehrere Aktionen durchgeführt. Zunächst wird der Timeout-Timer gestoppt. Sollte der Auftrag den ersten Prozessschritt, also das Abholen eines Werkstücks im Lager an Station 1, beinhalten wird der Schreibkopf des RFID neu beschrieben. In der Datenbank wird außerdem dem Start- und Zielarbeitsplatz der genutzte Roboter zugeordnet. Am Startarbeitsplatz wird das vorhandene Werkstück in der Datenbank entfernt und dem Zielarbeitsplatz zugeordnet. Die beiden Stationen werden außerdem Reserviert um zu verhindern, dass ein anderer Roboter an die zu bearbeitenden Stationen geschickt wird. Somit ist eine erste Kollisionsvermeidung implementiert. Zuletzt wird in der Datenbank das genutzte Werkstück dem Roboter zugewiesen. Auch in der Visualisierung werden Start- und Zielarbeitsplatz reserviert. Schlussendlich wird in der Visualisierung der Tooltip (vgl. Kapitel \ref{sec:tooltips}) des Start- und Zielarbeitsplatz aktualisiert.
+Bei dem Zustand SendPositionTask, in dem ein Auftrag aus der Planung an den Roboter verschickt wurde, werden nach erfolgreichem Nachrichtenversand mehrere Aktionen durchgeführt. Zunächst wird der Timeout-Timer gestoppt. Sollte der Auftrag den ersten Prozessschritt, also das Abholen eines Werkstücks im Lager an Station 1, beinhalten, wird der Schreibkopf des RFID neu beschrieben. In der Datenbank wird außerdem dem Start- und Zielarbeitsplatz der genutzte Roboter zugeordnet. Am Startarbeitsplatz wird das vorhandene Werkstück in der Datenbank entfernt und dem Zielarbeitsplatz zugeordnet. Die beiden Stationen werden außerdem reserviert, um zu verhindern, dass ein anderer Roboter an die zu bearbeitenden Stationen geschickt wird. Somit ist eine erste Kollisionsvermeidung implementiert. Zuletzt wird in der Datenbank das genutzte Werkstück dem Roboter zugewiesen. Auch in der Visualisierung werden Start- und Zielarbeitsplatz reserviert. Schlussendlich wird in der Visualisierung der Tooltip (vgl. Kapitel \ref{sec:tooltips}) des Start- und Zielarbeitsplatzes aktualisiert.
 
 \subsubsection{Zustand CheckAuftrag}
 \label{sec:CheckAuftrag}
@@ -538,20 +536,20 @@ Dazu wird zunächst in der Auftragsliste jeder Auftrag auf unfertige Prozesse un
 
 Dazu wird zunächst überprüft ob die Auftragsplanung pausiert ist oder sich der Prozess schon in Bearbeitung befindet. 
 
-Es wird geprüft ob die Start und Zielstation nicht durch einen Roboter reserviert ist.
+Es wird geprüft ob die Start- und Zielstation nicht durch einen Roboter reserviert ist.
 
 Sollte der nächste Prozessschritt der bearbeitet werden muss an der Lagerstation (Station 1) sein, so wird gewährleistet, dass sich ein Werkstück im Lager befindet und dieses ausgewählt. 
 
 Es wird geprüft ob eine der beiden Zielarbeitsplätze der Zielstation frei ist, also weder reserviert noch defekt und anschließend ausgewählt. 
 
-Wenn alle Vorbedingungen für einen der Prozesse eintreffen wird der Zustand direkt verlassen und der Auftrag wird an den ausgewählten Roboter im Zustand SendPositionTask gesendet. 
+Wenn alle Vorbedingungen für einen der Prozesse eintreffen, wird der Zustand direkt verlassen und der Auftrag wird an den ausgewählten Roboter im Zustand SendPositionTask gesendet. 
 
-Sollten alle Prozesse zu keinem Sendevorgang geführt haben, das heißt es ist entweder kein Auftrag vorhanden oder oder das senden wurde blockiert, so wird der aktuell ausgewählte Roboter zum Parken geschickt (Zustand SendParkingTask), sofern er sich noch nicht auf einem Parkplatz befindet. Sonst wird in den Initialzustand gewechselt.
+Sollten alle Prozesse zu keinem Sendevorgang geführt haben, das heißt es ist entweder kein Auftrag vorhanden oder das Senden wurde blockiert, so wird der aktuell ausgewählte Roboter zum Parken geschickt (Zustand SendParkingTask), sofern er sich noch nicht auf einem Parkplatz befindet. Sonst wird in den Initialzustand gewechselt.
 
 \subsection{Shuffle-Algorithmus}
 \label{sec:shuffle}
 
-Der Shuffle-Algorithmus dient dazu, die Roboter in zufälliger Reihenfolge abzuarbeiten, um eventuelle Dead-Locks zu vermeiden. Ein solcher Dead-Lock könnte zum Beispiel eintreten, wenn Roboter 1 und 2 an der Ladestation sind, Roboter 3 zum laden geschickt werden müsste, jedoch warten muss. Roboter 4 würde dabei, selbst wenn er bereit wäre einen Auftrag abzuarbeiten nie überprüft werden.
+Der Shuffle-Algorithmus dient dazu, die Roboter in zufälliger Reihenfolge abzuarbeiten, um eventuelle Dead-Locks zu vermeiden. Ein solcher Dead-Lock könnte zum Beispiel eintreten, wenn Roboter 1 und 2 an der Ladestation sind, Roboter 3 zum laden geschickt werden müsste, jedoch warten muss. Roboter 4 würde dabei, selbst wenn er bereit wäre einen Auftrag abzuarbeiten, nie überprüft werden.
 
 Zurückgegeben wird eine Liste in der die Zahlen 1 bis 4 in zufälliger Reihenfolge vorliegen. Der Algorithmus ist optimiert gegenüber der Anzahl an Systemaufrufen für eine Zufallszahl. Andernfalls wäre es einfacher solange eine Zufallszahl zurückgeben zu lassen,  wie die Liste diese noch nicht enthält.
 
@@ -595,7 +593,7 @@ Zuletzt wird die noch fehlende Zahl der Liste ergänzt (Listing \ref{lst:shuffle
 
 \section{Weitere Klassen}
 
-Neben den bisher ausführlicher beschriebenen Klassen gibt es noch weitere Klassen, die für Organisation, Strukturierung oder als Hilfe für bestimmte Teilgebiete dienen. 
+Neben den bisher ausführlicher beschriebenen Klassen, gibt es noch weitere Klassen, die für Organisation, Strukturierung oder als Hilfe für bestimmte Teilgebiete dienen. 
 
 In den folgenden Abschnitten sind werden die wichtigsten unter ihnen kurz beleuchtet.
 
@@ -662,7 +660,7 @@ Fertigung.Start();
 
 Nachdem so alle UDP- und internen Verbindungen hergestellt wurden, wird die Datenbank initialisiert und die Verbindung hergestellt (Listing \ref{lst:MainT3} Zeile 1f). 
 
-Alle Verknüpfungen zwischen Fertigungsplanung und DatenbankHandler und Visualisierung werden nachfolgend erzeugt. Das Konzept entspricht dem oben beschriebenen. 
+Alle Verknüpfungen zwischen Fertigungsplanung, DatenbankHandler und Visualisierung werden nachfolgend erzeugt. Das Konzept entspricht dem oben beschriebenen. 
 
 Der Fertigungsplanung werden nun alle erzeugten Objekte der Robotinos und aller Handler gesetzt (Zeilen 4 - 6). 
 
@@ -676,13 +674,13 @@ Um die in der Datenbank erzeugten Timestamps zwischenzuspeichern und anzuzeigen 
 
 Die Klasse enthält, zusätzlich zu dem Timestamp selbst, den zugehörigen Platz, das Werkstück und einen Status. Die Properties werden einmalig über den Konstruktor gesetzt. 
 
-Die Klasse stellt weiterhin eine Funktion bereit, die es ermöglicht aus den so vorliegenden Daten einen String zu generieren. Dazu wird ein QDateTime Objekt erzeugt, dessen Zeit auf LocalTime gesetzt wird. Mit diesem kann nachfolgend ein einheitlicher String erzeugt werden. 
+Die Klasse stellt weiterhin eine Funktion bereit, die es ermöglicht, aus den so vorliegenden Daten einen String zu generieren. Dazu wird ein QDateTime Objekt erzeugt, dessen Zeit auf LocalTime gesetzt wird. Mit diesem kann nachfolgend ein einheitlicher String erzeugt werden. 
 
 \subsection{Fertigungsstrasse}
 
-Um auf Events innerhalb der Prozesskette zu reagieren wurde zusätzlich zu der in der Datenbank abgelegten Fertigungsstrasse diese in Qt abgelegt. Beide werden redundant gepflegt und in Auftragsvergabe berücksichtigt. 
+Um auf Events innerhalb der Prozesskette zu reagieren wurde zusätzlich zu der in der Datenbank abgelegten Fertigungsstrasse, diese in Qt abgelegt. Beide werden redundant gepflegt und in der Auftragsvergabe berücksichtigt. 
 
-Die Fertigungsstrasse stellt Funktionen zur Verfügung, die ermöglichen einen Arbeitsplatz oder eine Station anhand ihrer ID zurückzugeben. Außerdem sind alle acht Stationen, Parkplätze und Ladestationen hier in eingebetteten Klassen abgebildet. 
+Die Fertigungsstrasse stellt Funktionen zur Verfügung, die ermöglichen, einen Arbeitsplatz oder eine Station anhand ihrer ID zurückzugeben. Außerdem sind alle acht Stationen, Parkplätze und Ladestationen hier in eingebetteten Klassen abgebildet. 
 
 Die Klasse der Stationen enthält neben zwei Arbeitsplätzen eine ID. 
 
