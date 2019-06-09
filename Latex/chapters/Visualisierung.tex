@@ -19,9 +19,9 @@ Aussage zu kommunizieren."'
 \cite[4]{corporate}
 \end{quote}
 
-Beim Design der Software wurde versucht diese Aspekte wieder aufzugreifen. Die Visualisierung sollte ebenso direkt und verständlich sein. Vor allem die Reduktion auf das Wesentliche lag besonders im Fokus. 
+Beim Design der Software wurde versucht, diese Aspekte wieder aufzugreifen. Die Visualisierung sollte ebenso direkt und verständlich sein. Vor allem die Reduktion auf das Wesentliche lag besonders im Fokus. 
 
-Um die Visualisierung im Stil der HAW zu gestalten wurde das Corporate Design bei Farb und Schriftwahl verwendet. Somit sind alle Schriftarten in der Visualisierung Open Sans. Als Farben wurden die vorgegebenen Farbstile "`HAW Hauptblau"' als Umrahmung und Abtrennung aller Bereiche gewählt. Das "`HAW Hellblau"' ist innerhalb der verschiedenen Bereiche als Trennung der Bedienelemente zu sehen. Da dieses blasser ist können alle Bedienelemente gut erkannt und verwendet werden. 
+Um die Visualisierung im Stil der HAW zu gestalten wurde das Corporate Design bei Farb und Schriftwahl verwendet. Somit sind alle Schriftarten in der Visualisierung Open Sans. Als Farben wurden die vorgegebenen Farbstile "`HAW Hauptblau"' als Umrahmung und Abtrennung aller Bereiche gewählt. Das "`HAW Hellblau"' ist innerhalb der verschiedenen Bereiche als Trennung der Bedienelemente zu sehen. Da dieses blasser ist, können alle Bedienelemente gut erkannt und verwendet werden. 
 
 \begin{figure}[htb]
     \centering
@@ -45,7 +45,7 @@ Die Visualisierung lässt sich in insgesamt 6 Bereiche unterteilen. Die Bereiche
 
 In Bereich II, der Auftragsübersicht, können die Fortschritte der laufenden Aufträge und Prozesse überwacht werden.
 
-Innerhalb des Bereich III können über Tabs vier weitere Fenster aufgerufen werden. Dabei dienen zwei der Anzeige spezifizierter Informationen, wohingegen die anderen beiden Tabs der Kontrolle dienen. Die Kombination aller vier Tabs wird folgend Tab-View genannt.
+Innerhalb des Bereichs III können über Tabs vier weitere Fenster aufgerufen werden. Dabei dienen zwei der Anzeige spezifizierter Informationen, wohingegen die anderen beiden Tabs der Kontrolle dienen. Die Kombination aller vier Tabs wird folgend Tab-View genannt.
 
 Bereich IV zeigt den Status der Robotinos an. 
 
@@ -60,11 +60,11 @@ In Abbildung \ref{fig:Gesamtprogramm} ist eine Übersicht der Visualisierung im 
     \label{fig:Gesamtprogramm}
 \end{figure}
 
-In den folgenden Kapiteln werden die einzelnen Bereiche der Abbildung näher beleuchtet und ihre Implementierung in der MainWindow Funktion erläutert. 
+In den folgenden Kapiteln werden die einzelnen Bereiche näher beleuchtet und ihre Implementierung in der MainWindow Funktion erläutert. 
 
 \section{Live-View}
 
-Der größte der Bereiche beinhaltet eine Live-View der Fertigungsstraße, dargestellt in Abbildung \ref{fig:LiveView}. Dabei sind alle Stationen, die Robotinos, Parkplätze und die Ladestationen dargestellt. In der unteren rechten Ecke ist das VPJ-Logo eingebettet. Das Fenster hat feste Maße von 800 x 400 Pixeln, wodurch die realen Raumabmessungen einfach dargestellt werden können. 1 Pixel entspricht im realen Raum 1 cm. 
+Der Größte der Bereiche beinhaltet eine Live-View der Fertigungsstraße, dargestellt in Abbildung \ref{fig:LiveView}. Darin sind alle Stationen, die Robotinos, Parkplätze und die Ladestationen dargestellt. In der unteren rechten Ecke ist das VPJ-Logo eingebettet. Das Fenster hat feste Maße von 800 x 400 Pixeln, wodurch die realen Raumabmessungen einfach dargestellt werden können. 1 Pixel entspricht im realen Raum 1 cm. 
 
 \begin{figure}[htb]
     \centering
@@ -77,7 +77,7 @@ Der größte der Bereiche beinhaltet eine Live-View der Fertigungsstraße, darge
 
 Der Robotino wird immer an der Position dargestellt, die in der zugehörigen Robotinoklasse hinterlegt ist. Über die Funktion UpdateRobotinoPosition() kann eine Aktualisierung angefordert werden. Sobald der UDP-Handler neue Positionsdaten für einen Robotino empfängt und die neue Position mindestens 2 Pixel von der Alten entfernt liegt, wird diese aktualisiert. 
 
-Die Funktion UpdateRobotinoPosition() prüft zunächst ob der Robotino ein Hindernis erkannt hat. Bei vorliegen eines Hindernis wird für den Robotino ein Bild geladen, welches im Rand den Hindernistyp kodiert. In Abbildung \ref{fig:RobotinoHindernis} sind alle auftretenden Hindernistypen dargestellt. Bei einem unbekannten Hindernis wird der Robotinorand Rot dargestellt, wie rechts abgebildet. Ein noch nicht klassifiziertes Hindernis wird, wie links abgebildet, mit gelbem Rand dargestellt. In der Mitte der Abbildung ist der Robotino mit orangenem Rand abgebildet, der bei einem anderen Robotino als Hindernis angezeigt wird.
+Die Funktion UpdateRobotinoPosition() prüft zunächst, ob der Robotino ein Hindernis erkannt hat. Bei Vorliegen eines Hindernis wird für den Robotino ein Bild geladen, welches im Rand den Hindernistyp kodiert. In Abbildung \ref{fig:RobotinoHindernis} sind alle auftretenden Hindernistypen dargestellt. Bei einem unbekannten Hindernis wird der Robotinorand Rot dargestellt, wie rechts abgebildet. Ein noch nicht klassifiziertes Hindernis wird, wie links abgebildet, mit gelbem Rand dargestellt. In der Mitte der Abbildung ist der Robotino mit orangenem Rand abgebildet, der bei einem anderen Robotino als Hindernis angezeigt wird.
 Wenn kein Hindernis erkannt wird bleibt der Rand schwarz. 
 
 \begin{figure}[htb]
@@ -89,7 +89,7 @@ Wenn kein Hindernis erkannt wird bleibt der Rand schwarz.
     \label{fig:RobotinoHindernis}
 \end{figure}
 
-Die Darstellung des Robotinos hängt neben den Hindernistypen auch von verschiedenen Stati ab. So wird ein defekter Robotino mit einer Flamme gekennzeichnet (Abb. \ref{fig:Robotino} mittig rechts). Das Einhorn als spezieller Robotino wird ebenfalls in der Darstellung als Einhorn abgebildet, in der Abbildung rechts dargestellt. 
+Die Darstellung des Robotinos hängt, neben den Hindernistypen, auch von verschiedenen Stati ab. So wird ein defekter Robotino mit einer Flamme gekennzeichnet (Abb. \ref{fig:Robotino} mittig rechts). Das Einhorn als spezieller Robotino wird ebenfalls in der Darstellung als Einhorn abgebildet, in der Abbildung rechts dargestellt. 
 
 Im Standardfall wird der Robotino wie in Abbildung \ref{fig:Robotino} links abgebildet angezeigt. Hierbei wird unterschieden ob der Greifer des Robotinos offen (links) oder geschlossen (rechts) ist. 
 
@@ -103,7 +103,7 @@ Im Standardfall wird der Robotino wie in Abbildung \ref{fig:Robotino} links abge
     \label{fig:Robotino}
 \end{figure}
 
-Nachdem das korrekte Bild für den Robotino ausgewählt wurde wird dieses gleich der Ausrichtung des Robotinos gedreht. In Listing \ref{lst:RobotinoDrehung} ist die Umsetzung im Code zu sehen. Zunächst wird eine Rotationsmatrix rm in Zeile 1 erzeugt. Diese Matrix wird anhand des Winkels des Robotinos konfiguriert. Anschließend wird der Bild des Robotinos in Zeile 3 gedreht und in Zeile 4 angewendet. In Zeile 6 ist die Positionierung des gedrehten Bildes abgebildet. Da die Y-Achse des Robotino invertiert zu der Darstellung ist muss diese als Offset zu 400 angegeben werden. 
+Nachdem das korrekte Bild für den Robotino ausgewählt wurde, wird dieses gleich der Ausrichtung des Robotinos gedreht. In Listing \ref{lst:RobotinoDrehung} ist die Umsetzung im Code zu sehen. Zunächst wird eine Rotationsmatrix rm in Zeile 1 erzeugt. Diese Matrix wird anhand des Winkels des Robotinos konfiguriert. Anschließend wird das Bild des Robotinos in Zeile 3 gedreht und in Zeile 4 angewendet. In Zeile 6 ist die Positionierung des gedrehten Bildes abgebildet. Da die Y-Achse des Robotino invertiert zu der Darstellung ist muss diese als Offset zu 400 angegeben werden. 
 
 \begin{lstlisting}[frame=single, breaklines=true, numbers=left, stepnumber=2, firstnumber=1, numberstyle = \tiny, caption=Robotino Drehung ,label=lst:RobotinoDrehung]
 QMatrix rm;
@@ -114,11 +114,11 @@ Rlabel->setPixmap(pixmap);
 Robotino->move(newPosition[0]/10, 400-(newPosition[1]/10));
 \end{lstlisting}
 
-Zusätzlich zur Position beinhaltet jeder Robotino in der Mitte eine Zahl, die die eindeutige RoboterID repräsentiert. Somit kann sofort erkannt werden, welcher Robotino dargestellt ist. Außerdem ist an der linken Seite einen Akkustand als vertikaler Balken dargestellt. Der Akkustand ist gleich dem der unten im Roboterstatus-View angezeigt wird und wird dort näher beleuchtet. Am Akkustand am Robotino kann direkt erkannt werden, welcher Robotino welchen Akkustand besitzt ohne erst die IDs abgleichen zu müssen.  
+Zusätzlich zur Position beinhaltet jeder Robotino in der Mitte eine Zahl, die die eindeutige RoboterID repräsentiert. Somit kann sofort erkannt werden, welcher Robotino dargestellt ist. Außerdem ist an der linken Seite der Akkustand als vertikaler Balken dargestellt. Der Akkustand ist gleich dem, der unten im Roboterstatus-View angezeigt wird und wird dort näher beleuchtet. Am Akkustand am Robotino kann direkt erkannt werden, welcher Robotino welchen Akkustand besitzt ohne erst die IDs abgleichen zu müssen.  
 
 \subsection{Parkplätze und Ladestationen}
 
-Im unteren Bereich der Live-View befinden sich die vier Parkplätze für die Robotinos. Je nach Zustand werden diese verschieden dargestellt. Sobald ein Parkplatz für einen Robotino reserviert wird oder durch einen Robotino belegt ist wird dieser in hellgelb abgebildet. 
+Im unteren Bereich der Live-View befinden sich die vier Parkplätze für die Robotinos. Je nach Zustand werden diese verschieden dargestellt. Sobald ein Parkplatz für einen Robotino reserviert wird, oder durch einen Robotino belegt ist wird dieser in hellgelb abgebildet. 
 Ein freier Parkplatz wird, wie in Abbildung \ref{fig:Parkplatz} rechts, blau dargestellt. 
 
 Eine Aktualisierung erfolgt über den Aufruf der Funktion UpdateParkplatz() in der MainWindow. 
@@ -150,7 +150,7 @@ Die Stationen enthalten Informationen über die Werkstücke, die an ihnen bearbe
     \label{fig:Station}
 \end{figure}
 
-Sobald ein Arbeitsplatz reserviert wird, da sich ein Werkstück auf dem Weg dahin befindet ist dieser Gelb dargestellt. Ein roter Arbeitsplatz zeigt an, das dieser defekt ist und nicht mehr angefahren werden kann. Ein defekter Arbeitsplatz wird von der Auftragsplanung nicht mehr berücksichtigt. Diese Einstellung kann mit der Hard-Code Area erzeugt werden. Wenn ein Werkstück an den Arbeitsplatz abgelegt wird befindet sich dieses in Bearbeitung und der Platz wird Orange dargestellt. Sobald die Bearbeitung abgeschlossen ist wechselt die Farbe des Arbeitsplatz auf grün und das Werkstück ist bereit zur Abholung. Ein leerer Arbeitsplatz wird in neutralem grau dargestellt. 
+Sobald ein Arbeitsplatz reserviert wird, da sich ein Werkstück auf dem Weg dahin befindet, ist dieser Gelb dargestellt. Ein roter Arbeitsplatz zeigt an, das dieser defekt ist und nicht mehr angefahren werden kann. Ein defekter Arbeitsplatz wird von der Auftragsplanung nicht mehr berücksichtigt. Diese Einstellung kann mit der Hard-Code Area erzeugt werden. Wenn ein Werkstück an den Arbeitsplatz abgelegt wird befindet sich dieses in Bearbeitung und der Platz wird Orange dargestellt. Sobald die Bearbeitung abgeschlossen ist, wechselt die Farbe des Arbeitsplatz auf Grün und das Werkstück ist bereit zur Abholung. Ein leerer Arbeitsplatz wird in neutralem grau dargestellt. 
 
 Über die Funktion UpdateStationsplatz() kann die Farbkodierung eines einzelnen Arbeitsplatz anhand des übergebenen Status angepasst werden. 
 
@@ -172,7 +172,7 @@ Der rechte Bereich (II) in der Visualisierung enthält die Auftragsübersicht. I
 
 \subsection{Auftragsdarstellung}
 
-In der Abbildung ist zu erkennen, dass jeder Auftrag dargestellt wird, inklusive seiner enthaltenen Prozesse. Durch Anklicken eines Auftrags der Liste können die zugehörigen Prozesse eingeblendet (Abb. \ref{fig:Auftragsausblendung} links) oder ausgeblendet (Abb. \ref{fig:Auftragsausblendung} rechts) werden. 
+In der Abbildung \ref{fig:Auftragsfortschritt} ist zu erkennen, dass jeder Auftrag dargestellt wird, inklusive seiner enthaltenen Prozesse. Durch Anklicken eines Auftrags der Liste können die zugehörigen Prozesse eingeblendet (Abb. \ref{fig:Auftragsausblendung} links) oder ausgeblendet (Abb. \ref{fig:Auftragsausblendung} rechts) werden. 
 
 \begin{figure}[htb]
     \centering
@@ -182,7 +182,7 @@ In der Abbildung ist zu erkennen, dass jeder Auftrag dargestellt wird, inklusive
     \label{fig:Auftragsausblendung}
 \end{figure}
 
-Der im Auftrag (siehe \ref{sec:Auftrag}) und Prozess (siehe \ref{sec:Prozess}) gespeicherte Fortschritt wird im Fortschrittsbalken aktualisiert, wenn die Funktion UpdateAuftragsFortschritt() innerhalb des Auftragsitem aufgerufen wird. Sobald der Fortschritt 100 Prozent erreicht, wird der Balken grün gefärbt. Der Balken eines geblockten Prozesses wird rot eingefärbt(siehe Abb. \ref{fig:Auftragsfortschritt} Auftrag 3 Prozess 1). 
+Der im Auftrag (siehe Kapitel \ref{sec:Auftrag}) und Prozess (siehe Kapitel \ref{sec:Prozess}) gespeicherte Fortschritt wird im Fortschrittsbalken aktualisiert, wenn die Funktion UpdateAuftragsFortschritt() innerhalb des Auftragsitem aufgerufen wird. Sobald der Fortschritt 100 Prozent erreicht, wird der Balken grün gefärbt. Der Balken eines geblockten Prozesses wird rot eingefärbt(siehe Abb. \ref{fig:Auftragsfortschritt} Auftrag 3 Prozess 1). 
 
 \subsubsection{Auftragsitem}
 
@@ -218,13 +218,13 @@ if ((item->whatsThis() == WhatsThis[0]))
 }
 \end{lstlisting}
 
-Dadurch kann durch Anklicken eines Auftragsitem die zugehörigen Prozessitems angezeigt oder ausgeblendet werden. Prozesse eines anderen Auftrags werden dabei ignoriert.
+Dadurch können durch Anklicken eines Auftragsitem die zugehörigen Prozessitems angezeigt oder ausgeblendet werden. Prozesse eines anderen Auftrags werden dabei ignoriert.
 
 \subsubsection{Prozessitem}
 
 Das Prozessitem (Abb. \ref{fig:Auftragsitem} rechts) wird in der Auftragsübersicht ähnlich dem Auftragsitem dargestellt. Der Hauptunterschied ist hierbei, dass das Prozessitem eine Höhe von nur 21 Pixeln besitzt und weiter eingerückt wird, als ein Auftragsitem. Dadurch kann die Hierarchie zwischen Aufträgen und Prozessen einfach erkannt werden. 
 
-Wenn nach Anklicken eines QListWidgetItems dieses in der Funktion on\_\-Auftrags\-List\-Widget\_\-item\-Clicked() als Prozessitem identifiziert wurde, wird der in Listing \ref{lst:ProzessitemClicked} dargestellte Code ausgeführt (Zeile 1). 
+Wenn nach Anklicken eines QListWidgetItems dieses in der Funktion on\_\-Auftrags\-List\-Widget\_\-item\-Clicked() als Prozessitem identifiziert wurde, wird der in Listing \ref{lst:ProzessitemClicked} dargestellte Code ausgeführt. 
 
 \begin{lstlisting}[frame=single, breaklines=true, numbers=left, stepnumber=2, firstnumber=1, numberstyle = \tiny, caption=Funktionsblock nach Klicken auf Prozessitem ,label=lst:ProzessitemClicked]
 else if (item->whatsThis() == WhatsThis[1])
@@ -241,9 +241,9 @@ else if (item->whatsThis() == WhatsThis[1])
 
 Dabei wird das QListWidgetItem zunächst dynamisch in Zeile 3 auf ein Prozessitem gecasted. 
 
-In C++ gibt es verschiedene Wege ein Objekt in ein anderes zu casten. Die geläufigsten (regulären) Castvorgänge sind reinterpret\_cast oder const\_cast. Neben diesen gibt es Funktionen wie dynamic\_cast oder static\_cast. Ein regulärer Cast versucht aus allen weiteren möglichen regulären Castvarianten eine geeignete zu finden, die funktioniert. Dynamic\_cast, oder static\_cast wird hierbei nicht berücksichtigt. Der Unterschied zwischen static\_cast und dynamic\_cast ist hauptsächlich, dass für einen static\_cast bekannt sein muss, in was das Objekt gecastet werden soll. Ein dynamic\_cast hingegen kann immer ausgeführt werden und liefert einen Nullpointer zurück, wenn der Cast fehlschlägt. In diesem Fall wurde die weniger verbreitete Funktion dynamic\_cast gewählt, da nur diese alle Anforderungen zur Laufzeit unterstützt (vgl. \cite{cast}). 
+In C++ gibt es verschiedene Wege ein Objekt in ein anderes zu casten. Die geläufigsten (regulären) Castvorgänge sind reinterpret\_cast oder const\_cast. Neben diesen gibt es Funktionen wie dynamic\_cast oder static\_cast. Ein regulärer Cast versucht, aus allen weiteren möglichen regulären Castvarianten eine geeignete zu finden, die funktioniert. Dynamic\_cast, oder static\_cast wird hierbei nicht berücksichtigt. Der Unterschied zwischen static\_cast und dynamic\_cast ist hauptsächlich, dass für einen static\_cast bekannt sein muss, in was das Objekt gecastet werden soll. Ein dynamic\_cast hingegen kann immer ausgeführt werden und liefert einen Nullpointer zurück, wenn der Cast fehlschlägt. In diesem Fall wurde die weniger verbreitete Funktion dynamic\_cast gewählt, da nur diese alle Anforderungen zur Laufzeit unterstützt (vgl. \cite{cast}). 
 
-Der Cast ist notwendig, da das QListWidgetItem nicht auf die Funktionen zugreifen kann, die das Prozessitem zur Verfügung stellt. 
+Der Cast ist notwendig, da das allgemeine QListWidgetItem nicht auf die Funktionen zugreifen kann, die das Prozessitem zur Verfügung stellt. 
 
 Nachdem sichergestellt wurde, dass das Objekt ein Prozessitem ist, wird in Zeile 4 ausgewertet, ob der Hard-Code Button zum blockieren eines Prozesses aktiv ist und anschließend dieser Prozess dahingehend aktualisiert.
 
@@ -256,9 +256,9 @@ emit GetTimestampsOnProzessClicked(pi->prozess->lfdId);
 
 \subsection{Buttons der Auftragsübersicht}
 
-Um die im Einhorn (Robotino 5) fest einprogrammierte Ladefahrt zu starten wurden die Button "`Einhorn Ladefahrt"' und "`Ladefahrt over"' implementiert. Jede Betätigung des Buttons  "`Einhorn Ladefahrt"' bewirkt ein einmaliges Senden eines definierten Auftrags an Robotino 5 (siehe Kapitel \ref{sec:Telegramme}). Dazu wird die Funktion EinhornLaden im UDP-Handler genutzt. 
+Um die im Einhorn (Robotino 5) fest einprogrammierte Ladefahrt zu starten, wurden die Buttons "`Einhorn Ladefahrt"' und "`Ladefahrt over"' implementiert. Jede Betätigung des Buttons  "`Einhorn Ladefahrt"' bewirkt ein einmaliges Senden eines definierten Auftrags an Robotino 5 (siehe Kapitel \ref{sec:Telegramme}). Dazu wird die Funktion EinhornLaden() im UDP-Handler genutzt. 
  
-Über eine Betätigung des Buttons "`Pause"' wird die Auftragsvergabe in der State-Machine der Fertigungsplanung pausiert. Somit werden Keine Transportaufträge mehr an die Robotinos versendet. Ladefahrten oder eine Parkplatzfahrt wird weiterhin zugelassen. Der Pause Button wird getoggelt, das heißt wenn er betätigt wird, bleibt er bis zur erneuten Betätigung aktiv. Um zu erkennen, das die Auftragsplanung pausiert ist ist der Button im aktivierten Zustand, wie in Abbildung \ref{fig:Pause} zu sehen, Rot hervorgehoben.
+Über eine Betätigung des Buttons "`Pause"' wird die Auftragsvergabe in der State-Machine der Fertigungsplanung pausiert. Somit werden Keine Transportaufträge mehr an die Robotinos versendet. Ladefahrten oder eine Parkplatzfahrt werden weiterhin zugelassen. Der Pause Button wird getoggelt, das heißt wenn er betätigt wird, bleibt er bis zur erneuten Betätigung aktiv. Um zu erkennen, dass die Auftragsplanung pausiert ist, wird der Button im aktivierten Zustand, wie in Abbildung \ref{fig:Pause} zu sehen, Rot hervorgehoben.
 
 \begin{figure}[htb]
     \centering
@@ -271,13 +271,13 @@ Die Auftragsplanung wird beispielsweise pausiert, wenn ein Robotino ausgefallen 
 
 \section{Tab-View}
 
-Der Bereich III unten links wurde als Tab-View umgesetzt. Es kann jederzeit eines von vier verschiedene Tabs ausgewählt werden, welches angezeigt wird. Zwei der Tabs dienen der Anzeige, über die anderen beiden kann das Programm bedient werden. 
+Der Bereich III unten links wurde als Tab-View umgesetzt. Es kann jederzeit einer aus vier verschiedenen Tabs ausgewählt werden, welcher angezeigt wird. Zwei der Tabs dienen der Anzeige, über die anderen beiden kann das Programm bedient werden. 
 
 Auf die einzelnen Tabs wird in den folgenden Abschnitten genauer eingegangen. 
 
 \subsection{Log-View}
 
-Der erste Tab, der auch bei Programmstart geöffnet ist beinhaltet das Log (Abbildung \ref{fig:Log}). In diesem Tab ist keine Eingabe möglich. Im scrollbaren Textfenster werden zu Programmlaufzeit Logeinträge dargestellt, die durch den Programmablauf generiert wurden. 
+Der erste Tab, der auch bei Programmstart geöffnet ist, beinhaltet das Log (Abbildung \ref{fig:Log}). In diesem Tab ist keine Eingabe möglich. Im scrollbaren Textfenster werden zu Programmlaufzeit Logeinträge dargestellt, die durch den Programmablauf generiert wurden. 
 
 \begin{figure}[htb]
     \centering
@@ -335,15 +335,15 @@ Eine Liste der vorkommenden Logeinträge ist in Tabelle \ref{tab:Log} zu finden.
 	\label{tab:Log}
 \end{table}
 
-Aus der Tabelle kann weiterhin entnommen werden, dass die einzelnen Logeinträge in Kategoriern eingeteilt werden können. Die Kategorie Initialisierung zeigt an, dass das Programm erfolgreich gestartet wurde und bereit ist für Eingaben vom Benutzer. 
+Aus der Tabelle kann weiterhin entnommen werden, dass die einzelnen Logeinträge in Kategorien eingeteilt werden können. Die Kategorie Initialisierung zeigt an, dass das Programm erfolgreich gestartet wurde und bereit ist für Eingaben vom Benutzer. 
 
-Die Logeinträge der Kategorie Feedback zeigen dem Benutzer, dass eine von ihm getätigte Eingabe erfolgreich interpretiert und ausgeführt wurde. Dazu zählt das Hinzufügen oder entfernen von Werkstücken an die Stationen oder das Hinzufügen von Prozessen oder Aufträgen. 
+Die Logeinträge der Kategorie Feedback zeigen dem Benutzer, dass eine von ihm getätigte Eingabe erfolgreich interpretiert und ausgeführt wurde. Dazu zählt das Hinzufügen oder Entfernen von Werkstücken an die Stationen oder das Hinzufügen von Prozessen oder Aufträgen. 
 
 Die Aktionen beschreiben die von den Robotinos ausgeführten Tätigkeiten und werden immer bei erfolgreicher Auftragsvergabe an einen Robotino dem Log hinzugefügt. 
 
-Um eine Warnung zu erzeugen muss ein Roboter entweder die Kommunikation verloren haben, oder aktiv auf defekt geschaltet worden sein. 
+Um eine Warnung zu erzeugen, muss ein Roboter entweder die Kommunikation verloren haben, oder aktiv auf defekt geschaltet worden sein. 
 
-Auf einen Error muss individuell reagiert werden. Während des regulären Betriebs sollte keiner der Errors auftreten. Ein Error zeigt somit eine Fehlfunktion des Programms an, und weist auf den Moment des Auftritts hin.
+Auf einen Error muss individuell reagiert werden. Während des regulären Betriebs sollte keiner der Errors auftreten. Ein Error zeigt somit eine Fehlfunktion des Programms an, und weist auf den Moment des Auftretens hin.
 
 Die Roboter-Error werden vom Robotino gesendet. Auf diese muss der Anwender händisch reagieren. Die einzelnen Errortypen und die nötige Reaktion sind in Kapitel \ref{sec:Error} beschrieben. 
 
@@ -362,9 +362,9 @@ Der zweite Tab der Tab-View, Abbildung \ref{fig:ManualControl}, enthält Buttons
 
 Über die beiden linken Buttons können dem Rohteillager einzelne Werkstücke zugeteilt werden. Dazu muss zuvor ein Werkstück händisch der realen Fertigungsstraße an entsprechender Position eingelegt werden. 
 
-Um die fertig bearbeiteten Teile aus Station 8 zu entfernen können die beiden rechten Buttons verwendet werden. 
+Um die fertig bearbeiteten Teile aus Station 8 zu entfernen, können die beiden rechten Buttons verwendet werden. 
 
-Über einen Action-Listener wird beim Klick auf einen der Button eine zugeordnete Funktion, z.B. on\_S1P2add\_clicked(), aufgerufen. In der aufgerufenen Funktion wird ein Signal emittiert, dass in der Fertigungsplanung ein Werkstück an entsprechender Stelle der Fertigungsstraße hinzufügt oder entfernt. 
+Über einen Action-Listener wird beim Klick auf einen der Buttons eine zugeordnete Funktion, z.B. on\_S1P2add\_clicked(), aufgerufen. In der aufgerufenen Funktion wird ein Signal emittiert, dass in der Fertigungsplanung ein Werkstück an entsprechender Stelle der Fertigungsstraße hinzufügt oder entfernt. 
 
 \subsection{Timestamp-Area}
 
@@ -382,14 +382,14 @@ Es können entweder alle Timestamps eines bestimmten Werkstücks (Abb. \ref{fig:
 
 Im Timestamp ist beschrieben, zu welcher Zeit sich ein Werkstück an welcher Station an-, bzw. abgemeldet hat. Man kann feststellen, dass sich an Station 1 nur Werkstücke abmelden und an Station 8 nur Werkstücke anmelden, da diese hier jeweils händisch ergänzt bzw. entnommen werden. 
 
-Um die Timestamps einer Station anzuzeigen muss ein leerer Arbeitsplatz oder der RFID-Platz angeklickt werden. Dadurch wird die Funktion SetTimestamps() aufgerufen, welche das Textview aktualisiert. 
+Um die Timestamps einer Station anzuzeigen, muss ein leerer Arbeitsplatz oder der RFID-Platz angeklickt werden. Dadurch wird die Funktion SetTimestamps() aufgerufen, welche das Textview aktualisiert. 
 
 Timestamps für ein spezielles Werkstück können angezeigt werden, indem ein dem Werkstück zugeordneter Arbeitsplatz angeklickt wird. Dabei ist es egal, ob sich das Werkstück gerade auf diesem befindet, oder nur eine Reservierung vorliegt. Alternativ kann, um auch abgeschlossene Werkstücke darstellen zu können, auf das zugehörige Prozessitem in der Auftragsübersicht ein Doppelklick gemacht werden. Dadurch werden die zugehörigen Timestamps dargestellt. 
 
 \subsection{Hard-Code Bereich}
 \label{sec:HardCode}
 
-Der Hard-Code Tab wird benötigt um die Programmlogik gezielt zu umgehen, oder Stati "`hart"' zu überschreiben oder zu setzen. Dazu wurden die in Abbildung \ref{fig:HardCode} dargestellten Buttons implementiert. Jeder Button hat eine eigene Funktion und wird in den folgenden Abschnitten einzeln beleuchtet. 
+Der Hard-Code Tab wird benötigt, um die Programmlogik gezielt zu umgehen, oder Stati "`hart"' zu überschreiben oder zu setzen. Dazu wurden die in Abbildung \ref{fig:HardCode} dargestellten Buttons implementiert. Jeder Button hat eine eigene Funktion und wird in den folgenden Abschnitten einzeln beleuchtet. 
 
 \begin{figure}[htb]
     \centering
@@ -410,25 +410,25 @@ Die Betätigung eines Buttons versetzt die Visualisierung in den "`Hard-Code Mod
 
 Der Hard-Code Modus kann durch Betätigen des aktiven Buttons wieder verlassen werden. 
 
-Um sicherzustellen, dass zeitgleich immer nur eine Hard-Code Funktionalität aktiv ist, wird bei Pressen eines Buttons, nach der Button-Listenerfunktion, zuerst die Funktion ResetButtonsExceptOne() aufgerufen, wenn der Button noch nicht aktiv war. In dieser Funktion wird der Hintergrund der Live-View rot eingefärbt. Anschließend werden alle Buttons die sich neben dem angeklickten im Hard-Code Tab befinden deaktiviert. 
+Um sicherzustellen, dass zeitgleich immer nur eine Hard-Code Funktionalität aktiv ist, wird bei Pressen eines Buttons, nach der Button-Listenerfunktion, zuerst die Funktion ResetButtonsExceptOne() aufgerufen, wenn der Button noch nicht aktiv war. In dieser Funktion wird der Hintergrund der Live-View rot eingefärbt. Anschließend werden alle Buttons die sich, neben dem Angeklickten, im Hard-Code Tab befinden deaktiviert. 
 
 Die Funktion GetPressedHardCodeButton() liefert für den Fall, dass ein Button aktiviert ist, diesen als Rückgabewert zurück. 
 
 \subsubsection{Arbeitsplatz im Hard-Code}
 
-Wenn der Button "`Arbeitsplatz defekt"' aktiviert wird, und ein Arbeitsplatz angeklickt so wird der Status dieses Arbeitsplatzes in der Fertigungsstraße zu defekt gesetzt. Die Visualisierung wird dadurch ebenfalls aktiviert. 
+Wenn der Button "`Arbeitsplatz defekt"' aktiviert, und ein Arbeitsplatz angeklickt wird, so wird der Status dieses Arbeitsplatzes in der Fertigungsstraße zu defekt gesetzt. Die Visualisierung wird dadurch ebenfalls aktualisiert. 
 
-Gegenteilig dazu kann wenn der Button "`Arbeitsplatz repariert"' ein zuvor defekt geschalteter Arbeitsplatz durch anklicken wieder freigegeben werden. 
+Gegenteilig dazu kann, über den Button "`Arbeitsplatz repariert"', ein zuvor defekt geschalteter Arbeitsplatz durch Anklicken wieder freigegeben werden. 
 
-Um bei Anklicken des Arbeitsplatzes nicht nur den Timestamp auszugeben wird in der Funktion StationClicked() zunächst über den Rückgabewert der Funktion GetPressedHardCodeButton() ausgewertet, ob einer der beschriebenen Buttons nicht aktiviert ist. 
+Um bei Anklicken des Arbeitsplatzes nicht nur den Timestamp auszugeben, wird in der Funktion StationClicked() zunächst über den Rückgabewert der Funktion GetPressedHardCodeButton() ausgewertet, ob einer der beschriebenen Buttons nicht aktiviert ist. 
 
 \subsubsection{Robotino im Hard-Code}
 
 Ähnlich dem Arbeitsplatz kann über den Button "`Roboter defekt"' der Status des angeklickten Robotinos auf defekt gesetzt werden. Dieser wird dadurch von der Auftragsplanung ausgeschlossen und bekommt als Visualisierung die Flamme. 
 
-Ein Robotino muss defekt geschaltet werden, wenn sich dieser aufgehängt hat, die Kommunikation zum Robotino fehlschlägt oder andere Probleme an dem Robotino auftreten. Ein entfernen eines nicht defekt geschalteten Robotinos führt zu einer Auftragsvergabe an den nicht vorhandenen Roboter. Durch die implementierten Timeouts würde das Programm zwar weiterlaufen, allerdings in deutlich verlangsamter Form, sobald es dem defekten Robotino einen Auftrag erteilen möchte. 
+Ein Robotino muss defekt geschaltet werden, wenn sich dieser aufgehängt hat, die Kommunikation zum Robotino fehlschlägt oder andere Probleme an dem Robotino auftreten. Ein Entfernen eines nicht defekt geschalteten Robotinos kann zu einer Auftragsvergabe an den nicht vorhandenen Roboter führen. Durch die implementierten Timeouts würde das Programm zwar weiterlaufen, allerdings in deutlich verlangsamter Form, sobald es dem defekten Robotino einen Auftrag erteilen möchte. 
 
-Der Button "`Roboter repariert"' aktiviert den angeklickten Robotino wieder. 
+Der Button "`Roboter repariert"' aktiviert den angeklickten (defekten) Robotino wieder. 
 
 Die dazu verwendete Funktion heißt RobotClicked().
 
@@ -438,17 +438,17 @@ Nach einem Ausfall eines Robotinos, während dieser bereits einen Auftrag erhalt
 
 Der Button "`Station freigeben"' bewirkt, dass die angeklickte Station nicht mehr von einem Robotino blockiert wird. Dazu wird in Datenbank und Fertigungsplanung der Stationsstatus als frei markiert. Um eine Station freizugeben kann ein beliebiger zur Station gehöriger Arbeitsplatz angeklickt werden.
 
-Ebenso wird mit Parkplätzen und Ladestationen verfahren. Da sich diese in der Implementierung nicht unterscheiden werden beide über den Button "`Parkplatz freigeben"' wieder auf frei gesetzt. 
+Ebenso wird mit Parkplätzen und Ladestationen verfahren. Da sich diese in der Implementierung nicht unterscheiden, werden beide über den Button "`Parkplatz freigeben"' wieder auf frei gesetzt. 
 
-Mit dem Button "`Arbeitsplatz freigeben"' können reservierte oder belegte Arbeitsplätze durch anklicken zu freien Arbeitsplätzen zurückgesetzt werden. 
+Mit dem Button "`Arbeitsplatz freigeben"' können reservierte oder belegte Arbeitsplätze durch Anklicken zu freien Arbeitsplätzen zurückgesetzt werden. 
 
 \subsubsection{Auftrag blocken}
 
-Über den Button "`Auftrag blocken"' kann ein Prozess eines Auftrags abgebrochen werden. Dazu muss im Hard-Code Modus der abzubrechende Prozess in der Auftragsübersicht angeklickt werden. Dieser wird sofort rot markiert und intern als geblockt behandelt. 
+Über den Button "`Auftrag blocken"' kann ein Prozess eines Auftrags abgebrochen werden. Dazu muss im Hard-Code Modus der abzubrechende Prozess in der Auftragsübersicht angeklickt werden. Dieser wird dann rot markiert und intern als geblockt behandelt. 
 
 Ein Auftrag muss geblockt werden, wenn während des Ablaufs ein unvorhergesehenes Ereignis die weitere Bearbeitung des Auftrags verhindert. Dazu zählt beispielsweise ein Totalausfall des bearbeitenden Robotinos, Verlust des Werkstücks oder anderweitig fehlgeschlagener Transport. 
 
-Wenn ein Auftrag geblockt wurde sollte das zugehörige Werkstück aus der Fertigungsstraße entfernt werden. 
+Wenn ein Auftrag geblockt wurde, sollte das zugehörige Werkstück aus der Fertigungsstraße entfernt werden. 
 
 \section{Roboterstatus}
 
@@ -494,7 +494,7 @@ Pklein->setStyleSheet("QProgressBar::chunk {background-color: green}");
 
 \subsection{Alive-Status}
 
-Der linke Bereich des Roboterstatus-View enthält die Information zum Alive-Status des Robotinos (vgl. \ref{sec:Robotino}). Die dargestellte grüne LED blinkt während der Roboter als "`lebend"' gilt. Das blinken ist in Abbildung \ref{fig:Led} abgebildet. 
+Der linke Bereich des Roboterstatus-View enthält die Information zum Alive-Status des Robotinos (vgl. \ref{sec:Robotino}). Die dargestellte grüne LED blinkt, während der Roboter als "`lebend"' gilt. Das Blinken ist in Abbildung \ref{fig:Led} abgebildet. 
 
 \begin{figure}[htb]
     \centering
@@ -516,7 +516,7 @@ toggler ? AliveR1->setStyleSheet("QPushButton {background-color: rgb(0,250,50); 
 \section{Prozesseingabe}
 \label{sec:Prozesseingabe}
 
-Über den Bereich der Prozesseingabe (V) kann der Fertigungsplanung ein neuer Referenzprozess hinzugefügt werden (siehe Abb. \ref{fig:Prozesseingabe}. Durch die Markierung auf der linken Seite können die Prozessschritte ausgewählt werden, die dem Prozess hinzugefügt werden sollen. Über das UI können Prozesse mit 1 bis 5 Prozessschritten erzeugt werden. Nach Auswahl des Prozessschritts kann eine Station zwischen 1 und 7 ausgewählt werden. Sollten zwei aufeinanderfolgende Prozessschritte die selbe Station beinhalten, wird ein Fehler generiert. Zuletzt kann im rechten Eingabefenster die Bearbeitungsdauer an der Station zwischen 1 und 99 Sekunden ausgewählt werden.
+Über den Bereich der Prozesseingabe (V) kann der Fertigungsplanung ein neuer Referenzprozess hinzugefügt werden (siehe Abb. \ref{fig:Prozesseingabe}). Durch die Markierung auf der linken Seite können die Prozessschritte ausgewählt werden, die dem Prozess hinzugefügt werden sollen. Über das UI können Prozesse mit 1 bis 5 Prozessschritten erzeugt werden. Nach Auswahl des Prozessschritts kann eine Station zwischen 2 und 7 ausgewählt werden. Sollten zwei aufeinanderfolgende Prozessschritte die selbe Station beinhalten, wird ein Fehler generiert. Zuletzt kann im rechten Eingabefenster die Bearbeitungsdauer an der Station zwischen 1 und 99 Sekunden ausgewählt werden.
 
 \begin{figure}[htb]
     \centering
@@ -525,7 +525,7 @@ toggler ? AliveR1->setStyleSheet("QPushButton {background-color: rgb(0,250,50); 
     \label{fig:Prozesseingabe}
 \end{figure}
 
-Dazu wird die Funktion on\_sendProzess\_clicked() aufgerufen. In der Funktion werden die Visualisierungseinträge von oben nach unten überprüft und die Prozessschritte zu einem Prozess erzeugt. Der letzte Prozessschritt zu Station 8 wird automatisch ergänzt. Abschließend wird der neue Prozess an die Fertigungsplanung und darüber an die Datenbank gesendet. 
+Bei Anklicken des Buttons "`Absenden"' wird die Funktion on\_sendProzess\_clicked() aufgerufen. In der Funktion werden die Visualisierungseinträge von oben nach unten überprüft und die Prozessschritte zu einem Prozess erzeugt. Der letzte Prozessschritt zu Station 8 wird automatisch ergänzt. Abschließend wird der neue Prozess an die Fertigungsplanung und darüber an die Datenbank gesendet. 
 
 \section{Auftragseingabe}
 \label{sec:Auftragseingabe}
@@ -576,20 +576,20 @@ foreach (Prozess *p, a->Prozesse)
 }
 \end{lstlisting}
 
-In Zeile 1 wird ein neues ListWidgetItem erzeugt, welches als Elternwidget das AuftragsListWidget gesetzt bekommt. Dieses Item wird nun dem Elternwidget AuftragsListWidget hinzugefügt. In den Zeilen 3 bis 5 wird ein neues Objekt vom Auftragsitem erzeugt, welches der AuftragsListWidget hinzugefügt wird. Dabei ist wichtig die Größe des Items explizit zu setzen, da es sonst eine Höhe von 1 Pixel bekommt. In Zeile 7 wird zuletzt das Auftragsitem der Liste angehängt. Das Item bekommt eine eindeutige Kennung, anhand derer ausgewertet wird, dass es sich um ein Auftragsitem handelt.
+In Zeile 1 wird ein neues ListWidgetItem erzeugt, welches als Elternwidget das AuftragsListWidget gesetzt bekommt. Dieses Item wird nun dem Elternwidget AuftragsListWidget hinzugefügt. In den Zeilen 3 bis 5 wird ein neues Objekt vom Auftragsitem erzeugt, welches dem AuftragsListWidget hinzugefügt wird. Dabei ist wichtig, die Größe des Items explizit zu setzen, da es sonst eine Höhe von 1 Pixel bekommt. In Zeile 7 wird zuletzt das Auftragsitem der Liste angehängt. Das Item bekommt eine eindeutige Kennung, anhand derer ausgewertet wird, dass es sich um ein Auftragsitem handelt.
 
-Nachdem das Auftragsitem erzeugt wurde werden alle zugehörigen Prozessitems erzeugt das Vorgehen ähnelt den Zeilen 1 - 7, nur werden die Prozessitems dem zuvor erzeugtem AuftragsListWidget an einer bestimmten Stelle eingefügt (Zeile 19). Bei der Erzeugung werden die Prozessitems direkt ausgeblendet (Zeile 23). Zuletzt wird der Tooltip (siehe Abschnitt \ref{sec:tooltips}) für die Prozessitems in Zeile 26 generiert.
+Nachdem das Auftragsitem erzeugt wurde, werden alle zugehörigen Prozessitems erzeugt. Das Vorgehen ähnelt den Zeilen 1 - 7, nur werden die Prozessitems dem zuvor erzeugtem AuftragsListWidget an einer bestimmten Stelle eingefügt (Zeile 19). Bei der Erzeugung werden die Prozessitems direkt ausgeblendet (Zeile 23). Zuletzt wird der Tooltip (siehe Abschnitt \ref{sec:tooltips}) für die Prozessitems in Zeile 26 generiert.
 
 Das besondere an dieser Funktion ist, dass dynamisch zur Laufzeit Widget-Elemente erzeugt, und in die in die Visualisierung eingebunden werden. 
 
 \section{Tooltips}
 \label{sec:tooltips}
 
-Um die Benutzerinteraktion zu erleichtern wurden an zwei Stellen innerhalb der Visualisierung Tooltips implementiert. Ein Tooltip ist ein Hinweistext zu einem Element, der sich beim überfahren mit der Maus (hovern) neben dieser öffnet. 
+Um die Benutzerinteraktion zu erleichtern, wurden an zwei Stellen innerhalb der Visualisierung Tooltips implementiert. Ein Tooltip ist ein Hinweistext zu einem Element, der sich beim überfahren mit der Maus (hovern) neben dieser öffnet. 
 
 \subsection{Werkstückstooltip}
 
-Sobald die Maus über ein Arbeitsplatz gefahren wird, auf dem ein Werkstück liegt oder eine Reservierung für ein Werkstück befindet wird über den Tooltip angezeigt, welche ID dieses Werkstück besitzt. In Abbildung \ref{fig:Stationstooltip} ist dies anhand einer Reservierung für Werkstück 7 angezeigt. 
+Sobald die Maus über ein Arbeitsplatz gefahren wird, auf dem ein Werkstück liegt, oder eine Reservierung für ein Werkstück existiert, wird über den Tooltip angezeigt, welche ID dieses Werkstück besitzt. In Abbildung \ref{fig:Stationstooltip} ist dies anhand einer Reservierung für Werkstück 7 angezeigt. 
 
 \begin{figure}[htb]
     \centering
@@ -598,11 +598,13 @@ Sobald die Maus über ein Arbeitsplatz gefahren wird, auf dem ein Werkstück lie
     \label{fig:Stationstooltip}
 \end{figure}
 
-Die Tooltips eines Arbeitsplatz werden über die Funktion UpdateStationToolTip() aktualisiert und über die Fertigungsplanung aufgerufen. 
+Die Tooltips eines Arbeitsplatzes werden über die Funktion UpdateStationToolTip() aktualisiert und über die Fertigungsplanung aufgerufen. 
 
 \subsection{Prozessitemtooltip}
 
 In Abbildung \ref{fig:Prozessitemtooltip} ist exemplarisch der Tooltip für Prozess 4 dargestellt. Dieser wird angezeigt, sobald mit der Maus über den Text des Prozesses gefahren wird. 
+
+Der Im Tooltip dargestellte Text wird über die Funktion UpdateProzessLabelTooltip() verändert und aktualisiert. Dazu wird jeder Prozessschritt des Prozesses durchgegangen und ein String generiert, der die Station und die Bearbeitungsdauer enthält. Die einzelnen Strings werden untereinander dargestellt. 
 
 \begin{figure}[htb]
     \centering
@@ -610,6 +612,3 @@ In Abbildung \ref{fig:Prozessitemtooltip} ist exemplarisch der Tooltip für Proz
     \caption{Tooltip eines Prozessitem}		
     \label{fig:Prozessitemtooltip}
 \end{figure}
-
-Der Im Tooltip dargestellte Text wird über die Funktion UpdateProzessLabelTooltip() verändert und aktualisiert. Dazu wird jeder Prozessschritt des Prozesses durchgegangen und ein String generiert, der die Station und die Bearbeitungsdauer enthält. Die einzelnen Strings werden untereinander dargestellt. 
-
