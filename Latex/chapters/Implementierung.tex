@@ -110,6 +110,8 @@ Es kann einfach festgestellt werden, ob sich ein Robotino aktuell auf einem Park
 
 Zuletzt werden über zwei Funktionen die Timestamps von Werkstück oder Station bereitgestellt.
 
+Nähere Informationen sind in Kapitel \ref{kap:MySQLGetter} zu finden.
+
 \subsection{Updates}
 
 Um die Daten der Datenbank zu aktualisieren wurden weitere Funktionen bereitgestellt. Mit den Update-Funktionen kann der Arbeitsplatz-Status oder der Prozessfortschritt aktualisiert werden. 
@@ -120,11 +122,15 @@ Dem Arbeitsplatz kann außerdem ein Werkstück oder Robotino zugewiesen, oder en
 
 Über eine Update-Funktion wird der Schreib-Tag, der die RFIDs beinhaltet aktualisiert. 
 
+Das Kapitel \ref{kap:MySQLUpdate} beschreibt den Inhalt der Funktionen genauer.
+
 \subsection{Setter}
 
 Über Setter-Funktionen können Einträge in der Datenbank gesetzt werden. Die beiden Hauptfunktionen hier setzen die erzeugten Aufträge oder erzeugten Prozesse.
 
 Innerhalb der SendProzess-Funktion wird unterschieden, ob die Datenbank den Prozess bereits beinhaltet, dieser also nur aktualisiert, oder neu erzeugt werden muss. 
+
+Die Implementierung der Setter-Funktionen ist in Kapitel \ref{kap:MySQLSetter} dargestellt.
 
 \section{UDP-Handler} 
 \label{sec:UdpHandler}

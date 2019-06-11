@@ -22,7 +22,6 @@ UdpHandler::UdpHandler(bool simulated, QHostAddress ip, quint16 sport, quint16 r
     {
         socket = new QUdpSocket(this);
 
-        //socket->bind(this->ip, rport);
         socket->bind(rport, QUdpSocket::ShareAddress);
 
         connect(socket, SIGNAL(readyRead()), this, SLOT(readPendingRobotData()));
@@ -65,18 +64,10 @@ void UdpHandler::WriteData(QVector<double> values)
         QByteArray Data;
         for(int i = 0; i < 5; i++)
         {
-            //Data.append()
-            //Data.append(QByteArray::number(values[i]));
-            //Data.append(*reinterpret_cast <const char*>(values[i]));
             Data.append(QByteArray::fromRawData(reinterpret_cast<char*>(&values[i]), sizeof(values[i])));
-            //Data.append(QByteArray::fromRawData(reinterpret_cast<char*>(&values[i]), sizeof(values[i]) * sizeof (double)));
         }
 
-        //socket->writeDatagram(Data, ip, sendingport);
-        //Data.append("Hello from Fertigungsrechner");
-
         socket->writeDatagram(Data, ip, sendingport);
-        //socket->writeDatagram(Data, 192.168.0.14, sendingport);
     }
 }
 
@@ -109,9 +100,6 @@ void UdpHandler::processTheNavigationData(QNetworkDatagram datagram)
         {
             QByteArray temp = datagram.data().mid(i*8,8);
             vektor[i] = *reinterpret_cast<const double*>(temp.data());
-//            qDebug() << i+1 << ": " << *reinterpret_cast<const double*>(temp.data());
-//            QByteArray temp2 = QByteArray::fromRawData(temp, 8);
-//            qDebug() << "double t2: " << *reinterpret_cast<const double*>(temp2.data());
         }
 
         prepareNavigationDataforRobot(vektor);
@@ -172,51 +160,3 @@ void UdpHandler::processTheRobotData(QNetworkDatagram datagram)
         emit StatusDataReceived(vektor);
     }
 }
-
-//void myUDP::prepareRobotData(QVector<double> values)
-//{
-
-//    posr1[0] = values[0];
-//    posr1[1] = values[1];
-//    posr1[2] = values[2];
-//    posr2[0] = values[3];
-//    posr2[1] = values[4];
-//    posr2[2] = values[5];
-//    posr3[0] = values[6];
-//    posr3[1] = values[7];
-//    posr3[2] = values[8];
-
-
-
-    //emit StatusDataReceived();
-//}
-
-
-//*********VERALTET**********//
-
-//        while (socket->hasPendingDatagrams()) {
-//            qDebug() << socket->pendingDatagramSize();
-//            QByteArray datagram;
-//            datagram.resize(socket->pendingDatagramSize());
-//            QHostAddress sender;
-//            quint16 senderPort;
-
-//            socket->readDatagram(datagram.data(), datagram.size(),
-//                                    &sender, &senderPort);
-
-//            processTheDatagram(datagram);
-//        }
-
-
-//QByteArray Buffer;
-//Buffer.resize((int)socket->pendingDatagramSize());
-//QHostAddress sender;
-//quint16 senderPort;
-
-//socket->readDatagram(Buffer.data(), Buffer.size(), &sender, &senderPort);
-
-//qDebug() << "UDP Message from: " << sender.toString();
-//qDebug() << "UDP port from: " << senderPort;
-//qDebug() << "UDP Message: " << Buffer;
-
-

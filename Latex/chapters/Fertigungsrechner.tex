@@ -1,3 +1,10 @@
 \chapter{Fertigungsrechner}\label{kap:Fertigungsrechner}
- Der Fertigungsrechner ist Teil des Gewerk 1 und besteht hauptsächlich aus zwei Teilen. Auf dem Fertigungsrechner befindet sich der Server der MySQL Datenbank, die alle relevanten Daten des Fertigungsprozesses beinhaltet. Der zweite Teil ist die Ansteuerung und Auswertung der RFID-Lese-/ Schreibköpfe. Mit den RFID-Lese-/Schreibköpfe ist eine Verfolgung der Werkstücke im Fertigungsprozess möglich, da jeder An- und Abmeldevorgang an den Fertigungs-Stationen 2-7 und dem Rohteil- so wie dem Fertigteil-Lager überwacht und gespeichert wird.  Über das Bussystem Profibus DP sind die RFID-Lese-/Schreibköpfe an den Fertigungsrechner angeschlossen. Über das lokale LAN-Netzwerk kann der Rechner der Fertigungsplanung auf den Fertigungsrechner Beziehungsweise die hier abgelegte MySQL-Datenbank zugreifen.
+ Der Fertigungsrechner ist Teil des Gewerk 1 und besteht hauptsächlich aus der MySQL-Datenbank und der Fertigungsüberwachung. Die MySQL-Daten\-bank be\-in\-hal\-tet alle relevanten Daten des Fertigungsprozesses. Der Entwurf und die Implementierung der Datenbank wird in Kapitel \ref{kap:Datenbank} beschrieben. Über das lokale LAN-Netzwerk kann der Rechner der Fertigungsplanung auf den Fertigungsrechner beziehungsweise die hier abgelegte MySQL-Datenbank zugreifen. 
+ Die Fertigungsüberwachung steuert die Ansteuerung und Auswertung der RFID-Schreib-Lese-Köpfe und legt die Daten der Werkstückverfolgung in der Datenbank ab. Mit den Schreib-Lese-Köpfen ist eine Verfolgung der Werkstücke im Fertigungsprozess möglich, da jeder An- und Abmeldevorgang an den Fertigungsstationen 2-7 und dem Rohteil- so wie dem Fertigteillager überwacht und gespeichert wird.  Über ein Interface und das Bussystem Profibus-DP sind die Schreib-Lese-Köpfe an den Fertigungsrechner angeschlossen. Die Fertigungsüberwachung wird in Kapitel \ref{kap:Fertigungsueberwachung} beschrieben.  In der Abbildung \ref{fig:Fertigungsrechner} ist eine Übersicht über die Komponenten des Fertigungsrechners und die Schnittstellen dargestellt.
+ \begin{figure}[hbt]
+	    \centering
+	    \includegraphics[width=1\linewidth]{Bilder/Fertigungsrechner.png}
+        \caption{Fertigungsrechner und Schnittstellen}
+        \label{fig:Fertigungsrechner}
+\end{figure}
  

@@ -1,30 +1,31 @@
-% !TEX root = ../VPJ.tex
+\chapter{Einleitung}\label{kap:Einleitung}
+Im Verbundprojekt Autonome Systeme soll ein Fertigungsprozess mit autonom agierenden Robotern automatisiert werden. Dazu befinden sich acht Stationen mit jeweils zwei Arbeitsplätzen und einem Platz zum Lesen oder Schreiben von RFID-Tags im Versuchsaufbau. Station 1 repräsentiert dabei das Rohteillager und Station 8 das Fertigteillager. Die Arbeitsschritte werden durch Aufenthalt der Werkstücke für eine bestimmte Zeit an den Arbeitsplätzen simuliert. Je nach Produkt, das hergestellt werden soll, variiert die Anzahl, Reihenfolge, und Bearbeitungszeit der Stationen. Zum Transport der Werkstücke zwischen den Stationen werden autonom agierende Roboter mit einer Greifzange eingesetzt. Die Navigation der Roboter wird mit Hilfe von ermittelten Positionsdaten realisiert, die mit Kameras ermittelt werden. Als Software wird, für die Programmierung der Roboter, Matlab/Simulink eingesetzt. Für die Auftragsplanung wird Qt verwendet. Das Speichern der Produktionsdaten erfolgt über eine MySQL-Datenbank und die RFID-Technologie wird mit CODESYS angesteuert.
 
-\chapter{Einleitung}
-\label{sec:Einleitung}
+\section{Aufgaben Gewerk 1}
 
-Um an einem realen System Abläufe und Prozesse zu simulieren, wird den Studierenden eine Anlage zur Verfügung gestellt, welche hauptsächlich aus Teilen der Firma „Festo“ besteht (folgend: Festo-Transfersystem). An diesem Festo-Transfersystem können die Studierende Laufbänder, Ampelanlage, Lichtschranken, Weichen etc. mithilfe selbst geschriebener Programme ansteuern und auslesen. 
+Das Gewerk 1 ist zuständig für:
 
-Das Laufband kann aufgelegte Objekte transportieren. Dabei kann die aktuelle Position des Objekts durch diverse Lichtschranken erfasst werden. Am Anfang des Laufbands kann mithilfe eines Entfernungssensors die Höhe des Objekts erfasst werden. Mit den vorhandenen Komponenten kann das Festo-Transfersystem allerdings ausschließlich die Position und die Höhe der Objekte bestimmen und nicht deren Farbe, Form, Ausrichtung oder sonstige optische Merkmale. 
+\begin{itemize}
+    \item die Fertigungsplanung,
+    \item die Visualisierung des Fertigungsprozesses,
+    \item das Beschreiben und Auslesen der RFID-Tags auf den Werkstücken und
+    \item das Ablegen aller produktionsrelevanten Daten in der MySQL-Datenbank.
+\end{itemize}
+
+Die Fertigungsplanung soll die über das visuelle HMI eingegebenen Aufträge verwalten und den Robotern ihre Aufträge zuweisen. Die Visualisierung soll die Roboter und ihre Position so wie die Arbeitsstationen darstellen. Über die Visualisierung soll ebenfalls die Auftragseingabe stattfinden und der aktuelle Fortschritt eines Auftrags abgebildet werden. Ebenso ist die vom Fertigungsrechner mit Hilfe der RFID-Technologie durchgeführte Verfolgung der Werkstücke darzustellen.
+
+Der Fertigungsrechner soll die RFID-Tags der Werkstücke mit Hilfe der RFID-Schreib-Lese-Köpfe beschreiben, beziehungsweise auslesen, um so eine Verfolgung der Werkstücke durch den Produktionsprozess zu ermöglichen. Auf dem Fertigungsrechner befindet sich auch der Server für die MySQL-Datenbank, die alle produktionsrelevanten Daten speichert und sowohl vom Programm für die RFID-Technologie, als auch von der Fertigungsplanung lesend und schreibend angesprochen wird.
+
+\section{Gesamtkonzept Gewerk 1}
+
+Das Gesamtkonzept von Gewerk 1 ist in Abbildung \ref{fig:Gesamtkonzept} dargestellt.
 
 \begin{figure}[htb]
-    \centering
-    \includegraphics[width=0.6\textwidth]{Abbildungen/Platzhalter.jpg}
-    \caption[CMUcam5 Pixy \newline Quelle: \textit{http://charmedlabs.com/default/products/}]{CMUcam5 Pixy}		
-    \label{fig:PixyCam}
+	    \centering
+	    \includegraphics[width=1\linewidth]{Bilder/Konzept2.png}
+        \caption{Gesamtkonzept von Gewerk 1}
+        \label{fig:Gesamtkonzept}
 \end{figure}
 
-Eine Erweiterung um ein Kamerasystem kann diese Mängel beheben und sogar noch weitere Funktionen und Features hinzufügen. 
-
-\section{Vorhaben}
-\inlinetodo {blabla}
-Ähnlich einer Smart Kamera \cite{festo_dok}, bei der nicht nur das Kamerabild, sondern auch weitere schon verarbeitete Informationen ausgegeben werden sollen, wird ein Prozessor benötigt, welcher in der Lage ist Bildverarbeitung durchzuführen. Es wurde als Möglichkeit für ein Prozessorsystem empfohlen, sich mit dem BeagleBone Black und Raspberry PI auseinanderzusetzen. Mithilfe einer Marktrecherche werden zunächst weitere geeignete Kamerasysteme gesucht und anschließend anhand der Eignung sortiert. Dabei wird auch eine geeignete Schnittstelle zu dem Kamerasystem ausgewählt, mit dem die Bilder und Informationen an den PC gesendet werden. Nachdem die beiden geeignetsten Kamerasysteme gewählt und bestellt sind, werden zugehörige Gehäuse und Befestigungen konstruiert und gefertigt. Nebenbei werden erste einfache Testprogramme geschrieben, um die Funktion von den gewählten Kamerasystemen zu gewährleisten. Der erste Prototyp wird dabei voraussichtlich mit Hilfe rapid-prototyping ein Erzeugnis aus dem 3D-Druck sein, um Kamera an der richtigen Position zu halten. Nachdem das Endprodukt montiert ist, folgt eine Auswertung der Kamerabilder. Folgend folgen optional das Erstellen einer Bibliotheksdatei und eine Automation der Kalibrierung und des Weißabgleichs. Der Zugriff auf die Kamera soll gewährleistet sein. 
-
-\begin{figure}[htb]
-    \centering
-    \includegraphics[width=0.4\textwidth]{Abbildungen/Platzhalter.jpg}
-    \includegraphics[width=0.4\textwidth]{Abbildungen/Platzhalter.jpg}
-    \caption{PixyCam Gehäusefehler}		
-    \label{fig:Pixy_Fehler}
-\end{figure}
+Die Fertigungsplanung und die Visualisierung werden in einem gemeinsamen Programm, dass mit Qt geschrieben wurde, realisiert. Die Fertigungsplanung empfängt für die Visualisierung über Ethernet per UDP/IP die Daten des Navigationsrechners. Die Kommunikation mit den Robotern wird ebenso von der Fertigungsplanung über WLAN per UDP/IP realisiert. Die Kommunikation zur Datenbank, die sich auf dem Fertigungsrechner befindet, findet über Ethernet statt. Die RFID-Schreib-Lese-Köpfe werden über ein Interface mittels Profibus-DP an den Fertigungsrechner angeschlossen. Das Programm zum Auslesen, beziehungsweise Beschreiben, der RFID-Tags wird mit CODESYS geschrieben und läuft auf einer Soft-SPS auf dem Fertigungsrechner. An Station 1 werden die RFID-Tags des Werkstücks beschrieben und an den Stationen 2 bis 8 ausgelesen. Über SQL4Automation kann das Programm auf die Datenbank lesend und schreibend zugreifen. In der Datenbank sind alle für den Produktionsprozess relevanten Daten abgelegt. Es handelt sich um eine relationale MySQL-Datenbank. Die Datenbank dient auch zur Kommunikation zwischen dem CODESYS-Programm auf dem Fertigungsrechner und der Fertigungsplanung. 
 
