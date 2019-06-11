@@ -3,5 +3,14 @@
 \chapter{Zusammenfassung}
 \label{sec:Fazit}
 
+Alle bereits in der Einleitung (Kapitel \ref{kap:Einleitung}) beschriebenen Aufgaben wurden erfolgreich bearbeitet und implementiert. Mit eigenen, über die Aufgabenstellung hinausgehenden Herausforderungen, wurden weitere Features implementiert. Insbesondere die Visualisierung enthält diverse in Kapitel \ref{sec:Visualisierung} beschriebene Besonderheiten, die weit über die geforderten Hinausgehen. 
 
-Qt als neues System ist sehr gut geeignet.
+Es wurde eine Datenbank entworfen, die alle produktionsrelevanten Daten enthält und mittels Qt gesteuert wird. Alle Robotinos kommunizieren mit dem Fertigungsplanungsrechner mithilfe eines konstruierten Telegramms. Auf selbigem PC wurde ohne ein gegebenes Starterkit auf der neuen Software Qt eine Auftragsvergabe implementiert, welche diverse Fehlerfälle abdeckt, Redundanzen und Sicherheiten beinhaltet und diese visuell darstellt. Die RFID-Lese-Schreib-Köpfe konnten erfolgreich Lesend und Schreibend genutzt werden. 
+
+Nach der Einarbeitung in Qt können wir die Entwicklungsumgebung für zukünftige Gewerke empfehlen. Qt ist als neues System sehr gut geeignet für die Bearbeitung der geforderten Aufgaben.
+
+Für zukünftige Gewerke könnten wir uns vorstellen, Qt zur Programmierung von einer Mobile-Applikation zu nutzen, um auf z.B. einem Handy oder Tablet die Fertigungsstraße darzustellen oder sogar zu steuern. 
+
+Weiterhin wäre eine automatische Beladung der Werkstücke in Station 1 und eine automatische Entladung in Station 8 mit z.B. auf der Station befestigten Roboterarmen oder einem kleinen Fließband / Rutschensystem eine Möglichkeit das Gesamtsystem weiter zu automatisieren. 
+
+Um die Benutzerinteraktion zur Visualisierung weiter zu reduzieren, könnte in das Navigationssystem eine Erkennung der Werkstücke auf Station 1 und 8 implementiert werden. Über das bestehende Telegramm könnte diese Information mit dem Fertigungsplanungsrechner geteilt werden. Dadurch müsste der Belade-, Entladevorgang der Stationen nicht über Buttons mitgeteilt werden. 
