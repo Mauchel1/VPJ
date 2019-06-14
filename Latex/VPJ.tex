@@ -8,6 +8,9 @@
 \usepackage{./style/thesisstyle}
 \usepackage{enumitem}           % customizations for enumerations
 \usepackage{listings}   				% für Codeschnipsel in lstlisting{}
+\usepackage{siunitx}
+
+\definecolor{newgray}{rgb}{0.92, 0.92, 0.92}
 
 \begin{document}
 \input{configuration/configuration}    % load all settings
@@ -58,6 +61,8 @@
 		\hline
     Position & Enthält eine Kodierung einer Station oder Arbeitsplatzes \\
 		\hline
+		Produktionsprozess & Ein Produktionsprozess ist im Zusammenhang mit der Datenbank als Rezept für die Bearbeitung des Werkstücks zu verstehen. \\
+		\hline
     Prozess & Ein Prozess beschreibt die Abfolge unterschiedlich vieler Prozessschritte. Im Zusammenhang der Datenbank wird der Begriff Werkstück verwendet  \\
 		\hline
     Prozessschritt & Enthält genau einen Arbeitsplatz mit Bearbeitungsdauer \\
@@ -88,9 +93,9 @@
 \input{chapters/Implementierung}
 \input{chapters/Visualisierung}
 \input{chapters/Robotersimulation}
-%\input{chapters/Fertigungsrechner.tex}
-%\input{chapters/Datenbank.tex}
-%\input{chapters/Fertigungsueberwachung.tex}
+\input{chapters/Fertigungsrechner.tex}
+\input{chapters/Datenbank.tex}
+\input{chapters/Fertigungsueberwachung.tex}
 \input{chapters/Fazit}
 
 \listoffigures

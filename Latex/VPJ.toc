@@ -1,63 +1,127 @@
 \select@language {ngerman}
 \contentsline {chapter}{\numberline {1}Einleitung}{1}
-\contentsline {section}{\numberline {1.1}Vorhaben}{1}
-\contentsline {chapter}{\numberline {2}Grundlagen und Konzepte}{3}
-\contentsline {section}{\numberline {2.1}Qt}{3}
-\contentsline {subsection}{\numberline {2.1.1}Eventbasiertes System}{3}
-\contentsline {subsection}{\numberline {2.1.2}State Machines in Qt}{3}
-\contentsline {chapter}{\numberline {3}Aufgabenstellung}{4}
-\contentsline {chapter}{\numberline {4}Schnittstellen}{5}
-\contentsline {section}{\numberline {4.1}Kommunikation zu Gewerk 2}{5}
-\contentsline {subsection}{\numberline {4.1.1}Sequenzdiagramm}{5}
-\contentsline {subsection}{\numberline {4.1.2}Fehlertypen und Behebung}{5}
-\contentsline {subsubsection}{\nonumberline Fehlertyp 1}{5}
-\contentsline {subsubsection}{\nonumberline Fehlertyp 2}{5}
-\contentsline {subsubsection}{\nonumberline Fehlertyp 3}{5}
-\contentsline {chapter}{\numberline {5}Implementierung}{6}
-\contentsline {section}{\numberline {5.1}Programmstruktur}{6}
-\contentsline {section}{\numberline {5.2}Databasehandler}{6}
-\contentsline {section}{\numberline {5.3}UDP-Handler}{6}
-\contentsline {section}{\numberline {5.4}Robotino}{6}
-\contentsline {section}{\numberline {5.5}Auftrag, Prozess, Prozessschritt}{6}
-\contentsline {subsection}{\numberline {5.5.1}Prozessschritt}{7}
-\contentsline {subsection}{\numberline {5.5.2}Prozess}{7}
-\contentsline {subsection}{\numberline {5.5.3}Auftrag}{8}
-\contentsline {section}{\numberline {5.6}Fertigungsplanung}{9}
-\contentsline {subsection}{\numberline {5.6.1}Initialisierung}{9}
-\contentsline {subsubsection}{\nonumberline Auftr\IeC {\"a}ge hinzuf\IeC {\"u}gen}{10}
-\contentsline {subsubsection}{\nonumberline Standardprozesse}{10}
-\contentsline {subsection}{\numberline {5.6.2}Roboter Status\IeC {\"a}nderungen}{12}
-\contentsline {subsubsection}{\nonumberline Roboterstatus ge\IeC {\"a}ndert}{13}
-\contentsline {subsubsection}{\nonumberline Greiferstatus ge\IeC {\"a}ndert}{13}
-\contentsline {subsubsection}{\nonumberline Roboter Error ge\IeC {\"a}ndert}{13}
-\contentsline {subsection}{\numberline {5.6.3}Hard-Code Funktionen}{14}
-\contentsline {subsection}{\numberline {5.6.4}Zustandsdiagramm}{14}
-\contentsline {subsection}{\numberline {5.6.5}State Machine Implementierung}{14}
-\contentsline {subsubsection}{\nonumberline Zustand CheckRobots}{15}
-\contentsline {subsubsection}{\nonumberline Zustand CheckParkplatzRobots}{15}
-\contentsline {subsubsection}{\nonumberline Zustand Wait}{15}
-\contentsline {subsubsection}{\nonumberline Zustand CheckAkku}{16}
-\contentsline {subsubsection}{\nonumberline Zust\IeC {\"a}nde SendLoadingTask, SendParkingTask, SendPositionTask}{16}
-\contentsline {subsubsection}{\nonumberline Zustand CheckAuftrag}{17}
-\contentsline {subsection}{\numberline {5.6.6}Shuffle-Algorithmus}{18}
-\contentsline {section}{\numberline {5.7}Mainwindow}{19}
-\contentsline {section}{\numberline {5.8}Main}{19}
-\contentsline {section}{\numberline {5.9}Weitere Klassen}{19}
-\contentsline {chapter}{\numberline {6}Visualisierung}{21}
-\contentsline {section}{\numberline {6.1}Grundstruktur}{21}
-\contentsline {section}{\numberline {6.2}Live-View}{22}
-\contentsline {section}{\numberline {6.3}Auftrags\IeC {\"u}bersicht}{22}
-\contentsline {section}{\numberline {6.4}Tab-View}{22}
-\contentsline {subsection}{\numberline {6.4.1}Hard-Code Bereich}{22}
-\contentsline {section}{\numberline {6.5}Roboterstatus}{22}
-\contentsline {section}{\numberline {6.6}Prozesseingabe}{22}
-\contentsline {section}{\numberline {6.7}Auftragseingabe}{22}
-\contentsline {section}{\numberline {6.8}Benutzerinteraktion}{22}
-\contentsline {subsection}{\numberline {6.8.1}Tooltips}{22}
-\contentsline {chapter}{\numberline {7}Simulation}{29}
-\contentsline {subsection}{\numberline {7.0.1}Zustandsdiagramm simulierter Roboter}{29}
-\contentsline {subsubsection}{\nonumberline Simulierte Ladefahrt}{30}
-\contentsline {subsubsection}{\nonumberline Simulierter Parkvorgang}{30}
-\contentsline {subsubsection}{\nonumberline Simulierter Transport}{31}
-\contentsline {chapter}{\numberline {8}Datenbank}{32}
-\contentsline {chapter}{\numberline {A}Inhalt der CD}{35}
+\contentsline {section}{\numberline {1.1}Aufgaben Gewerk 1}{1}
+\contentsline {section}{\numberline {1.2}Gesamtkonzept Gewerk 1}{2}
+\contentsline {chapter}{\numberline {2}Grundlagen und Konzepte von Qt}{3}
+\contentsline {section}{\numberline {2.1}Eventbasiertes System}{3}
+\contentsline {section}{\numberline {2.2}Sockets}{4}
+\contentsline {section}{\numberline {2.3}Datenbank in Qt}{5}
+\contentsline {section}{\numberline {2.4}State Machines in Qt}{5}
+\contentsline {section}{\numberline {2.5}QListWidget}{7}
+\contentsline {chapter}{\numberline {3}Schnittstelle zum Robotino}{8}
+\contentsline {section}{\numberline {3.1}Sequenzdiagramm}{8}
+\contentsline {section}{\numberline {3.2}Telegramme}{9}
+\contentsline {subsection}{\numberline {3.2.1}Telegramm vom Fertigungsplanungsrechner zu Gewerk 2}{9}
+\contentsline {subsection}{\numberline {3.2.2}Positionskodierung}{10}
+\contentsline {subsection}{\numberline {3.2.3}Telegramm vom Robotino zum Fertigungsplanungsrechner}{11}
+\contentsline {section}{\numberline {3.3}Fehlertypen und Behebung}{12}
+\contentsline {subsubsection}{\nonumberline Fehlertyp 2}{12}
+\contentsline {subsubsection}{\nonumberline Fehlertyp 3}{13}
+\contentsline {subsubsection}{\nonumberline Fehlertyp 4}{13}
+\contentsline {chapter}{\numberline {4}Implementierung}{14}
+\contentsline {section}{\numberline {4.1}Programmstruktur}{14}
+\contentsline {section}{\numberline {4.2}Database-Handler}{15}
+\contentsline {subsection}{\numberline {4.2.1}Konstruktor, Initialisierung und Sendefunktion}{15}
+\contentsline {subsubsection}{\nonumberline Konstruktor}{15}
+\contentsline {subsubsection}{\nonumberline Initialisierung}{16}
+\contentsline {subsubsection}{\nonumberline Allgemeine Sendefunktion}{17}
+\contentsline {subsection}{\numberline {4.2.2}Getter}{17}
+\contentsline {subsection}{\numberline {4.2.3}Updates}{17}
+\contentsline {subsection}{\numberline {4.2.4}Setter}{18}
+\contentsline {section}{\numberline {4.3}UDP-Handler}{18}
+\contentsline {subsection}{\numberline {4.3.1}UDP-Handler f\IeC {\"u}r Navigationsrechner}{18}
+\contentsline {subsection}{\numberline {4.3.2}UDP-Handler f\IeC {\"u}r Robotino}{20}
+\contentsline {section}{\numberline {4.4}Robotino}{22}
+\contentsline {subsection}{\numberline {4.4.1}Werte aktualisieren}{22}
+\contentsline {subsection}{\numberline {4.4.2}Visualisierungsfunktionen}{23}
+\contentsline {section}{\numberline {4.5}Auftrag, Prozess, Prozessschritt}{23}
+\contentsline {subsection}{\numberline {4.5.1}Prozessschritt}{23}
+\contentsline {subsection}{\numberline {4.5.2}Prozess}{24}
+\contentsline {subsection}{\numberline {4.5.3}Auftrag}{25}
+\contentsline {section}{\numberline {4.6}Fertigungsplanung}{26}
+\contentsline {subsection}{\numberline {4.6.1}Initialisierung}{26}
+\contentsline {subsubsection}{\nonumberline Auftr\IeC {\"a}ge hinzuf\IeC {\"u}gen}{26}
+\contentsline {subsubsection}{\nonumberline Standardprozesse}{27}
+\contentsline {subsection}{\numberline {4.6.2}Roboter Status\IeC {\"a}nderungen}{29}
+\contentsline {subsubsection}{\nonumberline Roboterstatus ge\IeC {\"a}ndert}{29}
+\contentsline {subsubsection}{\nonumberline Greiferstatus ge\IeC {\"a}ndert}{30}
+\contentsline {subsubsection}{\nonumberline Roboter Error ge\IeC {\"a}ndert}{30}
+\contentsline {subsection}{\numberline {4.6.3}Hard-Code Funktionen}{30}
+\contentsline {subsection}{\numberline {4.6.4}Zustandsdiagramm}{31}
+\contentsline {subsection}{\numberline {4.6.5}State Machine Implementierung}{31}
+\contentsline {subsubsection}{\nonumberline Zustand CheckRobots}{31}
+\contentsline {subsubsection}{\nonumberline Zustand CheckParkplatzRobots}{33}
+\contentsline {subsubsection}{\nonumberline Zustand Wait}{33}
+\contentsline {subsubsection}{\nonumberline Zustand CheckAkku}{34}
+\contentsline {subsubsection}{\nonumberline Zust\IeC {\"a}nde SendLoadingTask, SendParkingTask, SendPositionTask}{34}
+\contentsline {subsubsection}{\nonumberline Zustand CheckAuftrag}{35}
+\contentsline {subsection}{\numberline {4.6.6}Shuffle-Algorithmus}{35}
+\contentsline {section}{\numberline {4.7}Weitere Klassen}{37}
+\contentsline {subsection}{\numberline {4.7.1}Main}{37}
+\contentsline {subsection}{\numberline {4.7.2}Timestamp}{39}
+\contentsline {subsection}{\numberline {4.7.3}Fertigungsstrasse}{39}
+\contentsline {subsection}{\numberline {4.7.4}Auftrags- und Prozessitem}{40}
+\contentsline {chapter}{\numberline {5}Visualisierung}{41}
+\contentsline {section}{\numberline {5.1}Design}{41}
+\contentsline {section}{\numberline {5.2}Struktur}{42}
+\contentsline {section}{\numberline {5.3}Live-View}{42}
+\contentsline {subsection}{\numberline {5.3.1}Robotino}{43}
+\contentsline {subsection}{\numberline {5.3.2}Parkpl\IeC {\"a}tze und Ladestationen}{45}
+\contentsline {subsection}{\numberline {5.3.3}Stationen}{46}
+\contentsline {section}{\numberline {5.4}Auftrags\IeC {\"u}bersicht}{46}
+\contentsline {subsection}{\numberline {5.4.1}Auftragsdarstellung}{47}
+\contentsline {subsubsection}{\nonumberline Auftragsitem}{47}
+\contentsline {subsubsection}{\nonumberline Prozessitem}{48}
+\contentsline {subsection}{\numberline {5.4.2}Buttons der Auftrags\IeC {\"u}bersicht}{50}
+\contentsline {section}{\numberline {5.5}Tab-View}{50}
+\contentsline {subsection}{\numberline {5.5.1}Log-View}{50}
+\contentsline {subsection}{\numberline {5.5.2}Manual Control}{53}
+\contentsline {subsection}{\numberline {5.5.3}Timestamp-Area}{53}
+\contentsline {subsection}{\numberline {5.5.4}Hard-Code Bereich}{54}
+\contentsline {subsubsection}{\nonumberline Arbeitsplatz im Hard-Code}{55}
+\contentsline {subsubsection}{\nonumberline Robotino im Hard-Code}{55}
+\contentsline {subsubsection}{\nonumberline Freigabefunktionen}{56}
+\contentsline {subsubsection}{\nonumberline Auftrag blocken}{56}
+\contentsline {section}{\numberline {5.6}Roboterstatus}{56}
+\contentsline {subsection}{\numberline {5.6.1}Akkustand}{57}
+\contentsline {subsection}{\numberline {5.6.2}Alive-Status}{58}
+\contentsline {section}{\numberline {5.7}Prozesseingabe}{58}
+\contentsline {section}{\numberline {5.8}Auftragseingabe}{59}
+\contentsline {section}{\numberline {5.9}Tooltips}{61}
+\contentsline {subsection}{\numberline {5.9.1}Werkst\IeC {\"u}ckstooltip}{61}
+\contentsline {subsection}{\numberline {5.9.2}Prozessitemtooltip}{62}
+\contentsline {chapter}{\numberline {6}Robotersimulation}{63}
+\contentsline {section}{\numberline {6.1}Zustandsdiagramm simulierter Roboter}{63}
+\contentsline {subsubsection}{\nonumberline Simulierte Ladefahrt}{64}
+\contentsline {subsubsection}{\nonumberline Simulierter Parkvorgang}{64}
+\contentsline {subsubsection}{\nonumberline Simulierter Transport}{65}
+\contentsline {chapter}{\numberline {7}Fertigungsrechner}{66}
+\contentsline {chapter}{\numberline {8}Datenbank}{67}
+\contentsline {section}{\numberline {8.1}Aufgabe der Datenbank}{67}
+\contentsline {section}{\numberline {8.2}Konzept}{67}
+\contentsline {section}{\numberline {8.3}Konzeptionelles Modell}{67}
+\contentsline {subsection}{\numberline {8.3.1}Normalisierung}{70}
+\contentsline {section}{\numberline {8.4}Relationales Datenbankmodell}{71}
+\contentsline {section}{\numberline {8.5}Zugriff auf die Datenbank}{71}
+\contentsline {section}{\numberline {8.6}Umsetzung des entwickelten Modells}{72}
+\contentsline {section}{\numberline {8.7}MySQL-Befehle f\IeC {\"u}r die Fertigungsplanung}{75}
+\contentsline {subsection}{\numberline {8.7.1}Getter}{75}
+\contentsline {subsection}{\numberline {8.7.2}Update}{76}
+\contentsline {subsection}{\numberline {8.7.3}Setter}{77}
+\contentsline {chapter}{\numberline {9}Fertigungs\IeC {\"u}berwachung}{78}
+\contentsline {section}{\numberline {9.1}Konzept}{78}
+\contentsline {section}{\numberline {9.2}Programmstruktur}{78}
+\contentsline {section}{\numberline {9.3}Schnittstelle der RFID-Schreib-Lese-K\IeC {\"o}pfen}{80}
+\contentsline {section}{\numberline {9.4}Programmteile}{80}
+\contentsline {subsection}{\numberline {9.4.1}Main PLC\_PRG}{81}
+\contentsline {subsection}{\numberline {9.4.2}FB Aufruf\_RFID\_Channel\_2\_bis\_8\_Lesen}{81}
+\contentsline {subsection}{\numberline {9.4.3}FB Aufruf\_RFID\_Channel\_1\_Schreiben}{82}
+\contentsline {subsection}{\numberline {9.4.4}FB FB\_RFID\_SS15}{82}
+\contentsline {subsection}{\numberline {9.4.5}FB Werkstueck\_Tagen}{83}
+\contentsline {subsection}{\numberline {9.4.6}FB Timestamp\_anlegen}{83}
+\contentsline {subsection}{\numberline {9.4.7}FB Datenbank\_Read\_Write}{85}
+\contentsline {subsection}{\numberline {9.4.8}FB SQL4Automation}{85}
+\contentsline {subsection}{\numberline {9.4.9}Einstellen der Systemzeit}{87}
+\contentsline {chapter}{\numberline {10}Zusammenfassung}{89}
+\contentsline {chapter}{\numberline {A}Inhalt der CD}{93}
+\contentsline {chapter}{Selbstst\IeC {\"a}ndigkeitserkl\IeC {\"a}rung}{94}

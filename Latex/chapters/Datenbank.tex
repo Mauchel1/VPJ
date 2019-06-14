@@ -58,7 +58,7 @@ So lässt sich nun die Mengen aller Entitäten eines Entitätstyps als Tabelle d
 \section{Zugriff auf die Datenbank}\label{kap:DatenbankZugriff}
 Die MySQL-Datenbank ist auf einem Server, der auf dem Fertigungsrechner läuft, implementiert. Es gibt zwei User die Zugriff auf die Datenbank benötigen. Das ist zum einen die Fertigungsüberwachung, die das Auslesen der RFID-Tags übernimmt und die Fertigungsplanung. Die Fertigungsüberwachung befindet sich auf dem selben Rechner wie der Server der Datenbank. Die Fertigungsplanung ist auf einem anderen Rechner realisiert und über Ethernet mit dem Fertigungsrechner verbunden. Die Fertigungsplanung ist mit Qt ausgeführt und hat über eine eingebundene Bibliothek über Ethernet direkten Zugriff auf die Datenbank. 
 
-Die Fertigungsüberwachung läuft auf einer Soft-SPS auf dem Fertigungsrechner und ist mit CODESYS programmiert. Ein direkter Zugriff von der Soft-SPS auf die Datenbank ist nicht möglich. Ein Zugriff könnte über einen OPC-Server erfolgen. OPC (Open Platform Communications) ist eine standardisierte Softwareschnittstelle. Sie ermöglicht den Datenaustausch zwischen Steuerungen verschiedener Hersteller aus der Automatisierungstechnik. Hier wurde allerdings ein anderes Verfahren, speziell für den Zugriff auf Datenbanken von Steuerungen aus der Automatisierungstechnik, angewandt. Es handelt sich dabei um den SQL4Automation Connector der Firma Inasoft Systems GmbH. Dieser wurde speziell für den Zugriff von Speicherprogramierbaren Steuerungen auf eine Datenbank entwickelt und ermöglicht sowohl Lese- als auch Schreibbefehle in SQL direkt auf der SPS zu programmieren. Für die verwendete Steuerung ist schon eine fertige Bibliothek vorhanden, was die Anwendung deutlich erleichtert. In Abbildung \ref{fig:DatenbankZugriffUebersicht} ist schematisch dargestellt, wie auf die Datenbank zugegriffen wird.
+Die Fertigungsüberwachung läuft auf einer Soft-SPS auf dem Fertigungsrechner und ist mit CODESYS programmiert. Ein direkter Zugriff von der Soft-SPS auf die Datenbank ist nicht möglich. Ein Zugriff könnte über einen OPC-Server erfolgen. OPC (Open Platform Communications) ist eine standardisierte Softwareschnittstelle. Sie ermöglicht den Datenaustausch zwischen Steuerungen verschiedener Hersteller aus der Automatisierungstechnik. Hier wurde allerdings ein anderes Verfahren, speziell für den Zugriff auf Datenbanken von Steuerungen aus der Automatisierungstechnik, angewandt. Es handelt sich dabei um den SQL4Automation Connector der Firma Inasoft Systems GmbH. Dieser wurde speziell für den Zugriff von Speicherprogrammierbaren Steuerungen auf eine Datenbank entwickelt und ermöglicht sowohl Lese- als auch Schreibbefehle in SQL direkt auf der SPS zu programmieren. Für die verwendete Steuerung ist schon eine fertige Bibliothek vorhanden, was die Anwendung deutlich erleichtert. In Abbildung \ref{fig:DatenbankZugriffUebersicht} ist schematisch dargestellt, wie auf die Datenbank zugegriffen wird.
 
 \begin{figure}[ht]
 	    \centering
@@ -73,7 +73,7 @@ Zunächst wurde anhand des in Abschnitt \ref{kap:DatenbankKonzept} beschriebenen
  
 \begin{figure}[ht]
 	    \centering
-	    \includegraphics[width=0.4\linewidth]{Bilder/Datenbankdiagramm.png}
+	    \includegraphics[width=1\linewidth]{Bilder/DB_Modell.png}
         \caption{Grafisches Modell der Datenbank}
         \label{fig:ER-Diagramm_Worbenche}
 \end{figure}

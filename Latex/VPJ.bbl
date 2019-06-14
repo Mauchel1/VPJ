@@ -1,14 +1,62 @@
-\begin{thebibliography}{Sch09}
+\begin{thebibliography}{Qt 19d}
 
-\bibitem[Qt 19]{qt_statemachine}
+\bibitem[Cas17]{cast}
+Stack Exchange Inc.
+\newblock {\em Regular cast vs. static\_cast vs. dynamic\_cast}, 2017.
+\newblock Stand am 09.05.2019:
+  \url{https://stackoverflow.com/questions/28002/regular-cast-vs-static-cast-vs-dynamic-cast.html}.
+
+\bibitem[Cor17]{corporate}
+Hochschule für angewandte Wissenschaften Hamburg.
+\newblock {\em Corporate Design Manual}, 2017.
+\newblock Stand am 09.05.2019:
+  \url{https://www.haw-hamburg.de/fileadmin/user_upload/Presse_und_Kommunikation/Downloads/Corporate_Design_Manual_HAW_Hamburg-2017-05-10.pdf}.
+
+\bibitem[HSS01]{Heuer:2001}
+Andreas Heuer, Gunter Saake, and Kai-Uwe Sattler.
+\newblock {\em Datenbanken kompakt}.
+\newblock mitp-Verlag, 2001.
+
+\bibitem[Jar16]{Jarosch:2016}
+Helmut Jarosch.
+\newblock {\em Grundkurs Datenbankentwurf Eine beispielorientierte Einführung
+  für Studierende und Praktiker}.
+\newblock Springer Vieweg, 2016.
+
+\bibitem[Qt 19a]{qt_allgemein}
+The Qt Company Ltd.
+\newblock {\em About Qt}, 2019.
+\newblock Stand am 09.05.2019: \url{https://wiki.qt.io/About_Qt}.
+
+\bibitem[Qt 19b]{qt_listwidget}
+The Qt Company Ltd.
+\newblock {\em QListWidget Class}, 2019.
+\newblock Stand am 09.05.2019: \url{https://doc.qt.io/qt-5/qlistwidget.html}.
+
+\bibitem[Qt 19c]{qt_database}
+The Qt Company Ltd.
+\newblock {\em QSqlDatabase Class}, 2019.
+\newblock Stand am 09.05.2019: \url{https://doc.qt.io/qt-5/qsqldatabase.html}.
+
+\bibitem[Qt 19d]{qt_socket}
+The Qt Company Ltd.
+\newblock {\em QUdpSocket Class}, 2019.
+\newblock Stand am 09.05.2019: \url{https://doc.qt.io/qt-5/qudpsocket.html}.
+
+\bibitem[Qt 19e]{qt_signalslot}
+The Qt Company Ltd.
+\newblock {\em Signals \& Slots}, 2019.
+\newblock Stand am 09.05.2019:
+  \url{https://doc.qt.io/qt-5/signalsandslots.html}.
+
+\bibitem[Qt 19f]{qt_statemachine}
 The Qt Company Ltd.
 \newblock {\em The State Machine Framework}, 2019.
 \newblock Stand am 09.05.2019:
   \url{https://doc.qt.io/qt-5/statemachine-api.html}.
 
-\bibitem[Sch09]{festo_dok}
-Schober.
-\newblock {\em Festo Dokumentation Handbuch MPS Transfersystem}.
-\newblock Festo Didactic, 2009.
+\bibitem[RFI19]{BL_ident}
+Hans Turck GmbH \& Co. KG.
+\newblock {\em Handbuch RFID-System BL ident Planen und Projektieren}, 2019.
 
 \end{thebibliography}
